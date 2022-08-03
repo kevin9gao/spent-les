@@ -22,7 +22,6 @@ def leave_tip():
                         plan_id=data['plan_id'],
                         tip_body=data['tip_body'],
                         created_at=data['created_at'])
-        plan.tips.append(new_tip)
         db.session.add(new_tip)
         db.session.commit()
         return new_tip.to_dict()
