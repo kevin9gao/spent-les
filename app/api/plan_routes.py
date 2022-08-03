@@ -10,12 +10,10 @@ def get_all_plans():
     plans = SpendingPlan.query.all()
     return {'plans': [plan.to_dict() for plan in plans]}
 
-
 @plan_routes.route('/<int:id>')
 def get_plan(id):
     plan = SpendingPlan.query.get(id)
     return plan.to_dict()
-
 
 @plan_routes.route('/', methods=['POST'])
 def create_plan():
