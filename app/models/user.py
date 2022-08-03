@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    annual_income = db.Column(db.Numeric(10,2), nullable=True)
 
     @property
     def password(self):
@@ -26,5 +27,10 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'annual_income': self.annual_income
         }
+
+    spending_plans = db.relationship('SpendingPlan', back_populates='user', cascade='all, delete')
+    tips = db.relationship('Tip', back_populates='user', cascade='all, delete')
+    messages_sent = db.relationship("DirectMessage", back_populates="sender")
