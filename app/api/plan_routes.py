@@ -1,5 +1,4 @@
-from flask import Blueprint, jsonify, request
-from flask_login import login_required
+from flask import Blueprint, request
 from app.forms.plan_form import PlanForm
 from app.models import SpendingPlan, db
 
@@ -19,7 +18,6 @@ def get_plan(id):
 
 
 @plan_routes.route('/', methods=['POST'])
-@login_required
 def create_plan():
     form = PlanForm()
     form['csrf_token'].data = request.cookies['csrf_token']
