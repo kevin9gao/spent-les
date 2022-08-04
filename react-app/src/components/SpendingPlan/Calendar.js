@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import './Calendar.css';
+import SpendingsSidebar from "./SpendingsSidebar";
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
+  const [hidden, setHidden] = useState(true);
+  const [calendarDate, setCalendarDate] = useState('');
+
   const currDate = new Date();
   const currMonth = currDate.getMonth() + 1;
   const currYear = currDate.getFullYear();
@@ -71,8 +75,31 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     </div>
   ))
 
+  const toggleSidebar = e => {
+    e.preventDefault();
+    if (hidden === true) {
+      // console.log('e', e);
+      const day = e.target.innerHTML;
+      // console.log('day', day);
+      setCalendarDate(`${currYear}-${Number(currMonth) > 9 ?
+                                    currMonth :
+                                    '0' + currMonth}-${Number(day) > 9 ?
+                                                      day :
+                                                      '0' + day}`);
+    }
+    setHidden(!hidden);
+  }
+
+  // const closeSidebar = e => {
+  //   e.preventDefault();
+  //   setHidden(true);
+  // }
+
   return (
-    <div className="calendar-main-container">
+    <div
+      className="calendar-main-container"
+      // onClick={closeSidebar}
+    >
       <h2>Calendar</h2>
       <div id="month-selector-container">
         <div id="month-selector">
@@ -91,12 +118,23 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           {calendar && (calendar.map(week => (
             <div className="calendar-weeks">
               {week.map(day => (
-                <div className="calendar-days">
+                <div
+                  className="calendar-days"
+                  onClick={toggleSidebar}
+                >
                   {day}
                 </div>
               ))}
             </div>
           )))}
+        </div>
+      </div>
+      <div
+        id="sidebar"
+        hidden={hidden}
+      >
+        <div id="sidebar-content-container">
+          <SpendingsSidebar date={calendarDate} />
         </div>
       </div>
     </div>
