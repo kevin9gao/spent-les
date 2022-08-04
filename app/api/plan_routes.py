@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from app.forms.plan_form import PlanForm
 from app.models import SpendingPlan, db
+from app.models.user import User
 
 plan_routes = Blueprint('plans', __name__)
 
@@ -10,10 +11,21 @@ def get_all_plans():
     plans = SpendingPlan.query.all()
     return {'plans': [plan.to_dict() for plan in plans]}
 
-@plan_routes.route('/<int:id>')
-def get_plan(id):
-    plan = SpendingPlan.query.get(id)
+@plan_routes.route('/users/<int:user_id>')
+def get_user_plans(user_id):
+    user = User.query.get(user_id)
+    user_plans = user.spending_plans
+    return {'user_plans': [plan.to_dict() for plan in user_plans]}
+
+@plan_routes.route('/users/<int:user_id>/plan/<str:date>')
+def get_plan(user_id, date):
+    month = date[5:]
+    year = date[:4]
+    plan = SpendingPlan.query.filter(SpendingPlan.user_id == user_id and
+                                     SpendingPlan.month == month and
+                                     SpendingPlan.year == year).one()
     return plan.to_dict()
+
 
 @plan_routes.route('/', methods=['POST'])
 def create_plan():

@@ -3,24 +3,10 @@ import moment from 'moment';
 import './Calendar.css';
 import SpendingsSidebar from "./SpendingsSidebar";
 
-const Calendar = ({ WEEKDAYS, MONTHS }) => {
-  const [hidden, setHidden] = useState(true);
-  const [calendarDate, setCalendarDate] = useState('');
-
-  const currDate = new Date();
-  const currMonth = currDate.getMonth() + 1;
-  const currYear = currDate.getFullYear();
-  const dateStr = `${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}`;
-  // console.log('dateStr', dateStr)
-  // console.log('currYear', currYear)
-
-  const [month, setMonth] = useState(dateStr);
-  // console.log('month', month)
-
+const Calendar = ({ WEEKDAYS, MONTHS, currDate, currMonth, currYear, month, toggleSidebar }) => {
   const calendar = [];
 
   useEffect(() => {
-
     console.log('calendar', calendar);
   }, [month])
 
@@ -75,20 +61,20 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     </div>
   ))
 
-  const toggleSidebar = e => {
-    e.preventDefault();
-    if (hidden === true) {
-      // console.log('e', e);
-      const day = e.target.innerHTML;
-      // console.log('day', day);
-      setCalendarDate(`${currYear}-${Number(currMonth) > 9 ?
-                                    currMonth :
-                                    '0' + currMonth}-${Number(day) > 9 ?
-                                                      day :
-                                                      '0' + day}`);
-    }
-    setHidden(!hidden);
-  }
+  // const toggleSidebar = e => {
+  //   e.preventDefault();
+  //   if (hidden === true) {
+  //     // console.log('e', e);
+  //     const day = e.target.innerHTML;
+  //     // console.log('day', day);
+  //     setCalendarDate(`${currYear}-${Number(currMonth) > 9 ?
+  //                                   currMonth :
+  //                                   '0' + currMonth}-${Number(day) > 9 ?
+  //                                                     day :
+  //                                                     '0' + day}`);
+  //   }
+  //   setHidden(!hidden);
+  // }
 
   // const closeSidebar = e => {
   //   e.preventDefault();
@@ -100,16 +86,6 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       className="calendar-main-container"
       // onClick={closeSidebar}
     >
-      <h2>Calendar</h2>
-      <div id="month-selector-container">
-        <div id="month-selector">
-          <input
-            type="month"
-            value={month}
-            onChange={e => setMonth(e.target.value)}
-          />
-        </div>
-      </div>
       <div id='calendar-container'>
         <div id="weekdays-row">
           {weekdaysRow}
@@ -129,14 +105,14 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           )))}
         </div>
       </div>
-      <div
+      {/* <div
         id="sidebar"
         hidden={hidden}
       >
         <div id="sidebar-content-container">
           <SpendingsSidebar date={calendarDate} />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

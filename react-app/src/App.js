@@ -12,7 +12,7 @@ import { authenticate } from './store/session';
 import HomePage from './components/HomePage';
 import SpendingPlanMain from './components/SpendingPlan/SpendingPlanMain';
 import SpendingsBreakdown from './components/SpendingPlan/SpendingsBreakdown';
-import Calendar from './components/SpendingPlan/Calendar';
+import CalendarTab from './components/SpendingPlan/CalendarTab';
 
 const WEEKDAYS = [
   'Sunday',
@@ -81,7 +81,7 @@ function App() {
           <SpendingsBreakdown />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId/calendar' exact={true}>
-          <Calendar WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
+          <CalendarTab WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId/DMs' exact={true}>
           Inbox
