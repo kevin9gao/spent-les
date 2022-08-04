@@ -21,7 +21,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   }, [month])
 
   const selectedMonth = Number(month.slice(5));
-  const selectedYear = Number(month.slice(0, 4))
+  const selectedYear = Number(month.slice(0, 4));
   // console.log('selectedMonth', selectedMonth);
   // console.log('selectedYear', selectedYear);
 
