@@ -1,32 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const WEEKDAYS = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-
-const HomePage = () => {
+const HomePage = ({ WEEKDAYS, MONTHS }) => {
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.session.user);
@@ -55,6 +30,8 @@ const HomePage = () => {
       greeting = 'Good Evening';
   }
 
+  if (!user) return null;
+
   return (
     <div className="home-main-container">
       <div className="home-header">
@@ -66,7 +43,7 @@ const HomePage = () => {
         </div>
       </div>
       <div className="home-overview">
-        Plan Overviews
+        <h3>Plan Overviews</h3>
       </div>
     </div>
   );

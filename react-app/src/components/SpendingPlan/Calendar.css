@@ -1,0 +1,33 @@
+.calendar-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#month-selector-container {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#calendar-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#weekdays-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.weekdays {
+  width: 14.285%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid black;
+  border-collapse: collapse;
+}

@@ -11,10 +11,10 @@ const Navigation = () => {
       <NavLink to='/' exact>
         Home
       </NavLink>
-      <NavLink to='/' exact>
+      <NavLink to='/users/:userId/plans' exact>
         My Spending Plans
       </NavLink>
-      <NavLink to='/' exact>
+      <NavLink to='/users/:userId/DMs' exact>
         Messages
       </NavLink>
     </>
