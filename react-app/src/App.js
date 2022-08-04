@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar';
@@ -10,10 +10,41 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import { authenticate } from './store/session';
 import HomePage from './components/HomePage';
+import SpendingPlanMain from './components/SpendingPlan/SpendingPlanMain';
+import SpendingsBreakdown from './components/SpendingPlan/SpendingsBreakdown';
+import Calendar from './components/SpendingPlan/Calendar';
+
+const WEEKDAYS = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+];
+
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
+
+  const user = useSelector(state => state.session.user);
 
   useEffect(() => {
     (async() => {
@@ -29,7 +60,7 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar />
-      <Navigation />
+      {user && <Navigation />}
       <Switch>
         <Route path='/login' exact={true}>
           <LoginForm />
@@ -43,8 +74,20 @@ function App() {
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
         </ProtectedRoute>
+        <ProtectedRoute path='/users/:userId/plans' exact={true}>
+          <SpendingPlanMain />
+        </ProtectedRoute>
+        <ProtectedRoute path='/users/:userId/breakdown' exact={true}>
+          <SpendingsBreakdown />
+        </ProtectedRoute>
+        <ProtectedRoute path='/users/:userId/calendar' exact={true}>
+          <Calendar WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
+        </ProtectedRoute>
+        <ProtectedRoute path='/users/:userId/DMs' exact={true}>
+          Inbox
+        </ProtectedRoute>
         <ProtectedRoute path='/' exact={true} >
-          <HomePage />
+          <HomePage WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
