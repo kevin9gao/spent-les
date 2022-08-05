@@ -2,10 +2,17 @@ import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import './Calendar.css';
 import SpendingsSidebar from "./SpendingsSidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { getSinglePlan, getUserPlans } from "../../store/plans";
+import CreatePlanModal from './CreatePlanModal';
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const [hidden, setHidden] = useState(true);
   const [calendarDate, setCalendarDate] = useState('');
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);
+  const currPlan = useSelector(state => state.plans.current);
+  console.log('currPlan', currPlan);
 
   const currDate = new Date();
   const currMonth = currDate.getMonth() + 1;
@@ -13,21 +20,25 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const dateStr = `${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}`;
   // console.log('dateStr', dateStr)
   // console.log('currYear', currYear)
+  // console.log('currMonth', currMonth)
 
   const [month, setMonth] = useState(dateStr);
   // console.log('month', month)
 
   const calendar = [];
 
-  useEffect(() => {
-
-    console.log('calendar', calendar);
-  }, [month])
-
   const selectedMonth = Number(month.slice(5));
   const selectedYear = Number(month.slice(0, 4));
   // console.log('selectedMonth', selectedMonth);
   // console.log('selectedYear', selectedYear);
+
+  useEffect(() => {
+    dispatch(getUserPlans(user.id));
+  }, [])
+
+  useEffect(() => {
+    dispatch(getSinglePlan(user.id, selectedYear, selectedMonth));
+  }, [month])
 
   const firstOfSelectedMonth = moment(`${selectedYear}-${selectedMonth}-01`).day();
   // console.log('firstOfSelectedMonth', firstOfSelectedMonth);
@@ -69,8 +80,11 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     }
   }
 
-  let weekdaysRow = WEEKDAYS.map(day => (
-    <div className="weekdays">
+  let weekdaysRow = WEEKDAYS.map((day, weekdayIdx) => (
+    <div
+      className="weekdays"
+      key={weekdayIdx}
+    >
       {day}
     </div>
   ))
@@ -82,23 +96,48 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       const day = e.target.innerHTML;
       // console.log('day', day);
       setCalendarDate(`${currYear}-${Number(currMonth) > 9 ?
-                                    currMonth :
-                                    '0' + currMonth}-${Number(day) > 9 ?
-                                                      day :
-                                                      '0' + day}`);
+        currMonth :
+        '0' + currMonth}-${Number(day) > 9 ?
+          day :
+          '0' + day}`);
     }
     setHidden(!hidden);
   }
+
 
   // const closeSidebar = e => {
   //   e.preventDefault();
   //   setHidden(true);
   // }
 
+  console.log('currPlan?.month', currPlan?.month)
+  console.log('selectedMonth', selectedMonth)
+  console.log('currPlan?.month === selectedMonth', currPlan?.month === selectedMonth)
+
+  if (currPlan?.month !== selectedMonth) {
+    return (
+      <div className="no-plan-container">
+        <h1>You have not created a spending plan for this month.</h1>
+        <div id="month-selector-container">
+          <div id="month-selector">
+            <input
+              type="month"
+              value={month}
+              onChange={e => setMonth(e.target.value)}
+            />
+          </div>
+        </div>
+        <div id="calendar-create-plan-container">
+          <CreatePlanModal />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       className="calendar-main-container"
-      // onClick={closeSidebar}
+    // onClick={closeSidebar}
     >
       <h2>Calendar</h2>
       <div id="month-selector-container">
@@ -115,12 +154,15 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           {weekdaysRow}
         </div>
         <div id="calendar-body">
-          {calendar && (calendar.map(week => (
-            <div className="calendar-weeks">
-              {week.map(day => (
+          {calendar && (calendar.map((week, weekIdx) => (
+            <div
+              className="calendar-weeks"
+              key={weekIdx}>
+              {week.map((day, dayIdx) => (
                 <div
                   className="calendar-days"
                   onClick={toggleSidebar}
+                  key={dayIdx}
                 >
                   {day}
                 </div>

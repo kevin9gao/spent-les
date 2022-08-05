@@ -33,8 +33,24 @@ export const getPlans = () => async dispatch => {
   }
 }
 
-export const getSinglePlan = planId => async dispatch => {
-  const res = await fetch(`/api/plans/${planId}`);
+export const getSinglePlan = (userId, year, month) => async dispatch => {
+  const res = await fetch(`/api/plans/users/${userId}/plan/${year}-${month}`);
+  console.log('getSinglePlan res', res);
+
+  if (res.ok) {
+    const list = await res.json();
+    console.log('getSinglePlan list', list);
+    await dispatch(load(list));
+    return list;
+  } else {
+    const list = {};
+    await dispatch(load(list));
+    return list;
+  }
+}
+
+export const getUserPlans = userId => async dispatch => {
+  const res = await fetch(`/api/plans/users/${userId}`);
 
   if (res.ok) {
     const list = await res.json();
@@ -53,6 +69,12 @@ const plansReducer = (state = {}, action) => {
         const plans = action.list['plans'];
         plans.forEach(plan => {
           newState[plan.id] = plan;
+        })
+      } else if (action.list['user_plans']) {
+        const userPlans = action.list['user_plans'];
+        newState['user-plans'] = {};
+        userPlans.forEach(plan => {
+          newState['user-plans'][plan.id] = plan;
         })
       } else {
         newState['current'] = action.list
