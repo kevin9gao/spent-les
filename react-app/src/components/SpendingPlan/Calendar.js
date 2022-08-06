@@ -128,7 +128,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           </div>
         </div>
         <div id="calendar-create-plan-container">
-          <CreatePlanModal />
+          <CreatePlanModal month={selectedMonth} year={selectedYear} MONTHS={MONTHS} />
         </div>
       </div>
     )

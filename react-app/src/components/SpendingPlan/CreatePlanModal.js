@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal } from '../../context/Modal';
 import CreatePlanForm from "./CreatePlanForm";
 
-const CreatePlanModal = () => {
+const CreatePlanModal = ({ month, year, MONTHS }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -13,7 +13,7 @@ const CreatePlanModal = () => {
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <CreatePlanForm />
+          <CreatePlanForm month={month} year={year} MONTHS={MONTHS} />
           <button onClick={() => setShowModal(false)}>Cancel</button>
         </Modal>
       )}

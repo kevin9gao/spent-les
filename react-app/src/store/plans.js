@@ -59,12 +59,26 @@ export const getUserPlans = userId => async dispatch => {
   }
 }
 
+export const createPlan = payload => async dispatch => {
+  const res = await fetch(`/api/plans/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (res.ok) {
+    const plan = await res.json();
+    await dispatch(add(plan));
+    return plan;
+  }
+}
+
 let newState;
 
 const plansReducer = (state = {}, action) => {
   switch (action.type) {
     case LOAD:
-      newState = {...state};
+      newState = { ...state };
       if (action.list['plans']) {
         const plans = action.list['plans'];
         plans.forEach(plan => {
@@ -79,6 +93,10 @@ const plansReducer = (state = {}, action) => {
       } else {
         newState['current'] = action.list
       }
+      return newState;
+    case ADD:
+      newState = {...state};
+      newState[action.plan.id] = action.plan;
       return newState;
     default:
       return state;
