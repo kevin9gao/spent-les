@@ -80,7 +80,7 @@ function App() {
         <ProtectedRoute path='/users/:userId/breakdown' exact={true}>
           <SpendingsBreakdown />
         </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId/calendar' exact={true}>
+        <ProtectedRoute path='/users/:userId/calendar/:date' exact={true}>
           <Calendar WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId/DMs' exact={true}>

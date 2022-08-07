@@ -5,30 +5,35 @@ import SpendingsSidebar from "./SpendingsSidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { getSinglePlan, getUserPlans } from "../../store/plans";
 import CreatePlanModal from './CreatePlanModal';
+import { useHistory, useParams } from "react-router-dom";
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
+  const history = useHistory();
   const [hidden, setHidden] = useState(true);
   const [calendarDate, setCalendarDate] = useState('');
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
   const currPlan = useSelector(state => state.plans.current);
   console.log('currPlan', currPlan);
+  const { userId, date } = useParams();
+  console.log('userId, date', userId, date);
 
-  const currDate = new Date();
-  const currMonth = currDate.getMonth() + 1;
-  const currYear = currDate.getFullYear();
+  const currDate = moment(date);
+  const currMonth = currDate.month() + 1;
+  const currYear = currDate.year();
   const dateStr = `${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}`;
+  console.log('currDate', currDate)
   // console.log('dateStr', dateStr)
   // console.log('currYear', currYear)
   // console.log('currMonth', currMonth)
 
   const [month, setMonth] = useState(dateStr);
-  // console.log('month', month)
+  console.log('month', month)
 
   const calendar = [];
 
-  const selectedMonth = Number(month.slice(5));
-  const selectedYear = Number(month.slice(0, 4));
+  const selectedMonth = Number(month?.slice(5));
+  const selectedYear = Number(month?.slice(0, 4));
   // console.log('selectedMonth', selectedMonth);
   // console.log('selectedYear', selectedYear);
 
@@ -104,6 +109,12 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     setHidden(!hidden);
   }
 
+  const changeMonth = e => {
+    e.preventDefault();
+
+    setMonth(e.target.value);
+    return history.push(`/users/${user.id}/calendar/${e.target.value}`);
+  }
 
   // const closeSidebar = e => {
   //   e.preventDefault();
@@ -123,7 +134,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
             <input
               type="month"
               value={month}
-              onChange={e => setMonth(e.target.value)}
+              onChange={changeMonth}
             />
           </div>
         </div>

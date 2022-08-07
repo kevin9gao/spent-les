@@ -34,6 +34,7 @@ def create_plan():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         data = form.data
+        print('------------DATA----------------', data)
         new_plan = SpendingPlan(user_id=data['user_id'],
                                 plan_name=data['plan_name'],
                                 month=data['month'],

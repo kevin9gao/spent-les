@@ -60,11 +60,15 @@ export const getUserPlans = userId => async dispatch => {
 }
 
 export const createPlan = payload => async dispatch => {
+  console.log('createPlan payload', payload);
+
   const res = await fetch(`/api/plans/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
+
+  console.log('createPlan res', res);
 
   if (res.ok) {
     const plan = await res.json();

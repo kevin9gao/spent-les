@@ -8,7 +8,7 @@ class PlanForm(FlaskForm):
     plan_name = StringField('plan_name', validators=[DataRequired()])
     month = IntegerField('month', validators=[DataRequired()])
     year = IntegerField('year', validators=[DataRequired()])
-    private = BooleanField('private', validators=[DataRequired()])
+    private = BooleanField('private')
     additional_income = DecimalField('additional_income')
     additional_income_notes = StringField('additional_income_notes')
     notes = TextAreaField('notes')

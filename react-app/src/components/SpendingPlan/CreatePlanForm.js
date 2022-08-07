@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createPlan } from "../../store/plans";
@@ -8,11 +8,28 @@ const CreatePlanForm = ({ month, year, MONTHS }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(state => state.session.user);
-  const [planName, setPlanName] = useState(`${user.username} - ${MONTHS[month]} ${year}`);
+  const [planName, setPlanName] = useState(`${user.username} - ${MONTHS[month - 1]} ${year}`);
   const [priv, setPriv] = useState(false);
   const [additionalIncome, setAdditionalIncome] = useState('');
   const [addIncNotes, setAddIncNotes] = useState('');
   const [notes, setNotes] = useState('');
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [hideErrors, setHideErrors] = useState(true);
+
+
+  useEffect(() => {
+    const errors = [];
+
+    if (planName.length === 0) {
+      errors.push('Please include a name for the spending plan.');
+    }
+
+    if(!Number(additionalIncome)) {
+      errors.push('Additional income provided must be a number.');
+    }
+
+    setValidationErrors(errors);
+  }, [planName, additionalIncome]);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -29,13 +46,26 @@ const CreatePlanForm = ({ month, year, MONTHS }) => {
     }
     console.log('CreatePlanForm payload', payload);
 
-    const newPlan = await dispatch(createPlan(payload));
-    history.push(`/users/${user.id}/calendar`);
+    if (validationErrors.length === 0) {
+      const newPlan = await dispatch(createPlan(payload));
+      history.push(`/users/${user.id}/calendar`);
+    } else setHideErrors(false);
   }
 
   return (
     <div className="create-plan-container">
       <div id="create-plan-form-container">
+        <h2>Create a new plan!</h2>
+        <div
+          className="errors"
+          hidden={hideErrors}
+        >
+          <ul>
+            {validationErrors && validationErrors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>
+        </div>
         <form
           id="create-plan-form"
           onSubmit={handleSubmit}
