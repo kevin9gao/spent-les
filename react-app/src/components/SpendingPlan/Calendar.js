@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSinglePlan, getUserPlans } from "../../store/plans";
 import CreatePlanModal from './CreatePlanModal';
 import { useHistory, useParams } from "react-router-dom";
+import DeletePlanModal from "./DeletePlanModal";
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const history = useHistory();
@@ -150,7 +151,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       className="calendar-main-container"
     // onClick={closeSidebar}
     >
-      <h2>Calendar</h2>
+      <h2>{currPlan?.plan_name}</h2>
       <div id="month-selector-container">
         <div id="month-selector">
           <input
@@ -180,6 +181,9 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
               ))}
             </div>
           )))}
+          <div id="delete-plan-modal">
+            <DeletePlanModal plan={currPlan} />
+          </div>
         </div>
       </div>
       <div

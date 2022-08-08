@@ -13,7 +13,7 @@ const CreatePlanModal = ({ month, year, MONTHS }) => {
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <CreatePlanForm month={month} year={year} MONTHS={MONTHS} />
+          <CreatePlanForm month={month} year={year} MONTHS={MONTHS} setShowModal={setShowModal} />
           <button onClick={() => setShowModal(false)}>Cancel</button>
         </Modal>
       )}

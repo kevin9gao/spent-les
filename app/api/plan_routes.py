@@ -67,7 +67,9 @@ def edit_plan(id):
 
 @plan_routes.route('/<int:id>', methods=['DELETE'])
 def delete_plan(id):
+    print('HITTING DELETE ROUTE')
     plan = SpendingPlan.query.get(id)
+    print('DELETE ROUTE PLAN', plan)
     db.session.delete(plan)
     db.session.commit()
     return plan.to_dict()

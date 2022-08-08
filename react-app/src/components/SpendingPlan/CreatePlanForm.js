@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createPlan } from "../../store/plans";
+import { createPlan, getSinglePlan } from "../../store/plans";
 import './CreatePlanForm.css';
 
-const CreatePlanForm = ({ month, year, MONTHS }) => {
+const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(state => state.session.user);
@@ -48,7 +48,10 @@ const CreatePlanForm = ({ month, year, MONTHS }) => {
 
     if (validationErrors.length === 0) {
       const newPlan = await dispatch(createPlan(payload));
-      history.push(`/users/${user.id}/calendar`);
+      // console.log('newPlan', newPlan);
+      await dispatch(getSinglePlan(user.id, newPlan.year, newPlan.month));
+      setShowModal(false);
+      history.push(`/users/${user.id}/calendar/${newPlan.year}-${newPlan.month}`);
     } else setHideErrors(false);
   }
 
