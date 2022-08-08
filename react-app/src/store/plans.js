@@ -77,8 +77,18 @@ export const createPlan = payload => async dispatch => {
   }
 }
 
-export const editPlan = (userId, year, month) => async dispatch => {
-  const res = await fetch(`/api/plans/`)
+export const editPlan = (userId, year, month, payload) => async dispatch => {
+  const res = await fetch(`/api/plans/users/${userId}/plan/${year}-${month}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (res.ok) {
+    const plan = await res.json();
+    await dispatch(update(plan));
+    return plan;
+  }
 }
 
 export const deletePlan = planId => async dispatch => {
@@ -117,6 +127,11 @@ const plansReducer = (state = {}, action) => {
     case ADD:
       newState = {...state};
       newState[action.plan.id] = action.plan;
+      return newState;
+    case UPDATE:
+      newState = {...state};
+      newState[action.plan.id] = action.plan;
+      newState['user-plans'][action.plan.id] = action.plan;
       return newState;
     case REMOVE:
       newState = {...state};

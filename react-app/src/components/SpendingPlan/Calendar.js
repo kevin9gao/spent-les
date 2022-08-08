@@ -7,6 +7,7 @@ import { getSinglePlan, getUserPlans } from "../../store/plans";
 import CreatePlanModal from './CreatePlanModal';
 import { useHistory, useParams } from "react-router-dom";
 import DeletePlanModal from "./DeletePlanModal";
+import EditPlanModal from "./EditPlanModal";
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const history = useHistory();
@@ -182,6 +183,9 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
               ))}
             </div>
           )))}
+          <div id="edit-plan-modal">
+            <EditPlanModal plan={currPlan} />
+          </div>
           <div id="delete-plan-modal">
             <DeletePlanModal plan={currPlan} />
           </div>

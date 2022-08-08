@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { createPlan, getSinglePlan } from "../../store/plans";
+import { editPlan, getSinglePlan } from "../../store/plans";
 import './PlanForm.css';
 
-const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
+const EditPlanForm = ({ plan, setShowModal }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const user = useSelector(state => state.session.user);
-  const [planName, setPlanName] = useState(`${user.username} - ${MONTHS[month - 1]} ${year}`);
-  const [priv, setPriv] = useState(false);
-  const [additionalIncome, setAdditionalIncome] = useState('');
-  const [addIncNotes, setAddIncNotes] = useState('');
-  const [notes, setNotes] = useState('');
+  const [planName, setPlanName] = useState(plan.plan_name);
+  const [priv, setPriv] = useState(plan.private);
+  const [additionalIncome, setAdditionalIncome] = useState(plan.additional_income);
+  const [addIncNotes, setAddIncNotes] = useState(plan.additional_income_notes);
+  const [notes, setNotes] = useState(plan.notes);
   const [validationErrors, setValidationErrors] = useState([]);
   const [hideErrors, setHideErrors] = useState(true);
 
@@ -39,28 +37,27 @@ const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
     const payload = {
       user_id: user.id,
       plan_name: planName,
-      month,
-      year,
+      month: plan.month,
+      year: plan.year,
       private: priv,
       additional_income: additionalIncome.length ? additionalIncome : 0,
       additional_income_notes: addIncNotes,
       notes
     }
-    // console.log('CreatePlanForm payload', payload);
+    console.log('EditPlanForm payload', payload);
 
     if (validationErrors.length === 0) {
-      const newPlan = await dispatch(createPlan(payload));
-      // console.log('newPlan', newPlan);
-      await dispatch(getSinglePlan(user.id, newPlan.year, newPlan.month));
+      const editedPlan = await dispatch(editPlan(user.id, plan.year, plan.month, payload));;
+      // console.log('editedPlan', editedPlan);
+      await dispatch(getSinglePlan(user.id, plan.year, plan.month));
       setShowModal(false);
-      history.push(`/users/${user.id}/calendar/${newPlan.year}-${newPlan.month}`);
     } else setHideErrors(false);
   }
 
   return (
-    <div className="create-plan-container">
-      <div id="create-plan-form-container">
-        <h2>Create a new plan!</h2>
+    <div className="edit-plan-container">
+      <div id="edit-plan-form-container">
+        <h2>Edit Your Plan!</h2>
         <div
           className="errors"
           hidden={hideErrors}
@@ -84,19 +81,18 @@ const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
           <input
             value={additionalIncome}
             onChange={e => setAdditionalIncome(e.target.value)}
-            placeholder='Any additional income you made this month?'
           />
           <label>Notes On Additional Income</label>
           <input
             value={addIncNotes}
             onChange={e => setAddIncNotes(e.target.value)}
-            placeholder='What was your additional income from?'
+            placeholder='Add notes on additional income...'
           />
           <label>Notes</label>
           <textarea
             value={notes}
             onChange={e => setNotes(e.target.value)}
-            placeholder='Any additional remarks about this month?'
+            placeholder='Any notes about this month...'
           />
           <label>Private:</label>
           <input
@@ -111,4 +107,4 @@ const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
   )
 }
 
-export default CreatePlanForm;
+export default EditPlanForm;
