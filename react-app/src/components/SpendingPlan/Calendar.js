@@ -43,6 +43,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   }, [])
 
   useEffect(() => {
+    console.log('THE MONTH CHANGED');
     dispatch(getSinglePlan(user.id, selectedYear, selectedMonth));
   }, [month])
 

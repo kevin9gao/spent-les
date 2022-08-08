@@ -24,8 +24,10 @@ const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
       errors.push('Please include a name for the spending plan.');
     }
 
-    if(!Number(additionalIncome)) {
-      errors.push('Additional income provided must be a number.');
+    if (additionalIncome.length) {
+      if (!Number(additionalIncome)) {
+        errors.push('Additional income provided must be a number.');
+      }
     }
 
     setValidationErrors(errors);
@@ -40,7 +42,7 @@ const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
       month,
       year,
       private: priv,
-      additional_income: additionalIncome,
+      additional_income: additionalIncome.length ? additionalIncome : 0,
       additional_income_notes: addIncNotes,
       notes
     }

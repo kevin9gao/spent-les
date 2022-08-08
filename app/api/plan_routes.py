@@ -47,13 +47,17 @@ def create_plan():
         db.session.commit()
         return new_plan.to_dict()
 
-@plan_routes.route('/<int:id>', methods=['PUT'])
-def edit_plan(id):
+@plan_routes.route('/users/<int:user_id>/plan/<date>', methods=['PUT'])
+def edit_plan(user_id, date):
+    year = int(date[:4])
+    month = int(date[5:])
+    plan = SpendingPlan.query.filter(SpendingPlan.user_id == user_id,
+                                     SpendingPlan.year == year,
+                                     SpendingPlan.month == month).one()
     form = PlanForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         data = form.data
-        plan = SpendingPlan.query.get(id)
         plan.user_id = data['user_id']
         plan.plan_name = data['plan_name']
         plan.month = data['month']

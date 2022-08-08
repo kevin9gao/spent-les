@@ -77,6 +77,10 @@ export const createPlan = payload => async dispatch => {
   }
 }
 
+export const editPlan = (userId, year, month) => async dispatch => {
+  const res = await fetch(`/api/plans/`)
+}
+
 export const deletePlan = planId => async dispatch => {
   const res = await fetch(`/api/plans/${planId}`, {
     method: 'DELETE'
@@ -116,9 +120,9 @@ const plansReducer = (state = {}, action) => {
       return newState;
     case REMOVE:
       newState = {...state};
-      newState[action.planId] = {};
-      newState['user-plans'][action.planId] = {};
-      newState['current'] = {};
+      delete newState[action.planId];
+      delete newState['user-plans'][action.planId];
+      delete newState['current'];
     default:
       return state;
   }
