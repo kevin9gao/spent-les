@@ -58,6 +58,56 @@
   border: 3px solid black;
 }
 
+.days {
+  grid-area: day;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icons-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+  'one two three'
+  'eight day four'
+  'seven six five';
+  grid-template-rows: repeat(3, 3.89vh);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.spending {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spending.num-0 {
+  grid-area: one;
+}
+.spending.num-1 {
+  grid-area: two;
+}
+.spending.num-2 {
+  grid-area: three;
+}
+.spending.num-3 {
+  grid-area: four;
+}
+.spending.num-4 {
+  grid-area: five;
+}
+.spending.num-5 {
+  grid-area: six;
+}
+.spending.num-6 {
+  grid-area: seven;
+}
+.spending.num-7 {
+  grid-area: eight;
+}
+
 #sidebar {
   position: fixed;
   right: 0;

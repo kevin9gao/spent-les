@@ -8,6 +8,8 @@ import CreatePlanModal from './CreatePlanModal';
 import { useHistory, useParams } from "react-router-dom";
 import DeletePlanModal from "./DeletePlanModal";
 import EditPlanModal from "./EditPlanModal";
+import { getSpendings } from "../../store/spendings";
+import SpendingIcons from "../Spendings/SpendingsIcons";
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const history = useHistory();
@@ -16,21 +18,22 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
   const currPlan = useSelector(state => state.plans.current);
-  console.log('currPlan', currPlan);
+
+
   const { userId, date } = useParams();
-  console.log('userId, date', userId, date);
+  // console.log('userId, date', userId, date);
 
   const currDate = moment(date);
   const currMonth = currDate.month() + 1;
   const currYear = currDate.year();
   const dateStr = `${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}`;
-  console.log('currDate', currDate)
+  // console.log('currDate', currDate)
   // console.log('dateStr', dateStr)
   // console.log('currYear', currYear)
   // console.log('currMonth', currMonth)
 
   const [month, setMonth] = useState(dateStr);
-  console.log('month', month)
+  // console.log('month', month)
 
   const calendar = [];
 
@@ -44,8 +47,9 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   }, [])
 
   useEffect(() => {
-    console.log('THE MONTH CHANGED');
+    // console.log('THE MONTH CHANGED');
     dispatch(getSinglePlan(user.id, selectedYear, selectedMonth));
+    dispatch(getSpendings(currPlan?.id));
   }, [month])
 
   const firstOfSelectedMonth = moment(`${selectedYear}-${selectedMonth}-01`).day();
@@ -73,15 +77,27 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
 
         // fill in leading dates with dates from previous month
         if (week === 0 && day < firstOfSelectedMonth) {
-          calendar[week][day] = leadingDate;
+          calendar[week][day] = `${currMonth === 1 ?
+                                  currYear - 1 :
+                                  currYear}-${currMonth - 1 < 10 ?
+                                              `0${currMonth - 1}` :
+                                              currMonth - 1}-${leadingDate}`;
           leadingDate++;
           // fill in dates of current month
         } else if (dayOfSelectedMonth <= lastOfSelectedMonth) {
-          calendar[week][day] = dayOfSelectedMonth;
+          calendar[week][day] = `${currYear}-${currMonth < 10 ?
+                                              `0${currMonth}` :
+                                              currMonth}-${dayOfSelectedMonth < 10 ?
+                                                          `0${dayOfSelectedMonth}` :
+                                                          dayOfSelectedMonth}`;
           dayOfSelectedMonth++;
           // fill in dates of next month
         } else {
-          calendar[week][day] = trailingDate;
+          calendar[week][day] = `${currYear}-${currMonth + 1 < 10 ?
+                                              `0${currMonth + 1}` :
+                                              currMonth + 1}-${trailingDate < 10 ?
+                                                              `0${trailingDate}` :
+                                                              trailingDate}`;
           trailingDate++;
         }
       }
@@ -97,13 +113,13 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     </div>
   ))
 
-  const toggleSidebar = (e, dayIdx, weekIdx) => {
+  const toggleSidebar = (e, dayIdx, weekIdx, dayStr) => {
     e.preventDefault();
 
-    console.log('dayIdx', dayIdx)
-    console.log('weekIdx', weekIdx)
-    const day = e.target.innerHTML;
-    const isLastMonth = (weekIdx === 0) && (dayIdx < 6) && (Number(day) > 1);
+    const day = dayStr.slice(8, 10);
+    // console.log('dayIdx', dayIdx)
+    // console.log('weekIdx', weekIdx)
+    const isLastMonth = (weekIdx === 0) && (dayIdx < 6) && (Number(day) > 21);
     const isNextMonth = (weekIdx > 3) && (Number(day) < 15);
     const isJanuary = Number(currMonth) === 1;
     const isDecember = Number(currMonth) === 12;
@@ -112,7 +128,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     let targetYear = Number(currYear);
     if (isLastMonth && !isJanuary) {
       targetMonth--;
-      console.log('last month targetMonth', targetMonth)
+      // console.log('last month targetMonth', targetMonth)
     } else if (isLastMonth && isJanuary) {
       targetMonth = 12;
       targetYear--;
@@ -129,11 +145,9 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       setCalendarDate(`${targetYear}-${Number(targetMonth) > 9 ?
         targetMonth :
         '0' + targetMonth
-      }-${Number(day) > 9 ?
-          day :
-          '0' + day}`);
+      }-${day}`);
     }
-    console.log('calendarDate', calendarDate)
+    // console.log('calendarDate', calendarDate)
     setHidden(!hidden);
   }
 
@@ -184,7 +198,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           <input
             type="month"
             value={month}
-            onChange={e => setMonth(e.target.value)}
+            onChange={changeMonth}
           />
         </div>
       </div>
@@ -197,13 +211,13 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
             <div
               className="calendar-weeks"
               key={weekIdx}>
-              {week.map((day, dayIdx) => (
+              {week.map((dayStr, dayIdx) => (
                 <div
                   className="calendar-days"
-                  onClick={e => toggleSidebar(e, dayIdx, weekIdx)}
+                  onClick={e => toggleSidebar(e, dayIdx, weekIdx, dayStr)}
                   key={dayIdx}
                 >
-                  {day}
+                  <SpendingIcons date={`${dayStr.slice(0,4)}-${dayStr.slice(5,7)}-${dayStr.slice(8,10)}`} calendarDay={dayStr.slice(8,10)} />
                 </div>
               ))}
             </div>
