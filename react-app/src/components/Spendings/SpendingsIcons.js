@@ -27,7 +27,7 @@ const SpendingIcons = ({ date, calendarDay }) => {
     spending.date = mmtDateStr;
     return spending;
   })
-  console.log('spendings', spendings);
+  // console.log('spendings', spendings);
 
   const icon = spending => {
     const amount = Number(spending.amount);
@@ -45,6 +45,7 @@ const SpendingIcons = ({ date, calendarDay }) => {
       {spendings?.filter(spending => spending.date === `${year}-${month}-${day}`).slice(0,8).map((spending, idx) => (
         <div
           className={`spending n-${idx}`}
+          key={spending.id}
         >
           {icon(spending)}
         </div>
