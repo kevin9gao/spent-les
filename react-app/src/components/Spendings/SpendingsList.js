@@ -30,7 +30,7 @@ const SpendingsList = ({ date }) => {
               {spending.transaction_notes}
             </p>
             <h4 className="spending-amounts">
-              {`Amount: ${spending.amount}`}
+              {`Amount: $${spending.amount}`}
             </h4>
           </li>
         ))}

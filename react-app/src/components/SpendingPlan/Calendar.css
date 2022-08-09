@@ -52,13 +52,9 @@
 .calendar-days {
   width: 14.285%;
   height: 100%;
-  display: grid;
-  grid-template-areas:
-  'one two three'
-  'eight day four'
-  'seven six five';
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 3px solid black;
 }
 
@@ -69,28 +65,46 @@
   align-items: center;
 }
 
-.spending-1 {
+.icons-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+  'one two three'
+  'eight day four'
+  'seven six five';
+  grid-template-rows: repeat(3, 3.89vh);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.spending {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spending.num-0 {
   grid-area: one;
 }
-.spending-2 {
+.spending.num-1 {
   grid-area: two;
 }
-.spending-3 {
+.spending.num-2 {
   grid-area: three;
 }
-.spending-4 {
+.spending.num-3 {
   grid-area: four;
 }
-.spending-5 {
+.spending.num-4 {
   grid-area: five;
 }
-.spending-6 {
+.spending.num-5 {
   grid-area: six;
 }
-.spending-7 {
+.spending.num-6 {
   grid-area: seven;
 }
-.spending-8 {
+.spending.num-7 {
   grid-area: eight;
 }
 

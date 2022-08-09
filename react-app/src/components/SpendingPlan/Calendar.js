@@ -9,6 +9,7 @@ import { useHistory, useParams } from "react-router-dom";
 import DeletePlanModal from "./DeletePlanModal";
 import EditPlanModal from "./EditPlanModal";
 import { getSpendings } from "../../store/spendings";
+import SpendingIcons from "../Spendings/SpendingsIcons";
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const history = useHistory();
@@ -18,17 +19,6 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const user = useSelector(state => state.session.user);
   const currPlan = useSelector(state => state.plans.current);
 
-  const spendingsSelector = Object.values(useSelector(state => state.spendings));
-  const spendings = spendingsSelector.map(spending => {
-    const mmtDate = moment(spending.date);
-    const year = mmtDate.year();
-    const month = mmtDate.month() + 1;
-    const day = mmtDate.date() + 1;
-    const mmtDateStr = `${year}-${month > 9 ? month : '0' + month}-${day > 9 ? day : '0' + day}`;
-    spending.date = mmtDateStr;
-    return spending;
-  })
-  console.log('spendings', spendings);
 
   const { userId, date } = useParams();
   // console.log('userId, date', userId, date);
@@ -111,13 +101,12 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     </div>
   ))
 
-  const toggleSidebar = (e, dayIdx, weekIdx) => {
+  const toggleSidebar = (e, dayIdx, weekIdx, day) => {
     e.preventDefault();
 
     // console.log('dayIdx', dayIdx)
     // console.log('weekIdx', weekIdx)
-    const day = e.target.innerHTML;
-    const isLastMonth = (weekIdx === 0) && (dayIdx < 6) && (Number(day) > 1);
+    const isLastMonth = (weekIdx === 0) && (dayIdx < 6) && (Number(day) > 21);
     const isNextMonth = (weekIdx > 3) && (Number(day) < 15);
     const isJanuary = Number(currMonth) === 1;
     const isDecember = Number(currMonth) === 12;
@@ -198,7 +187,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           <input
             type="month"
             value={month}
-            onChange={e => setMonth(e.target.value)}
+            onChange={changeMonth}
           />
         </div>
       </div>
@@ -214,17 +203,10 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
               {week.map((day, dayIdx) => (
                 <div
                   className="calendar-days"
-                  onClick={e => toggleSidebar(e, dayIdx, weekIdx)}
+                  onClick={e => toggleSidebar(e, dayIdx, weekIdx, day)}
                   key={dayIdx}
                 >
-                  <div className="days">{day}</div>
-                  {spendings.filter(spending => spending.date === `${currYear}-${currMonth}-${day}`).map((spending, idx) => (
-                    <div
-                      className={`spending-${idx}`}
-                    >
-                      $
-                    </div>
-                  ))}
+                  <SpendingIcons date={`${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}-${day < 10 ? '0' + day : day}`} calendarDay={day} />
                 </div>
               ))}
             </div>

@@ -104,6 +104,7 @@ export const deletePlan = planId => async dispatch => {
 }
 
 let newState;
+// true deep copy json.parse(json.stringify(state))
 
 const plansReducer = (state = {}, action) => {
   switch (action.type) {
