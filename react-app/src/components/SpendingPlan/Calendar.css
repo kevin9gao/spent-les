@@ -52,10 +52,46 @@
 .calendar-days {
   width: 14.285%;
   height: 100%;
+  display: grid;
+  grid-template-areas:
+  'one two three'
+  'eight day four'
+  'seven six five';
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  border: 3px solid black;
+}
+
+.days {
+  grid-area: day;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 3px solid black;
+}
+
+.spending-1 {
+  grid-area: one;
+}
+.spending-2 {
+  grid-area: two;
+}
+.spending-3 {
+  grid-area: three;
+}
+.spending-4 {
+  grid-area: four;
+}
+.spending-5 {
+  grid-area: five;
+}
+.spending-6 {
+  grid-area: six;
+}
+.spending-7 {
+  grid-area: seven;
+}
+.spending-8 {
+  grid-area: eight;
 }
 
 #sidebar {

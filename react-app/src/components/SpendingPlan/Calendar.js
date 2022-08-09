@@ -8,6 +8,7 @@ import CreatePlanModal from './CreatePlanModal';
 import { useHistory, useParams } from "react-router-dom";
 import DeletePlanModal from "./DeletePlanModal";
 import EditPlanModal from "./EditPlanModal";
+import { getSpendings } from "../../store/spendings";
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const history = useHistory();
@@ -16,21 +17,33 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
   const currPlan = useSelector(state => state.plans.current);
-  console.log('currPlan', currPlan);
+
+  const spendingsSelector = Object.values(useSelector(state => state.spendings));
+  const spendings = spendingsSelector.map(spending => {
+    const mmtDate = moment(spending.date);
+    const year = mmtDate.year();
+    const month = mmtDate.month() + 1;
+    const day = mmtDate.date() + 1;
+    const mmtDateStr = `${year}-${month > 9 ? month : '0' + month}-${day > 9 ? day : '0' + day}`;
+    spending.date = mmtDateStr;
+    return spending;
+  })
+  console.log('spendings', spendings);
+
   const { userId, date } = useParams();
-  console.log('userId, date', userId, date);
+  // console.log('userId, date', userId, date);
 
   const currDate = moment(date);
   const currMonth = currDate.month() + 1;
   const currYear = currDate.year();
   const dateStr = `${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}`;
-  console.log('currDate', currDate)
+  // console.log('currDate', currDate)
   // console.log('dateStr', dateStr)
   // console.log('currYear', currYear)
   // console.log('currMonth', currMonth)
 
   const [month, setMonth] = useState(dateStr);
-  console.log('month', month)
+  // console.log('month', month)
 
   const calendar = [];
 
@@ -44,8 +57,9 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   }, [])
 
   useEffect(() => {
-    console.log('THE MONTH CHANGED');
+    // console.log('THE MONTH CHANGED');
     dispatch(getSinglePlan(user.id, selectedYear, selectedMonth));
+    dispatch(getSpendings(currPlan?.id));
   }, [month])
 
   const firstOfSelectedMonth = moment(`${selectedYear}-${selectedMonth}-01`).day();
@@ -100,8 +114,8 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const toggleSidebar = (e, dayIdx, weekIdx) => {
     e.preventDefault();
 
-    console.log('dayIdx', dayIdx)
-    console.log('weekIdx', weekIdx)
+    // console.log('dayIdx', dayIdx)
+    // console.log('weekIdx', weekIdx)
     const day = e.target.innerHTML;
     const isLastMonth = (weekIdx === 0) && (dayIdx < 6) && (Number(day) > 1);
     const isNextMonth = (weekIdx > 3) && (Number(day) < 15);
@@ -112,7 +126,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     let targetYear = Number(currYear);
     if (isLastMonth && !isJanuary) {
       targetMonth--;
-      console.log('last month targetMonth', targetMonth)
+      // console.log('last month targetMonth', targetMonth)
     } else if (isLastMonth && isJanuary) {
       targetMonth = 12;
       targetYear--;
@@ -133,7 +147,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           day :
           '0' + day}`);
     }
-    console.log('calendarDate', calendarDate)
+    // console.log('calendarDate', calendarDate)
     setHidden(!hidden);
   }
 
@@ -203,7 +217,14 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
                   onClick={e => toggleSidebar(e, dayIdx, weekIdx)}
                   key={dayIdx}
                 >
-                  {day}
+                  <div className="days">{day}</div>
+                  {spendings.filter(spending => spending.date === `${currYear}-${currMonth}-${day}`).map((spending, idx) => (
+                    <div
+                      className={`spending-${idx}`}
+                    >
+                      $
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
