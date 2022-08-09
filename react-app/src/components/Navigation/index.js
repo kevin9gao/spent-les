@@ -1,9 +1,9 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const Navigation = () => {
-  const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);
 
   return (
     <>
@@ -11,10 +11,10 @@ const Navigation = () => {
       <NavLink to='/' exact>
         Home
       </NavLink>
-      <NavLink to='/users/:userId/plans' exact>
+      <NavLink to={`/users/${user.id}/plans`} exact>
         My Spending Plans
       </NavLink>
-      <NavLink to='/users/:userId/DMs' exact>
+      <NavLink to={`/users/${user.id}/DMs`} exact>
         Messages
       </NavLink>
     </>

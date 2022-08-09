@@ -33,8 +33,24 @@ export const getPlans = () => async dispatch => {
   }
 }
 
-export const getSinglePlan = planId => async dispatch => {
-  const res = await fetch(`/api/plans/${planId}`);
+export const getSinglePlan = (userId, year, month) => async dispatch => {
+  const res = await fetch(`/api/plans/users/${userId}/plan/${year}-${month}`);
+  console.log('getSinglePlan res', res);
+
+  if (res.ok) {
+    const list = await res.json();
+    console.log('getSinglePlan list', list);
+    await dispatch(load(list));
+    return list;
+  } else {
+    const list = {};
+    await dispatch(load(list));
+    return list;
+  }
+}
+
+export const getUserPlans = userId => async dispatch => {
+  const res = await fetch(`/api/plans/users/${userId}`);
 
   if (res.ok) {
     const list = await res.json();
@@ -43,21 +59,85 @@ export const getSinglePlan = planId => async dispatch => {
   }
 }
 
+export const createPlan = payload => async dispatch => {
+  console.log('createPlan payload', payload);
+
+  const res = await fetch(`/api/plans/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  console.log('createPlan res', res);
+
+  if (res.ok) {
+    const plan = await res.json();
+    await dispatch(add(plan));
+    return plan;
+  }
+}
+
+export const editPlan = (userId, year, month, payload) => async dispatch => {
+  const res = await fetch(`/api/plans/users/${userId}/plan/${year}-${month}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (res.ok) {
+    const plan = await res.json();
+    await dispatch(update(plan));
+    return plan;
+  }
+}
+
+export const deletePlan = planId => async dispatch => {
+  const res = await fetch(`/api/plans/${planId}`, {
+    method: 'DELETE'
+  });
+
+  if (res.ok) {
+    const plan = await res.json();
+    await dispatch(remove(planId));
+    return plan;
+  }
+}
+
 let newState;
 
 const plansReducer = (state = {}, action) => {
   switch (action.type) {
     case LOAD:
-      newState = {...state};
+      newState = { ...state };
       if (action.list['plans']) {
         const plans = action.list['plans'];
         plans.forEach(plan => {
           newState[plan.id] = plan;
         })
+      } else if (action.list['user_plans']) {
+        const userPlans = action.list['user_plans'];
+        newState['user-plans'] = {};
+        userPlans.forEach(plan => {
+          newState['user-plans'][plan.id] = plan;
+        })
       } else {
         newState['current'] = action.list
       }
       return newState;
+    case ADD:
+      newState = {...state};
+      newState[action.plan.id] = action.plan;
+      return newState;
+    case UPDATE:
+      newState = {...state};
+      newState[action.plan.id] = action.plan;
+      newState['user-plans'][action.plan.id] = action.plan;
+      return newState;
+    case REMOVE:
+      newState = {...state};
+      delete newState[action.planId];
+      delete newState['user-plans'][action.planId];
+      delete newState['current'];
     default:
       return state;
   }

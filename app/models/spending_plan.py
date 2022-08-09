@@ -22,7 +22,7 @@ class SpendingPlan(db.Model):
             'month': self.month,
             'year': self.year,
             'private': self.private,
-            'additional_income': self.additional_income,
+            'additional_income': str(self.additional_income),
             'additional_income_notes': self.additional_income_notes,
             'notes': self.notes
         }

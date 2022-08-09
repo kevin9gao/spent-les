@@ -1,6 +1,8 @@
 from flask import Blueprint, request
 from app.forms.spending_form import SpendingForm
 from app.models import Spending, db
+from app.models.spending_plan import SpendingPlan
+from app.models.user import User
 
 spending_routes = Blueprint('spendings', __name__)
 
@@ -9,6 +11,12 @@ spending_routes = Blueprint('spendings', __name__)
 def get_spending(id):
     spending = Spending.query.get(id)
     return spending.to_dict()
+
+@spending_routes.route('/plan/<int:plan_id>')
+def get_user_spendings(plan_id):
+    plan = SpendingPlan.query.get(plan_id)
+    spendings = plan.spendings
+    return {'spendings': [spending.to_dict() for spending in spendings]}
 
 @spending_routes.route('/', methods=['POST'])
 def create_spending():

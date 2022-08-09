@@ -2,32 +2,51 @@ import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import './Calendar.css';
 import SpendingsSidebar from "./SpendingsSidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { getSinglePlan, getUserPlans } from "../../store/plans";
+import CreatePlanModal from './CreatePlanModal';
+import { useHistory, useParams } from "react-router-dom";
+import DeletePlanModal from "./DeletePlanModal";
+import EditPlanModal from "./EditPlanModal";
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
+  const history = useHistory();
   const [hidden, setHidden] = useState(true);
   const [calendarDate, setCalendarDate] = useState('');
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);
+  const currPlan = useSelector(state => state.plans.current);
+  console.log('currPlan', currPlan);
+  const { userId, date } = useParams();
+  console.log('userId, date', userId, date);
 
-  const currDate = new Date();
-  const currMonth = currDate.getMonth() + 1;
-  const currYear = currDate.getFullYear();
+  const currDate = moment(date);
+  const currMonth = currDate.month() + 1;
+  const currYear = currDate.year();
   const dateStr = `${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}`;
+  console.log('currDate', currDate)
   // console.log('dateStr', dateStr)
   // console.log('currYear', currYear)
+  // console.log('currMonth', currMonth)
 
   const [month, setMonth] = useState(dateStr);
-  // console.log('month', month)
+  console.log('month', month)
 
   const calendar = [];
 
-  useEffect(() => {
-
-    console.log('calendar', calendar);
-  }, [month])
-
-  const selectedMonth = Number(month.slice(5));
-  const selectedYear = Number(month.slice(0, 4));
+  const selectedMonth = Number(month?.slice(5));
+  const selectedYear = Number(month?.slice(0, 4));
   // console.log('selectedMonth', selectedMonth);
   // console.log('selectedYear', selectedYear);
+
+  useEffect(() => {
+    dispatch(getUserPlans(user.id));
+  }, [])
+
+  useEffect(() => {
+    console.log('THE MONTH CHANGED');
+    dispatch(getSinglePlan(user.id, selectedYear, selectedMonth));
+  }, [month])
 
   const firstOfSelectedMonth = moment(`${selectedYear}-${selectedMonth}-01`).day();
   // console.log('firstOfSelectedMonth', firstOfSelectedMonth);
@@ -69,25 +88,60 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     }
   }
 
-  let weekdaysRow = WEEKDAYS.map(day => (
-    <div className="weekdays">
+  let weekdaysRow = WEEKDAYS.map((day, weekdayIdx) => (
+    <div
+      className="weekdays"
+      key={weekdayIdx}
+    >
       {day}
     </div>
   ))
 
-  const toggleSidebar = e => {
+  const toggleSidebar = (e, dayIdx, weekIdx) => {
     e.preventDefault();
+
+    console.log('dayIdx', dayIdx)
+    console.log('weekIdx', weekIdx)
+    const day = e.target.innerHTML;
+    const isLastMonth = (weekIdx === 0) && (dayIdx < 6) && (Number(day) > 1);
+    const isNextMonth = (weekIdx > 3) && (Number(day) < 15);
+    const isJanuary = Number(currMonth) === 1;
+    const isDecember = Number(currMonth) === 12;
+
+    let targetMonth = Number(currMonth);
+    let targetYear = Number(currYear);
+    if (isLastMonth && !isJanuary) {
+      targetMonth--;
+      console.log('last month targetMonth', targetMonth)
+    } else if (isLastMonth && isJanuary) {
+      targetMonth = 12;
+      targetYear--;
+    } else if (isNextMonth && !isDecember) {
+      targetMonth++;
+    } else if (isNextMonth && isDecember) {
+      targetMonth = 1;
+      targetYear++;
+    }
+
     if (hidden === true) {
       // console.log('e', e);
-      const day = e.target.innerHTML;
       // console.log('day', day);
-      setCalendarDate(`${currYear}-${Number(currMonth) > 9 ?
-                                    currMonth :
-                                    '0' + currMonth}-${Number(day) > 9 ?
-                                                      day :
-                                                      '0' + day}`);
+      setCalendarDate(`${targetYear}-${Number(targetMonth) > 9 ?
+        targetMonth :
+        '0' + targetMonth
+      }-${Number(day) > 9 ?
+          day :
+          '0' + day}`);
     }
+    console.log('calendarDate', calendarDate)
     setHidden(!hidden);
+  }
+
+  const changeMonth = e => {
+    e.preventDefault();
+
+    setMonth(e.target.value);
+    return history.push(`/users/${user.id}/calendar/${e.target.value}`);
   }
 
   // const closeSidebar = e => {
@@ -95,12 +149,36 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   //   setHidden(true);
   // }
 
+  // console.log('currPlan?.month', currPlan?.month)
+  // console.log('selectedMonth', selectedMonth)
+  // console.log('currPlan?.month === selectedMonth', currPlan?.month === selectedMonth)
+
+  if (currPlan?.month !== selectedMonth) {
+    return (
+      <div className="no-plan-container">
+        <h1>You have not created a spending plan for this month.</h1>
+        <div id="month-selector-container">
+          <div id="month-selector">
+            <input
+              type="month"
+              value={month}
+              onChange={changeMonth}
+            />
+          </div>
+        </div>
+        <div id="calendar-create-plan-container">
+          <CreatePlanModal month={selectedMonth} year={selectedYear} MONTHS={MONTHS} />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       className="calendar-main-container"
-      // onClick={closeSidebar}
+    // onClick={closeSidebar}
     >
-      <h2>Calendar</h2>
+      <h2>{currPlan?.plan_name}</h2>
       <div id="month-selector-container">
         <div id="month-selector">
           <input
@@ -115,18 +193,27 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           {weekdaysRow}
         </div>
         <div id="calendar-body">
-          {calendar && (calendar.map(week => (
-            <div className="calendar-weeks">
-              {week.map(day => (
+          {calendar && (calendar.map((week, weekIdx) => (
+            <div
+              className="calendar-weeks"
+              key={weekIdx}>
+              {week.map((day, dayIdx) => (
                 <div
                   className="calendar-days"
-                  onClick={toggleSidebar}
+                  onClick={e => toggleSidebar(e, dayIdx, weekIdx)}
+                  key={dayIdx}
                 >
                   {day}
                 </div>
               ))}
             </div>
           )))}
+          <div id="edit-plan-modal">
+            <EditPlanModal plan={currPlan} />
+          </div>
+          <div id="delete-plan-modal">
+            <DeletePlanModal plan={currPlan} />
+          </div>
         </div>
       </div>
       <div

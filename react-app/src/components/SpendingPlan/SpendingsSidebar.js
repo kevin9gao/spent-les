@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
+import NewSpendingForm from "../Spendings/NewSpendingForm";
 import './SpendingsSidebar.css';
 
 const SpendingsSidebar = ({ date }) => {
   const [hideNewSpendingForm, setHideNewSpendingForm] = useState(true);
-  const [nameInput, setNameInput] = useState('');
-  const [notesInput, setNotesInput] = useState('');
-  const [amountInput, setAmountInput] = useState();
+
 
   useEffect(() => {
     setHideNewSpendingForm(true);
@@ -24,29 +23,12 @@ const SpendingsSidebar = ({ date }) => {
         >
           New Spending
         </button>
-        <form
-          id="new-spending-form"
+        <div
+          id="new-spending-container"
           hidden={hideNewSpendingForm}
         >
-          <label>Spending Name</label>
-          <input
-            placeholder="What kind of transaction was this?"
-            value={nameInput}
-            onChange={e => setNameInput(e.target.value)}
-          />
-          <label>Notes</label>
-          <input
-            placeholder="Notes regarding the spending..."
-            value={notesInput}
-            onChange={e => setNotesInput(e.target.value)}
-          />
-          <label>Amount</label>
-          <input
-            placeholder="Spending amount..."
-            value={amountInput}
-            onChange={e => setAmountInput(e.target.value)}
-          />
-        </form>
+          <NewSpendingForm date={date} setHideNewSpendingForm={setHideNewSpendingForm} />
+        </div>
       </div>
     </div>
   );
