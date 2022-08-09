@@ -27,7 +27,7 @@ const SpendingsSidebar = ({ date }) => {
           id="new-spending-container"
           hidden={hideNewSpendingForm}
         >
-          <NewSpendingForm date={date} />
+          <NewSpendingForm date={date} setHideNewSpendingForm={setHideNewSpendingForm} />
         </div>
       </div>
     </div>

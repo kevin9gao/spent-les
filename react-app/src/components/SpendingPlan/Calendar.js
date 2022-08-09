@@ -97,18 +97,43 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     </div>
   ))
 
-  const toggleSidebar = e => {
+  const toggleSidebar = (e, dayIdx, weekIdx) => {
     e.preventDefault();
+
+    console.log('dayIdx', dayIdx)
+    console.log('weekIdx', weekIdx)
+    const day = e.target.innerHTML;
+    const isLastMonth = (weekIdx === 0) && (dayIdx < 6) && (Number(day) > 1);
+    const isNextMonth = (weekIdx > 3) && (Number(day) < 15);
+    const isJanuary = Number(currMonth) === 1;
+    const isDecember = Number(currMonth) === 12;
+
+    let targetMonth = Number(currMonth);
+    let targetYear = Number(currYear);
+    if (isLastMonth && !isJanuary) {
+      targetMonth--;
+      console.log('last month targetMonth', targetMonth)
+    } else if (isLastMonth && isJanuary) {
+      targetMonth = 12;
+      targetYear--;
+    } else if (isNextMonth && !isDecember) {
+      targetMonth++;
+    } else if (isNextMonth && isDecember) {
+      targetMonth = 1;
+      targetYear++;
+    }
+
     if (hidden === true) {
       // console.log('e', e);
-      const day = e.target.innerHTML;
       // console.log('day', day);
-      setCalendarDate(`${currYear}-${Number(currMonth) > 9 ?
-        currMonth :
-        '0' + currMonth}-${Number(day) > 9 ?
+      setCalendarDate(`${targetYear}-${Number(targetMonth) > 9 ?
+        targetMonth :
+        '0' + targetMonth
+      }-${Number(day) > 9 ?
           day :
           '0' + day}`);
     }
+    console.log('calendarDate', calendarDate)
     setHidden(!hidden);
   }
 
@@ -124,9 +149,9 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   //   setHidden(true);
   // }
 
-  console.log('currPlan?.month', currPlan?.month)
-  console.log('selectedMonth', selectedMonth)
-  console.log('currPlan?.month === selectedMonth', currPlan?.month === selectedMonth)
+  // console.log('currPlan?.month', currPlan?.month)
+  // console.log('selectedMonth', selectedMonth)
+  // console.log('currPlan?.month === selectedMonth', currPlan?.month === selectedMonth)
 
   if (currPlan?.month !== selectedMonth) {
     return (
@@ -175,7 +200,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
               {week.map((day, dayIdx) => (
                 <div
                   className="calendar-days"
-                  onClick={toggleSidebar}
+                  onClick={e => toggleSidebar(e, dayIdx, weekIdx)}
                   key={dayIdx}
                 >
                   {day}

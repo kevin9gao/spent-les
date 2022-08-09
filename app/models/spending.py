@@ -17,7 +17,7 @@ class Spending(db.Model):
             'plan_id': self.plan_id,
             'transaction_name': self.transaction_name,
             'transaction_notes': self.transaction_notes,
-            'amount': self.amount,
+            'amount': str(self.amount),
             'date': self.date
         }
 

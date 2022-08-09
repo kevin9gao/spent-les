@@ -34,11 +34,15 @@ export const getSpendings = planId => async dispatch => {
 }
 
 export const createSpending = payload => async dispatch => {
-  const res = await fetch('/api/spendings', {
+  console.log('createSpending thunk');
+
+  const res = await fetch('/api/spendings/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
+
+  console.log('createSpending res', res);
 
   if (res.ok) {
     const spending = await res.json();
