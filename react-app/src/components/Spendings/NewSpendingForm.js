@@ -43,7 +43,7 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
     const payload = {
       plan_id: plan.id,
       transaction_name: nameInput,
-      transaction_notes: notesInput,
+      transaction_notes: notesInput.length ? notesInput : null,
       amount: amountInput,
       date
     }
@@ -52,6 +52,7 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
 
     if (!validationErrors.length) {
       const newSpending = await dispatch(createSpending(payload));
+      console.log('newSpending', newSpending)
       setHideNewSpendingForm(true);
       setNameInput('');
       setNotesInput('');
