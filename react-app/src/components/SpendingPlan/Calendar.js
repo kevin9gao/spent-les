@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import moment from 'moment';
-import './Calendar.css';
 import SpendingsSidebar from "./SpendingsSidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { getSinglePlan, getUserPlans } from "../../store/plans";
+import { getAnotherUsersPlans, getSinglePlan, getUserPlans } from "../../store/plans";
 import CreatePlanModal from './CreatePlanModal';
 import { useHistory, useParams } from "react-router-dom";
 import DeletePlanModal from "./DeletePlanModal";
 import EditPlanModal from "./EditPlanModal";
 import { getSpendings } from "../../store/spendings";
 import SpendingIcons from "../Spendings/SpendingsIcons";
+import './Calendar.css';
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const history = useHistory();
   const [hidden, setHidden] = useState(true);
   const [calendarDate, setCalendarDate] = useState('');
+  const [otherUser, setOtherUser] = useState({});
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
   const currPlan = useSelector(state => state.plans.current);
@@ -22,6 +23,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
 
   const { userId, date } = useParams();
   // console.log('userId, date', userId, date);
+
 
   const currDate = moment(date);
   const currMonth = currDate.month() + 1;
@@ -78,26 +80,26 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
         // fill in leading dates with dates from previous month
         if (week === 0 && day < firstOfSelectedMonth) {
           calendar[week][day] = `${currMonth === 1 ?
-                                  currYear - 1 :
-                                  currYear}-${currMonth - 1 < 10 ?
-                                              `0${currMonth - 1}` :
-                                              currMonth - 1}-${leadingDate}`;
+            currYear - 1 :
+            currYear}-${currMonth - 1 < 10 ?
+              `0${currMonth - 1}` :
+              currMonth - 1}-${leadingDate}`;
           leadingDate++;
           // fill in dates of current month
         } else if (dayOfSelectedMonth <= lastOfSelectedMonth) {
           calendar[week][day] = `${currYear}-${currMonth < 10 ?
-                                              `0${currMonth}` :
-                                              currMonth}-${dayOfSelectedMonth < 10 ?
-                                                          `0${dayOfSelectedMonth}` :
-                                                          dayOfSelectedMonth}`;
+            `0${currMonth}` :
+            currMonth}-${dayOfSelectedMonth < 10 ?
+              `0${dayOfSelectedMonth}` :
+              dayOfSelectedMonth}`;
           dayOfSelectedMonth++;
           // fill in dates of next month
         } else {
           calendar[week][day] = `${currYear}-${currMonth + 1 < 10 ?
-                                              `0${currMonth + 1}` :
-                                              currMonth + 1}-${trailingDate < 10 ?
-                                                              `0${trailingDate}` :
-                                                              trailingDate}`;
+            `0${currMonth + 1}` :
+            currMonth + 1}-${trailingDate < 10 ?
+              `0${trailingDate}` :
+              trailingDate}`;
           trailingDate++;
         }
       }
@@ -145,7 +147,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       setCalendarDate(`${targetYear}-${Number(targetMonth) > 9 ?
         targetMonth :
         '0' + targetMonth
-      }-${day}`);
+        }-${day}`);
     }
     // console.log('calendarDate', calendarDate)
     setHidden(!hidden);
@@ -158,14 +160,84 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     return history.push(`/users/${user.id}/calendar/${e.target.value}`);
   }
 
-  // const closeSidebar = e => {
-  //   e.preventDefault();
-  //   setHidden(true);
-  // }
+  const changeMonthOnOtherUser = e => {
+    e.preventDefault();
 
-  // console.log('currPlan?.month', currPlan?.month)
-  // console.log('selectedMonth', selectedMonth)
-  // console.log('currPlan?.month === selectedMonth', currPlan?.month === selectedMonth)
+    setMonth(e.target.value);
+    return history.push(`/users/${userId}/calendar/${e.target.value}`);
+  }
+
+  // if currently logged in user is not owner of plan
+  const otherPlansObj = useSelector(state => state.plans['other-users-plans']);
+  const otherPlans = otherPlansObj ? Object.values(otherPlansObj) : null;
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+
+    if (user.id !== userId) {
+      (async () => {
+        const response = await fetch(`/api/users/${userId}`);
+        const paramsUser = await response.json();
+        setOtherUser(paramsUser);
+      })();
+
+      dispatch(getAnotherUsersPlans(userId));
+    }
+  }, [userId]);
+  console.log('otherUser', otherUser)
+  console.log('otherPlans', otherPlans)
+
+  if (user.id !== userId) {
+    const options = otherPlans?.map(plan => {
+      return {
+        value: `${plan.year}-${plan.month < 10 ? `0${plan.month}` : plan.month}`,
+        label: plan.plan_name
+      };
+    });
+    console.log('options', options);
+    return (
+      <div className="not-owner-calendar">
+        <div id="not-owner-month-selector-container">
+          <select onChange={changeMonthOnOtherUser}>
+            {options?.map(opt => (
+              <option value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+        </div>
+        <div id='calendar-container'>
+          <div id="weekdays-row">
+            {weekdaysRow}
+          </div>
+          <div id="calendar-body">
+            {calendar && (calendar.map((week, weekIdx) => (
+              <div
+                className="calendar-weeks"
+                key={weekIdx}>
+                {week.map((dayStr, dayIdx) => (
+                  <div
+                    className="calendar-days"
+                    onClick={e => toggleSidebar(e, dayIdx, weekIdx, dayStr)}
+                    key={dayIdx}
+                  >
+                    <SpendingIcons date={`${dayStr.slice(0, 4)}-${dayStr.slice(5, 7)}-${dayStr.slice(8, 10)}`} calendarDay={dayStr.slice(8, 10)} />
+                  </div>
+                ))}
+              </div>
+            )))}
+          </div>
+        </div>
+        <div
+          id="sidebar"
+          hidden={hidden}
+        >
+          <div id="sidebar-content-container">
+            {/* <SpendingsSidebar date={calendarDate} /> */}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (currPlan?.month !== selectedMonth) {
     return (
@@ -217,7 +289,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
                   onClick={e => toggleSidebar(e, dayIdx, weekIdx, dayStr)}
                   key={dayIdx}
                 >
-                  <SpendingIcons date={`${dayStr.slice(0,4)}-${dayStr.slice(5,7)}-${dayStr.slice(8,10)}`} calendarDay={dayStr.slice(8,10)} />
+                  <SpendingIcons date={`${dayStr.slice(0, 4)}-${dayStr.slice(5, 7)}-${dayStr.slice(8, 10)}`} calendarDay={dayStr.slice(8, 10)} />
                 </div>
               ))}
             </div>

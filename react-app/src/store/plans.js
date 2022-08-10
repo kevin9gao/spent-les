@@ -59,6 +59,17 @@ export const getUserPlans = userId => async dispatch => {
   }
 }
 
+export const getAnotherUsersPlans = userId => async dispatch => {
+  const res = await fetch(`/api/plans/users/${userId}`);
+
+  if (res.ok) {
+    const list = await res.json();
+    console.log('getanotherusersplans list', list);
+    await dispatch(load({'other-users-plans': list}));
+    return list;
+  }
+}
+
 export const createPlan = payload => async dispatch => {
   console.log('createPlan payload', payload);
 
@@ -120,6 +131,12 @@ const plansReducer = (state = {}, action) => {
         newState['user-plans'] = {};
         userPlans.forEach(plan => {
           newState['user-plans'][plan.id] = plan;
+        })
+      } else if (action.list['other-users-plans']) {
+        const otherUsersPlans = action.list['other-users-plans']['user_plans'];
+        newState['other-users-plans'] = {};
+        otherUsersPlans.forEach(plan => {
+          newState['other-users-plans'][plan.id] = plan;
         })
       } else {
         newState['current'] = action.list

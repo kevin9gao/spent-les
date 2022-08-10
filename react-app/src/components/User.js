@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
 function User() {
   const [user, setUser] = useState({});
@@ -31,6 +31,9 @@ function User() {
       <li>
         <strong>Email</strong> {user.email}
       </li>
+      <NavLink to={`/users/${userId}/plans`}>
+        {`${user.username}'s Spending Plans`}
+      </NavLink>
     </ul>
   );
 }
