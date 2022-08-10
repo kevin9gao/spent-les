@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Modal } from '../../context/Modal';
-import { deletePlan, getSinglePlan, getUserPlans } from "../../store/plans";
+import { deletePlan, getSinglePlan } from "../../store/plans";
 
 const DeletePlanModal = ({ plan }) => {
   const [showModal, setShowModal] = useState(false);
@@ -22,9 +22,9 @@ const DeletePlanModal = ({ plan }) => {
     console.log('planDeleted', planDeleted);
     if (planDeleted) {
       setShowModal(false);
-      const newDate = planDeleted.month === 1 ?
-                      `${planDeleted.year-1}-12` :
-                      `${planDeleted.year}-${planDeleted.month-1}`;
+      // const newDate = planDeleted.month === 1 ?
+      //                 `${planDeleted.year-1}-12` :
+      //                 `${planDeleted.year}-${planDeleted.month-1}`;
     };
   }
 
@@ -32,7 +32,8 @@ const DeletePlanModal = ({ plan }) => {
     <>
       <button
         className="create-plan-btn"
-        onClick={() => setShowModal(true)}>Delete Plan
+        onClick={() => setShowModal(true)}>
+          Delete Plan
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
@@ -40,7 +41,8 @@ const DeletePlanModal = ({ plan }) => {
           <button
             id="delete-plan-btn"
             onClick={handleDeletePlan}
-            >Yes, delete my plan.</button>
+            >Yes, delete my plan.
+          </button>
           <button onClick={() => setShowModal(false)}>Cancel</button>
         </Modal>
       )}

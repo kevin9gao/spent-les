@@ -44,7 +44,6 @@ def edit_tip(id):
         tip.user_id = data['user_id']
         tip.plan_id = data['plan_id']
         tip.tip_body = data['tip_body']
-        tip.created_at = data['created_at']
         db.session.commit()
         return tip.to_dict()
 

@@ -22,7 +22,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const user = useSelector(state => state.session.user);
   const currPlan = useSelector(state => state.plans.current);
 
-  const [newTipMade, setNewTipMade] = useState(false);
+  const [tipChanged, setTipChanged] = useState(false);
 
   const { userId, date } = useParams();
   const isOwner = user.id === Number(userId);
@@ -240,10 +240,10 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
         </div>
         <div className="tips-container">
           <div id="calendar-tips-section">
-            <TipSection plan={currPlan} newTipMade={newTipMade} setNewTipMade={setNewTipMade} />
+            <TipSection plan={currPlan} tipChanged={tipChanged} setTipChanged={setTipChanged} />
           </div>
           <div id="calendar-new-tip-container">
-            <NewTipForm plan={currPlan} setNewTipMade={setNewTipMade} />
+            <NewTipForm plan={currPlan} setTipChanged={setTipChanged} />
           </div>
         </div>
         <div

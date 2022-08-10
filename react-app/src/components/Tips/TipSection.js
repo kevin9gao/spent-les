@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadTips } from "../../store/tips";
+import DeleteTipModal from "./DeleteTipModal";
+import EditTipModal from "./EditTipModal";
 
-const TipSection = ({ plan, newTipMade, setNewTipMade }) => {
+const TipSection = ({ plan, tipChanged, setTipChanged }) => {
   const dispatch = useDispatch();
   const tips = useSelector(state => state.tips);
   let tipsArr;
@@ -13,8 +15,8 @@ const TipSection = ({ plan, newTipMade, setNewTipMade }) => {
 
   useEffect(() => {
     dispatch(loadTips(plan?.id));
-    setNewTipMade(false);
-  }, [plan, newTipMade])
+    setTipChanged(false);
+  }, [plan, tipChanged])
 
 
   return (
@@ -26,7 +28,16 @@ const TipSection = ({ plan, newTipMade, setNewTipMade }) => {
             className="tips"
             key={tip.id}
           >
-            {tip.user && `${tip.user.username}: ${tip.tip_body}`}
+            <div className="tip-username">
+              {tip.user && `${tip.user.username}:`}
+            </div>
+            <div className="tip-body">
+              {tip.tip_body}
+            </div>
+            <div className="tip-edit-delete">
+              <EditTipModal tip={tip} setTipChanged={setTipChanged} />
+              <DeleteTipModal tip={tip} />
+            </div>
           </div>
         ))}
       </div>

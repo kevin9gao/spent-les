@@ -47,6 +47,30 @@ export const createTip = payload => async dispatch => {
   }
 }
 
+export const editTip = (tipId, payload) => async dispatch => {
+  const res = await fetch(`/api/tips/${tipId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (res.ok) {
+    const tip = await res.json();
+    await dispatch(update(tip));
+    return tip;
+  }
+}
+
+export const deleteTip = (tipId) => async dispatch => {
+  const res = await fetch(`/api/tips/${tipId}`, {
+    method: 'DELETE'
+  });
+
+  if (res.ok) {
+    await dispatch(remove(tipId));
+  }
+}
+
 let newState;
 
 const tipsReducer = (state = {}, action) => {
@@ -61,6 +85,14 @@ const tipsReducer = (state = {}, action) => {
     case ADD:
       newState = { ...state };
       newState[action.tip.id] = action.tip;
+      return newState;
+    case UPDATE:
+      newState = { ...state };
+      newState[action.tip.id] = action.tip;
+      return newState;
+    case REMOVE:
+      newState = { ...state };
+      delete newState[action.tipId];
       return newState;
     default:
       return state;

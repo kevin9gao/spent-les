@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createTip } from "../../store/tips";
+import { useDispatch } from "react-redux";
+import { editTip } from "../../store/tips";
 
-const NewTipForm = ({ plan, setTipChanged }) => {
+const EditTipForm = ({ tip, setShowModal, setTipChanged }) => {
   const dispatch = useDispatch();
-  const [tipInput, setTipInput] = useState('');
+  const [tipInput, setTipInput] = useState(tip.tip_body);
   const [validationErrors, setValidationErrors] = useState([]);
   const [hideErrors, setHideErrors] = useState(true);
-  const user = useSelector(state => state.session.user);
 
   useEffect(() => {
     const errors = [];
@@ -26,19 +25,20 @@ const NewTipForm = ({ plan, setTipChanged }) => {
 
     if (!validationErrors.length) {
       const payload = {
-        user_id: user.id,
-        plan_id: plan?.id,
+        user_id: tip.user_id,
+        plan_id: tip.plan_id,
         tip_body: tipInput
       };
 
-      await dispatch(createTip(payload));
+      await dispatch(editTip(tip.id, payload));
       setTipInput('');
       setTipChanged(true);
+      setShowModal(false);
     } else setHideErrors(false);
   }
 
   return (
-    <div className="new-tip-container">
+    <div className="edit-tip-container">
       <div
         className="errors"
         hidden={hideErrors}
@@ -50,11 +50,10 @@ const NewTipForm = ({ plan, setTipChanged }) => {
         </ul>
       </div>
       <form
-        id="new-tip-form"
+        id="edit-tip-form"
         onSubmit={handleSubmit}
       >
         <input
-          placeholder="Leave a tip..."
           value={tipInput}
           onChange={e => setTipInput(e.target.value)}
         />
@@ -64,4 +63,4 @@ const NewTipForm = ({ plan, setTipChanged }) => {
   );
 }
 
-export default NewTipForm;
+export default EditTipForm;
