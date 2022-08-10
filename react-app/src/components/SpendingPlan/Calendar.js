@@ -10,6 +10,8 @@ import EditPlanModal from "./EditPlanModal";
 import { getSpendings } from "../../store/spendings";
 import SpendingIcons from "../Spendings/SpendingsIcons";
 import './Calendar.css';
+import TipSection from "../Tips/TipSection";
+import NewTipForm from "../Tips/NewTipForm";
 
 const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const history = useHistory();
@@ -20,6 +22,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const user = useSelector(state => state.session.user);
   const currPlan = useSelector(state => state.plans.current);
 
+  const [newTipMade, setNewTipMade] = useState(false);
 
   const { userId, date } = useParams();
   const isOwner = user.id === Number(userId);
@@ -30,7 +33,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const currMonth = currDate.month() + 1;
   const currYear = currDate.year();
   const dateStr = `${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}`;
-  console.log('currDate', currDate)
+  // console.log('currDate', currDate)
   // console.log('dateStr', dateStr)
   // console.log('currYear', currYear)
   // console.log('currMonth', currMonth)
@@ -44,8 +47,8 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const selectedYearStr = month?.slice(0, 4);
   const selectedMonth = Number(month?.slice(5));
   const selectedYear = Number(month?.slice(0, 4));
-  console.log('selectedMonth', selectedMonthStr);
-  console.log('selectedYear', selectedYearStr);
+  // console.log('selectedMonth', selectedMonthStr);
+  // console.log('selectedYear', selectedYearStr);
 
   useEffect(() => {
     dispatch(getUserPlans(user.id));
@@ -233,6 +236,14 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
                 ))}
               </div>
             )))}
+          </div>
+        </div>
+        <div className="tips-container">
+          <div id="calendar-tips-section">
+            <TipSection plan={currPlan} newTipMade={newTipMade} setNewTipMade={setNewTipMade} />
+          </div>
+          <div id="calendar-new-tip-container">
+            <NewTipForm plan={currPlan} setNewTipMade={setNewTipMade} />
           </div>
         </div>
         <div

@@ -11,6 +11,15 @@ def get_tip(id):
     tip = Tip.query.get(id)
     return tip.to_dict()
 
+@tip_routes.route('/plans/<int:plan_id>')
+def get_plan_tip(plan_id):
+    plan = SpendingPlan.query.get(plan_id)
+    plan_tips = plan.tips
+    tips = [tip.to_dict() for tip in plan_tips]
+    for i, tip in enumerate(tips):
+        tip['user'] = plan_tips[i].user.to_dict()
+    return {'tips': tips}
+
 @tip_routes.route('/', methods=['POST'])
 def leave_tip():
     form = TipForm()
@@ -20,8 +29,7 @@ def leave_tip():
         plan = SpendingPlan.query.get(data['plan_id'])
         new_tip = Tip(user_id=data['user_id'],
                         plan_id=data['plan_id'],
-                        tip_body=data['tip_body'],
-                        created_at=data['created_at'])
+                        tip_body=data['tip_body'])
         db.session.add(new_tip)
         db.session.commit()
         return new_tip.to_dict()

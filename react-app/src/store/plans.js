@@ -34,9 +34,9 @@ export const getPlans = () => async dispatch => {
 }
 
 export const getSinglePlan = (userId, year, month) => async dispatch => {
-  console.log('getSinglePlan, year, month', year, month);
+  // console.log('getSinglePlan, year, month', year, month);
   const res = await fetch(`/api/plans/users/${userId}/plan/${year}-${month}`);
-  console.log('getSinglePlan res', res);
+  // console.log('getSinglePlan res', res);
 
   if (res.ok) {
     const list = await res.json();
@@ -65,14 +65,14 @@ export const getAnotherUsersPlans = userId => async dispatch => {
 
   if (res.ok) {
     const list = await res.json();
-    console.log('getanotherusersplans list', list);
+    // console.log('getanotherusersplans list', list);
     await dispatch(load({'other-users-plans': list}));
     return list;
   }
 }
 
 export const createPlan = payload => async dispatch => {
-  console.log('createPlan payload', payload);
+  // console.log('createPlan payload', payload);
 
   const res = await fetch(`/api/plans/`, {
     method: 'POST',
@@ -80,7 +80,7 @@ export const createPlan = payload => async dispatch => {
     body: JSON.stringify(payload)
   });
 
-  console.log('createPlan res', res);
+  // console.log('createPlan res', res);
 
   if (res.ok) {
     const plan = await res.json();
