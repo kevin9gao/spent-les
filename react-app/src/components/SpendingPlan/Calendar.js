@@ -22,6 +22,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
 
 
   const { userId, date } = useParams();
+  const isOwner = user.id === Number(userId);
   // console.log('userId, date', userId, date);
 
 
@@ -29,7 +30,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   const currMonth = currDate.month() + 1;
   const currYear = currDate.year();
   const dateStr = `${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}`;
-  // console.log('currDate', currDate)
+  console.log('currDate', currDate)
   // console.log('dateStr', dateStr)
   // console.log('currYear', currYear)
   // console.log('currMonth', currMonth)
@@ -39,18 +40,21 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
 
   const calendar = [];
 
+  const selectedMonthStr = month?.slice(5);
+  const selectedYearStr = month?.slice(0, 4);
   const selectedMonth = Number(month?.slice(5));
   const selectedYear = Number(month?.slice(0, 4));
-  // console.log('selectedMonth', selectedMonth);
-  // console.log('selectedYear', selectedYear);
+  console.log('selectedMonth', selectedMonthStr);
+  console.log('selectedYear', selectedYearStr);
 
   useEffect(() => {
     dispatch(getUserPlans(user.id));
   }, [])
 
   useEffect(() => {
-    // console.log('THE MONTH CHANGED');
-    dispatch(getSinglePlan(user.id, selectedYear, selectedMonth));
+    dispatch(getSinglePlan(isOwner ?
+                            user.id :
+                            userId, selectedYearStr, selectedMonthStr));
     dispatch(getSpendings(currPlan?.id));
   }, [month])
 
@@ -175,7 +179,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       return;
     }
 
-    if (user.id !== userId) {
+    if (!isOwner) {
       (async () => {
         const response = await fetch(`/api/users/${userId}`);
         const paramsUser = await response.json();
@@ -185,10 +189,10 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       dispatch(getAnotherUsersPlans(userId));
     }
   }, [userId]);
-  console.log('otherUser', otherUser)
-  console.log('otherPlans', otherPlans)
+  // console.log('otherUser', otherUser)
+  // console.log('otherPlans', otherPlans)
 
-  if (user.id !== userId) {
+  if (!isOwner) {
     const options = otherPlans?.map(plan => {
       return {
         value: `${plan.year}-${plan.month < 10 ? `0${plan.month}` : plan.month}`,
@@ -196,12 +200,16 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       };
     });
     console.log('options', options);
+
     return (
       <div className="not-owner-calendar">
         <div id="not-owner-month-selector-container">
           <select onChange={changeMonthOnOtherUser}>
             {options?.map(opt => (
-              <option value={opt.value}>{opt.label}</option>
+              <option
+                value={opt.value}
+                key={opt.label}
+              >{opt.label}</option>
             ))}
           </select>
         </div>
@@ -232,7 +240,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           hidden={hidden}
         >
           <div id="sidebar-content-container">
-            {/* <SpendingsSidebar date={calendarDate} /> */}
+            <SpendingsSidebar date={calendarDate} isOwner={false} />
           </div>
         </div>
       </div>
