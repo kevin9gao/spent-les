@@ -1,0 +1,44 @@
+.home-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.home-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
+  margin-right: 2em;
+}
+
+.home-header div {
+  margin: .5em;
+}
+
+#home-header-title {
+  margin-top: 1.5em;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+#home-header-date {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+
+#home-header-greeting {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 32px;
+  margin-top: 0;
+}

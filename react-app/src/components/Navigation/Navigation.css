@@ -1,0 +1,30 @@
+.navbar-container {
+  display: block;
+  width: 15vw;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: black;
+  color: white;
+  height: 100vh;
+}
+
+.navbar a {
+  color: white;
+}
+
+.navbar-links {
+  margin: 1em 0;
+}
+
+.navigation-profile-btn {
+  display: block;
+  position: absolute;
+  right: 5vw;
+  top: 2vh;
+  width: 15vw;
+}
