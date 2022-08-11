@@ -77,13 +77,13 @@ function App() {
           <ProtectedRoute path='/users/:userId/plans' exact={true}>
             <SpendingPlanMain />
           </ProtectedRoute>
-          <ProtectedRoute path='/users/:userId/breakdown' exact={true}>
-            <SpendingsBreakdown />
+          <ProtectedRoute path='/users/:userId/plans/:breakdownOrCalendar' exact={true}>
+            <SpendingPlanMain />
           </ProtectedRoute>
           <ProtectedRoute path='/users/:userId/calendar/:date' exact={true}>
             <Calendar WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
           </ProtectedRoute>
-          <ProtectedRoute path='/users/:userId/plans/calendar/:date' exact={true}>
+          <ProtectedRoute path='/users/:userId/plans/:breakdownOrCalendar/:date' exact={true}>
             <SpendingPlanMain WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
           </ProtectedRoute>
           <ProtectedRoute path='/users/:userId/DMs' exact={true}>
