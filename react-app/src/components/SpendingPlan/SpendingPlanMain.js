@@ -3,11 +3,14 @@ import { useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import moment from "moment";
 import './SpendingPlanMain.css';
+import SpendingsBreakdown from "./SpendingsBreakdown";
+import Calendar from "./Calendar";
 
 const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
   const user = useSelector(state => state.session.user);
   const [otherUser, setOtherUser] = useState({});
-  const { userId } = useParams();
+  const { userId, breakdownOrCalendar, date } = useParams();
+  console.log('userId, breakdownOrCalendar, date', userId, breakdownOrCalendar, date);
 
   useEffect(() => {
     if (!userId) {
@@ -23,6 +26,17 @@ const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
   const currDate = moment();
   const month = currDate.month() + 1;
   const year = currDate.year();
+
+  let bodySection;
+  if (breakdownOrCalendar === 'breakdown') {
+    bodySection = (
+      <SpendingsBreakdown />
+    );
+  } else if (breakdownOrCalendar === 'calendar') {
+    bodySection = (
+      <Calendar WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
+    )
+  }
 
   if (!user) return null;
 
@@ -42,14 +56,19 @@ const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
               My Monthly Spending Plans
             </div>
             <div id="spending-plan-main-header-categories">
-              <NavLink to={`/users/${user.id}/breakdown`}>
+              <NavLink to={`/users/${user.id}/plans/breakdown`}>
+                {/* onClick={setBreakdownOrCalendar('breakdown')} > */}
                 Spendings Breakdown
               </NavLink>
-              <NavLink to={`/users/${user.id}/calendar/${year}-${month}`}>
+              <NavLink to={`/users/${user.id}/plans/calendar/${year}-${month}`}>
+                {/* onClick={setBreakdownOrCalendar('calendar')} > */}
                 Calendar
               </NavLink>
             </div>
           </div>
+        </div>
+        <div id="spending-plan-main-body">
+          {bodySection}
         </div>
       </div>
     );
