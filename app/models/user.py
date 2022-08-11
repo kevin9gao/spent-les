@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     annual_income = db.Column(db.Numeric(10,2), nullable=True)
+    profile_pic_url = db.Column(db.String(255), nullable=True, default='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROZTgJiqRWL5wWednBz8zyRUhSuEDTzefieg&usqp=CAU')
 
     @property
     def password(self):
@@ -28,7 +29,8 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'annual_income': self.annual_income
+            'annual_income': str(self.annual_income),
+            'profile_pic_url': self.profile_pic_url
         }
 
     spending_plans = db.relationship('SpendingPlan', back_populates='user', cascade='all, delete')
