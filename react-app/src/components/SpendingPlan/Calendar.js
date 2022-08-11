@@ -164,7 +164,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     e.preventDefault();
 
     setMonth(e.target.value);
-    return history.push(`/users/${user.id}/calendar/${e.target.value}`);
+    return history.push(`/users/${user.id}/plans/calendar/${e.target.value}`);
   }
 
   const changeMonthOnOtherUser = e => {
@@ -205,7 +205,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     console.log('options', options);
 
     return (
-      <div className="not-owner-calendar">
+      <div className="calendar-main-container">
         <div id="not-owner-month-selector-container">
           <select onChange={changeMonthOnOtherUser}>
             {options?.map(opt => (

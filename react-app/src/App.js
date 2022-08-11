@@ -59,39 +59,44 @@ function App() {
 
   return (
     <BrowserRouter>
-      {user && <Navigation />}
-      <Switch>
-        <Route path='/login' exact={true}>
-          <LoginForm />
-        </Route>
-        <Route path='/sign-up' exact={true}>
-          <SignUpForm />
-        </Route>
-        <ProtectedRoute path='/users' exact={true} >
-          <UsersList/>
-        </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId' exact={true} >
-          <User />
-        </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId/plans' exact={true}>
-          <SpendingPlanMain />
-        </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId/breakdown' exact={true}>
-          <SpendingsBreakdown />
-        </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId/calendar/:date' exact={true}>
-          <Calendar WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
-        </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId/DMs' exact={true}>
-          Inbox
-        </ProtectedRoute>
-        <ProtectedRoute path='/home' exact={true} >
-          <HomePage WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
-        </ProtectedRoute>
-        <Route path='/' exact={true} >
-          <SplashPage />
-        </Route>
-      </Switch>
+      <div className='app-wrapper'>
+        {user && <Navigation />}
+        <Switch>
+          <Route path='/login' exact={true}>
+            <LoginForm />
+          </Route>
+          <Route path='/sign-up' exact={true}>
+            <SignUpForm />
+          </Route>
+          <ProtectedRoute path='/users' exact={true} >
+            <UsersList/>
+          </ProtectedRoute>
+          <ProtectedRoute path='/users/:userId' exact={true} >
+            <User />
+          </ProtectedRoute>
+          <ProtectedRoute path='/users/:userId/plans' exact={true}>
+            <SpendingPlanMain />
+          </ProtectedRoute>
+          <ProtectedRoute path='/users/:userId/breakdown' exact={true}>
+            <SpendingsBreakdown />
+          </ProtectedRoute>
+          <ProtectedRoute path='/users/:userId/calendar/:date' exact={true}>
+            <Calendar WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/users/:userId/plans/calendar/:date' exact={true}>
+            <SpendingPlanMain WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
+          </ProtectedRoute>
+          <ProtectedRoute path='/users/:userId/DMs' exact={true}>
+            Inbox
+          </ProtectedRoute>
+          <ProtectedRoute path='/home' exact={true} >
+            <HomePage WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
+          </ProtectedRoute>
+          <Route path='/' exact={true} >
+            <SplashPage />
+          </Route>
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 }

@@ -1,0 +1,41 @@
+#spending-plan-main-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.spending-plan-main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.spending-plan-main-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1em;
+  border-bottom: 3px solid gray;
+}
+
+.spending-plan-main-header div {
+  margin: 1em;
+}
+
+#spending-plan-main-header-categories {
+  color: rgb(85, 82, 82);
+}
+#spending-plan-main-header-categories a {
+  margin: .5em;
+  padding: .5em;
+  transition: all 2s ease;
+}
+#spending-plan-main-header-categories a:hover {
+  font-size: 17px;
+  filter: drop-shadow(0 0 5px rgb(60, 70, 75));
+}
+
+#spending-plan-main-header-title {
+  font-size: 20px;
+  font-weight: 500;
+}

@@ -1,9 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import './HomePage.css';
 
 const HomePage = ({ WEEKDAYS, MONTHS }) => {
-  const dispatch = useDispatch();
-
   const user = useSelector(state => state.session.user);
 
   const date = new Date();
@@ -35,6 +34,7 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
   return (
     <div className="home-main-container">
       <div className="home-header">
+        <div id="home-header-title">Home</div>
         <div id="home-header-date">
           {dateStr}
         </div>

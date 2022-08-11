@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import moment from "moment";
+import './SpendingPlanMain.css';
 
-const SpendingPlanMain = () => {
+const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
   const user = useSelector(state => state.session.user);
   const [otherUser, setOtherUser] = useState({});
   const { userId } = useParams();
@@ -31,7 +32,8 @@ const SpendingPlanMain = () => {
         <div className="spending-plan-main-header">
           <div id="spending-plan-main-user-avatar">
             <img
-              src=""
+              src={user.profile_pic_url}
+              id='spending-plan-main-avatar'
               alt='avatar'
             />
           </div>
