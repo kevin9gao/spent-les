@@ -13,6 +13,7 @@ import HomePage from './components/HomePage';
 import SpendingPlanMain from './components/SpendingPlan/SpendingPlanMain';
 import SpendingsBreakdown from './components/SpendingPlan/SpendingsBreakdown';
 import Calendar from './components/SpendingPlan/Calendar';
+import SplashPage from './components/SplashPage/SplashPage';
 
 const WEEKDAYS = [
   'Sunday',
@@ -86,9 +87,12 @@ function App() {
         <ProtectedRoute path='/users/:userId/DMs' exact={true}>
           Inbox
         </ProtectedRoute>
-        <ProtectedRoute path='/' exact={true} >
+        <ProtectedRoute path='/home' exact={true} >
           <HomePage WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
         </ProtectedRoute>
+        <Route path='/' exact={true} >
+          <SplashPage />
+        </Route>
       </Switch>
     </BrowserRouter>
   );

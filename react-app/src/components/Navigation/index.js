@@ -8,7 +8,7 @@ const Navigation = () => {
   return (
     <>
       <h1>Spent-Lès</h1>
-      <NavLink to='/' exact>
+      <NavLink to='/home' exact>
         Home
       </NavLink>
       <NavLink to={`/users/${user.id}/plans`} exact>
@@ -16,6 +16,9 @@ const Navigation = () => {
       </NavLink>
       <NavLink to={`/users/${user.id}/DMs`} exact>
         Messages
+      </NavLink>
+      <NavLink to='/users' exact={true} activeClassName='active'>
+        Users
       </NavLink>
     </>
   );

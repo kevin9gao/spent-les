@@ -1,7 +1,7 @@
 const LOAD = 'spendings/LOAD';
 const ADD = 'spendings/ADD';
-const UPDATE = 'spendings/UPDATE';
-const REMOVE = 'spendings/REMOVE';
+// const UPDATE = 'spendings/UPDATE';
+// const REMOVE = 'spendings/REMOVE';
 
 const load = list => ({
   type: LOAD,
@@ -13,15 +13,15 @@ const add = spending => ({
   spending
 })
 
-const update = spending => ({
-  type: UPDATE,
-  spending
-})
+// const update = spending => ({
+//   type: UPDATE,
+//   spending
+// })
 
-const remove = spendingId => ({
-  type: REMOVE,
-  spendingId
-})
+// const remove = spendingId => ({
+//   type: REMOVE,
+//   spendingId
+// })
 
 export const getSpendings = planId => async dispatch => {
   const res = await fetch(`/api/spendings/plan/${planId}`);

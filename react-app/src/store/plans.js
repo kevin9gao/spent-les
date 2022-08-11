@@ -157,6 +157,7 @@ const plansReducer = (state = {}, action) => {
       delete newState[action.planId];
       delete newState['user-plans'][action.planId];
       delete newState['current'];
+      return newState;
     default:
       return state;
   }
