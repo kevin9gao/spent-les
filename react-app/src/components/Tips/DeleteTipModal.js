@@ -18,7 +18,7 @@ const DeleteTipModal = ({ tip }) => {
   return (
     <div className="modal">
       <button
-        className="delete-tip-btn"
+        className="delete-btn"
         onClick={() => setShowModal(true)}>
           Delete
       </button>
@@ -26,6 +26,7 @@ const DeleteTipModal = ({ tip }) => {
         <Modal onClose={() => setShowModal(false)}>
           <h1>Are you sure you would like to delete your tip?</h1>
           <button
+            className="delete-btn"
             id="delete-tip-btn"
             onClick={handleDeleteTip}
             >Yes, delete this tip.

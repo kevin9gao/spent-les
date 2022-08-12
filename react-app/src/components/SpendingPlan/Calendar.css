@@ -128,6 +128,8 @@
   height: 100vh;
   background-color: black;
   color: white;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 #sidebar-content-container {

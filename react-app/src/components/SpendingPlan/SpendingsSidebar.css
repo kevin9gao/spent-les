@@ -7,7 +7,7 @@
   overflow-y: scroll;
   top: 0;
   bottom: 0;
-  width: 100%;
+  width: 21vw;
 }
 
 .spending-form {
@@ -27,4 +27,41 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.existing-spendings h2 {
+  text-align: center;
+}
+
+#sidebar-new-spending-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.spending-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+
+.new-spending-form-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5em 1em;
+  padding: 1em;
+  background-color: rgb(54, 48, 48);
+  border-radius: 20px;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.spending-form button {
+  color: white;
 }

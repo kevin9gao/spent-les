@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ProfileButton from "../ProfileButton";
+import Logo from '../../images/logo.jpg';
 import './Navigation.css';
 
 const Navigation = () => {
@@ -11,7 +12,14 @@ const Navigation = () => {
     <>
       <div className="navbar-container">
         <div className="navbar">
-          <h1>Spent-Lès</h1>
+          <div className="logo-wrapper">
+            <img
+              src={Logo}
+              alt='logo'
+              className="logo"
+              />
+            <span>Spent-Lès</span>
+          </div>
           <div
             className="navbar-links">
             <NavLink to='/home' exact>

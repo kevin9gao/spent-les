@@ -41,6 +41,10 @@ a:hover {
   filter: drop-shadow(0 0 5px rgb(60, 70, 75));
 }
 
+.delete-btn:hover {
+  color: rgb(184, 21, 48);
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

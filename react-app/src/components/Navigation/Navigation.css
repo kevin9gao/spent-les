@@ -11,6 +11,7 @@
   background-color: black;
   color: white;
   height: 100%;
+  min-width: 12vw;
 }
 
 .navbar a {
@@ -27,4 +28,23 @@
   right: 5vw;
   top: 2vh;
   width: 15vw;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 0 0 5px;
+  padding: 5px;
+}
+.logo-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-top: 12px;
+}
+.logo-wrapper span {
+  font-size: 20px;
+  font-weight: 500;
 }
