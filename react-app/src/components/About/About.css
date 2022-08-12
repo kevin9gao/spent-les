@@ -32,4 +32,8 @@
 #modal-content {
   width: 20vw;
   height: 50vh;
+  z-index: 20;
+}
+#modal {
+  z-index: 20;
 }
