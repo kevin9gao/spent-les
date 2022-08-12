@@ -23,15 +23,15 @@ const SpendingsList = ({ date }) => {
       <ul className="spendings-list">
         {dailySpendings && dailySpendings.map(spending => (
           <li className="spendings" key={spending.id}>
-            <h3 className="spending-names">
+            <h4 className="spending-names">
               {spending.transaction_name}
-            </h3>
+            </h4>
             <p className="spending-notes">
               {spending.transaction_notes}
             </p>
-            <h4 className="spending-amounts">
+            <p className="spending-amounts">
               {`Amount: $${spending.amount}`}
-            </h4>
+            </p>
           </li>
         ))}
       </ul>

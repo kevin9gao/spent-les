@@ -313,11 +313,13 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
               ))}
             </div>
           )))}
-          <div id="edit-plan-modal">
-            <EditPlanModal plan={currPlan} />
-          </div>
-          <div id="delete-plan-modal">
-            <DeletePlanModal plan={currPlan} />
+          <div id="calendar-edit-delete">
+            <div id="edit-plan-modal">
+              <EditPlanModal plan={currPlan} />
+            </div>
+            <div id="delete-plan-modal">
+              <DeletePlanModal plan={currPlan} />
+            </div>
           </div>
         </div>
       </div>
@@ -325,9 +327,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
         id="sidebar"
         hidden={hidden}
       >
-        <div id="sidebar-content-container">
-          <SpendingsSidebar date={calendarDate} />
-        </div>
+        <SpendingsSidebar date={calendarDate} />
       </div>
     </div>
   );
