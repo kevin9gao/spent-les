@@ -94,13 +94,17 @@ const EditPlanForm = ({ plan, setShowModal }) => {
             onChange={e => setNotes(e.target.value)}
             placeholder='Any notes about this month...'
           />
-          <label>Private:</label>
-          <input
-            type="checkbox"
-            checked={priv}
-            onChange={e => setPriv(!priv)}
-          />
-          <button>Submit</button>
+          <div className="private-checkbox">
+            <label>Private:</label>
+            <input
+              type="checkbox"
+              checked={priv}
+              onChange={e => setPriv(!priv)}
+            />
+          </div>
+          <div className="submit">
+            <button>Submit</button>
+          </div>
         </form>
       </div>
     </div>

@@ -95,7 +95,9 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
             value={amountInput}
             onChange={e => setAmountInput(e.target.value)}
           />
-          <button>Submit</button>
+          <div className="submit">
+            <button>Submit</button>
+          </div>
         </form>
       </div>
     </div>

@@ -205,16 +205,18 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     console.log('options', options);
 
     return (
-      <div className="calendar-main-container">
-        <div id="not-owner-month-selector-container">
-          <select onChange={changeMonthOnOtherUser}>
-            {options?.map(opt => (
-              <option
-                value={opt.value}
-                key={opt.label}
-              >{opt.label}</option>
-            ))}
-          </select>
+      <div className="not-owner calendar-main-container not-owner-main-container">
+        <div id="month-selector-container" className="not-owner">
+          <div id="month-selector" className="not-owner">
+            <select onChange={changeMonthOnOtherUser}>
+              {options?.map(opt => (
+                <option
+                  value={opt.value}
+                  key={opt.label}
+                >{opt.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
         <div id='calendar-container'>
           <div id="weekdays-row">
@@ -250,9 +252,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           id="sidebar"
           hidden={hidden}
         >
-          <div id="sidebar-content-container">
-            <SpendingsSidebar date={calendarDate} isOwner={false} />
-          </div>
+          <SpendingsSidebar date={calendarDate} isOwner={false} />
         </div>
       </div>
     );

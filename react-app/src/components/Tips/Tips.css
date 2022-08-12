@@ -1,0 +1,59 @@
+.tip-section-container {
+  padding: 1em;
+  min-width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#tip-section {
+  min-width: 60%;
+}
+
+.tips {
+  background-color: rgb(167, 166, 170);
+  margin: 1em;
+  border-radius: 20px;
+  padding: 1em;
+  min-width: 60%;
+}
+
+.tip-edit-delete {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 2px solid gray;
+}
+
+.modal button {
+  color: white;
+}
+
+.new-tip-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#new-tip-form {
+  width: 90%;
+}
+
+#new-tip-form input {
+  width: 60%;
+  border-radius: 10px;
+  height: 4vh;
+  border: none;
+  padding: .5em;
+}
+
+#new-tip-form input:focus {
+  border: rgb(167, 166, 170);
+}
+
+.tip-username {
+  font-weight: 500;
+  color: white;
+}
