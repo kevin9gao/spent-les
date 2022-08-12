@@ -22,9 +22,11 @@ const SpendingsSidebar = ({ date, isOwner = true }) => {
 
   return (
     <div className="sidebar-container">
-      <h2>{`User Spendings - ${date}`}</h2>
-      <div id="sidebar-spendings-container">
-        <SpendingsList date={date} />
+      <div className="existing-spendings">
+        <h2>{`User Spendings - ${date}`}</h2>
+        <div id="sidebar-spendings-container">
+          <SpendingsList date={date} />
+        </div>
       </div>
       {isOwner &&
         (<div id="sidebar-new-spending-container">
