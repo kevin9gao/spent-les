@@ -12,6 +12,10 @@
   align-items: center;
   width: 98vw;
   margin: 1em;
+  padding: 0 5em;
+  z-index: 10;
+  background-color: inherit;
+  position: absolute;
 }
 
 #logo-wrapper {
@@ -36,4 +40,96 @@
 
 #about-wrapper {
   margin-left: 5em;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-col {
+  width: 55vw;
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.left-col h3 {
+  font-size: 45px;
+  width: 70%;
+  font-weight: 400;
+  margin-bottom: 2em;
+  margin-top: 0;
+}
+.left-col p {
+  width: 45%;
+  font-size: 18px;
+  line-height: 28px;
+  padding: 1em 1em 1em 0;
+  border-top: 2px solid gray;
+}
+#left-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 15vw;
+}
+#left-links a {
+  font-size: 36px;
+}
+#left-links a:hover {
+  font-size: 38px;
+  margin: .3em;
+}
+
+.right-col {
+  width: 45vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#graphs-img {
+  width: 25vw;
+  height: 30vh;
+}
+#wallet-img {
+  width: 22vw;
+  height: 30vh;
+}
+#right-images {
+  position: absolute;
+  top: 25%;
+}
+#img-1 {
+  position: absolute;
+  left: -20%;
+  z-index: 1;
+}
+#img-2 {
+  position: relative;
+  left: 45%;
+  top: 20vh;
+}
+#wallet-img {
+  transform: all 5s ease;
+}
+#wallet-img:hover {
+  width: 26vw;
+  height: 34vh;
+}
+#graphs-img {
+  transform: all 5s ease;
+}
+#graphs-img:hover {
+  width: 26vw;
+  height: 34vh;
+}
+#img-1:hover {
+  z-index: 2;
+}
+#img-2:hover {
+  z-index: 2;
 }
