@@ -9,8 +9,10 @@ import Calendar from "./Calendar";
 const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
   const user = useSelector(state => state.session.user);
   const [otherUser, setOtherUser] = useState({});
+  const [avatarUrl, setAvatarUrl] = useState(user.profile_pic_url);
   const { userId, breakdownOrCalendar, date } = useParams();
-  console.log('userId, breakdownOrCalendar, date', userId, breakdownOrCalendar, date);
+  // console.log('userId, breakdownOrCalendar, date', userId, breakdownOrCalendar, date);
+  console.log('avatarUrl', avatarUrl);
 
   useEffect(() => {
     if (!userId) {
@@ -26,6 +28,10 @@ const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
   const currDate = moment();
   const month = currDate.month() + 1;
   const year = currDate.year();
+
+  if (avatarUrl === null) {
+    setAvatarUrl('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROZTgJiqRWL5wWednBz8zyRUhSuEDTzefieg&usqp=CAU');
+  }
 
   let bodySection;
   if (breakdownOrCalendar === 'breakdown') {
@@ -46,7 +52,7 @@ const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
         <div className="spending-plan-main-header">
           <div id="spending-plan-main-user-avatar">
             <img
-              src={user.profile_pic_url}
+              src={avatarUrl}
               id='spending-plan-main-avatar'
               alt='avatar'
             />

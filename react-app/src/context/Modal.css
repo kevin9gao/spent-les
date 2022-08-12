@@ -1,5 +1,5 @@
 #modal {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
   position: fixed;
   top: 0;
   right: 0;
@@ -11,7 +11,7 @@
 }
 
 #modal-background {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
   position: fixed;
   top: 0;
   right: 0;
@@ -21,9 +21,62 @@
 }
 
 #modal-content {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
   position: absolute;
   background-color: white;
   box-shadow: 5px 5px 5px black;
   border-radius: 20px;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30vw;
+}
+
+#modal-content > div {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#modal-content form input,
+#modal-content form label {
+  padding: .5em;
+}
+
+#modal-content form input,
+#modal-content form textarea {
+  border-radius: 5px;
+  border: 1px solid gray;
+  width: 100%;
+}
+
+#edit-plan-form-container {
+  width: 90%;
+}
+#edit-plan-form-container > h2 {
+  text-align: center;
+}
+
+.private-checkbox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.private-checkbox input {
+  margin-top: .5em;
+}
+
+#modal-content form button {
+  margin-top: .5em;
+}
+
+#modal-content .submit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
