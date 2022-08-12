@@ -34,6 +34,7 @@ const NewTipForm = ({ plan, setTipChanged }) => {
       await dispatch(createTip(payload));
       setTipInput('');
       setTipChanged(true);
+      setHideErrors(true);
     } else setHideErrors(false);
   }
 

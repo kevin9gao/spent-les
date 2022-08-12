@@ -14,7 +14,8 @@
   padding: 1em;
 }
 
-#month-selector input {
+#month-selector input,
+#month-selector select {
   padding: 0.5em;
   border-radius: 20px;
   text-align: center;
@@ -150,4 +151,20 @@
   align-items: center;
   margin: 1em;
   width: 80%;
+}
+
+.not-owner-main-container {
+  margin-top: 3em;
+}
+
+.tips-container {
+  margin: 3em;
+  min-width: 60%;
+}
+
+#calendar-new-tip-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }

@@ -6,7 +6,7 @@ const EditTipModal = ({ tip, setTipChanged }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="edit-tip-modal-container">
+    <div className="modal">
       <button
         className="edit-tip-btn"
         onClick={() => setShowModal(true)}>Edit Tip

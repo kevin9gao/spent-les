@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, Redirect, useParams } from "react-router-dom";
 import moment from "moment";
 import './SpendingPlanMain.css';
 import SpendingsBreakdown from "./SpendingsBreakdown";
@@ -74,11 +74,7 @@ const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
     );
   } else {
     return (
-      <div className="other-user-plan-container">
-        <NavLink to={`/users/${otherUser.id}/calendar/${year}-${month}`}>
-          {`${otherUser.username}'s Spending Plans`}
-        </NavLink>
-      </div>
+      <Redirect to={`/users/${otherUser.id}/calendar/${year}-${month}`} />
     );
   }
 }

@@ -16,7 +16,7 @@ const DeleteTipModal = ({ tip }) => {
   }
 
   return (
-    <div className="delete-tip-modal-container">
+    <div className="modal">
       <button
         className="delete-tip-btn"
         onClick={() => setShowModal(true)}>
