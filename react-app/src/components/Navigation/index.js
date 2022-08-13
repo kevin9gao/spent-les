@@ -28,7 +28,7 @@ const Navigation = () => {
           </div>
           <div
             className="navbar-links">
-            <NavLink to={`/users/${user.id}/plans`} exact>
+            <NavLink to={`/users/${user.id}/plans/breakdown`} exact>
               My Spending Plans
             </NavLink>
           </div>

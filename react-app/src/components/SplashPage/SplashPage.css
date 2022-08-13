@@ -18,7 +18,8 @@
   position: absolute;
 }
 
-#logo-wrapper {
+#logo-wrapper,
+#logo-wrapper a {
   display: flex;
   align-items: center;
 }
