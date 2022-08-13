@@ -11,12 +11,14 @@ const SplashPage = () => {
       <div className="header">
         <div id="left">
           <div id="logo-wrapper">
-            <img
-              id="logo"
-              src={Logo}
-              alt='logo'
-            />
-            <span>Spent-Lès</span>
+            <NavLink to='/'>
+              <img
+                id="logo"
+                src={Logo}
+                alt='logo'
+              />
+              <span>Spent-Lès</span>
+            </NavLink>
           </div>
           <div id="about-wrapper">
             <AboutModal />
