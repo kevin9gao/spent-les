@@ -17,7 +17,7 @@ const SpendingsBreakdown = () => {
                                                         today.month() + 1}`);
   const currYear = month.slice(0, 4);
   const currMonth = month.slice(5, 7);
-  console.log('month', month)
+  // console.log('month', month)
 
   const plansObj = useSelector(state => state.plans['user-plans']);
   const plans = plansObj ? Object.values(plansObj) : null;
@@ -25,6 +25,10 @@ const SpendingsBreakdown = () => {
 
   const selectedPlan = useSelector(state => state.plans['current']);
   // console.log('selectedPlan', selectedPlan);
+
+  const spendingsObj = useSelector(state => state.spendings);
+  const spendings = spendingsObj ? Object.values(spendingsObj) : null;
+  // console.log('spendings', spendings);
 
   useEffect(() => {
     dispatch(getUserPlans(user.id));
@@ -48,11 +52,18 @@ const SpendingsBreakdown = () => {
     };
   });
 
+  const moneySpent = spendings ? spendings.reduce((accum, current) => {
+    return accum + Number(current.amount);
+  }, 0) : null;
+  // console.log('moneySpent', moneySpent);
+
   const changeMonth = e => {
     e.preventDefault();
 
     setMonth(e.target.value);
   }
+
+  console.log('annual income', user.annual_income)
 
   return (
     <div className="breakdowns-container">
@@ -72,8 +83,16 @@ const SpendingsBreakdown = () => {
         <div className="breakdown-overview">
           <h3>Overview</h3>
           <div className="breakdown-row">
-            <span className="breakdown-name">Additional Income This Month</span>
-            <span className="breakdown-value">{selectedPlan.additional_income}</span>
+            <span className="breakdown-name">Additional Income</span>
+            <span className="breakdown-value">{selectedPlan?.additional_income}</span>
+          </div>
+          <div className="breakdown-row">
+            <span className="breakdown-name">Money Spent</span>
+            <span className="breakdown-value">{moneySpent && moneySpent}</span>
+          </div>
+          <div className="breakdown-row">
+            <span className="breakdown-name">Monthly Income</span>
+            <span className="breakdown-value">{Number(user.annual_income) / 12}</span>
           </div>
         </div>
       </div>

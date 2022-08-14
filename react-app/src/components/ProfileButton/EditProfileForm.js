@@ -80,13 +80,15 @@ const EditProfileForm = ({ user, setShowModal }) => {
             value={profilePicUrl}
             onChange={e => setProfilePicUrl(e.target.value)}
             />
-          <img
-            id="profile-pic-preview-img"
-            src={previewUrl}
-            alt='prof-pic-preview'
-            onError={handleBrokenLink}
-            />
-          <button>Submit</button>
+          <div id="preview-wrapper">
+            <img
+              id="profile-pic-preview-img"
+              src={previewUrl}
+              alt='prof-pic-preview'
+              onError={handleBrokenLink}
+              />
+          </div>
+          <button className="submit">Submit</button>
         </form>
       </div>
     </div>
