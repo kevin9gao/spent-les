@@ -14,8 +14,9 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 1em;
+  padding: 1em;
   border-bottom: 3px solid gray;
+  height: 15vh;
 }
 
 .spending-plan-main-header div {

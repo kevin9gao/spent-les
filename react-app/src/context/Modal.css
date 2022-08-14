@@ -80,3 +80,7 @@
   display: flex;
   justify-content: center;
 }
+
+#modal-content {
+  height: fit-content;
+}

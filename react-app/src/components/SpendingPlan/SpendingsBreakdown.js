@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSinglePlan, getUserPlans } from "../../store/plans";
 import { getSpendings } from "../../store/spendings";
+import './SpendingsBreakdown.css';
 
 const SpendingsBreakdown = () => {
   const dispatch = useDispatch();
@@ -12,11 +13,11 @@ const SpendingsBreakdown = () => {
 
   const today = moment();
   const [month, setMonth] = useState(`${today.year()}-${today.month() + 1 < 10 ?
-                                                        `0${today.month()}` :
+                                                        `0${today.month() + 1}` :
                                                         today.month() + 1}`);
   const currYear = month.slice(0, 4);
   const currMonth = month.slice(5, 7);
-  // console.log('month', month)
+  console.log('month', month)
 
   const plansObj = useSelector(state => state.plans['user-plans']);
   const plans = plansObj ? Object.values(plansObj) : null;
@@ -65,6 +66,15 @@ const SpendingsBreakdown = () => {
               >{opt.label}</option>
             ))}
           </select>
+        </div>
+      </div>
+      <div className="breakdown-info">
+        <div className="breakdown-overview">
+          <h3>Overview</h3>
+          <div className="breakdown-row">
+            <span className="breakdown-name">Additional Income This Month</span>
+            <span className="breakdown-value">{selectedPlan.additional_income}</span>
+          </div>
         </div>
       </div>
     </div>

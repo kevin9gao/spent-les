@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from '../../context/Modal';
 import CreatePlanForm from "./CreatePlanForm";
+import './PlanForm.css';
 
 const CreatePlanModal = ({ month, year, MONTHS }) => {
   const [showModal, setShowModal] = useState(false);
