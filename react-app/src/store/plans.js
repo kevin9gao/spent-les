@@ -34,13 +34,13 @@ export const getPlans = () => async dispatch => {
 }
 
 export const getSinglePlan = (userId, year, month) => async dispatch => {
-  // console.log('getSinglePlan, year, month', year, month);
+  console.log('getSinglePlan, year, month', year, month);
   const res = await fetch(`/api/plans/users/${userId}/plan/${year}-${month}`);
   // console.log('getSinglePlan res', res);
 
   if (res.ok) {
     const list = await res.json();
-    console.log('getSinglePlan list', list);
+    // console.log('getSinglePlan list', list);
     await dispatch(load(list));
     return list;
   } else {

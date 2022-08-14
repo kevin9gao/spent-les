@@ -37,7 +37,8 @@ const DeletePlanModal = ({ plan }) => {
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <h2>{`Are you sure you want to delete plan: '${plan.plan_name}'?`}</h2>
+          <h4>{`Are you sure you want to delete your plan:`}</h4>
+          <h2>{`'${plan.plan_name}'?`}</h2>
           <button
             className="delete-btn"
             id="delete-plan-btn"
