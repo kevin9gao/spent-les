@@ -4,3 +4,8 @@
   justify-content: center;
   align-items: flex-start;
 }
+
+.create-plan-container,
+#create-plan-form-container {
+  height: fit-content;
+}

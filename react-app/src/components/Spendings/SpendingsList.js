@@ -12,7 +12,10 @@ const SpendingsList = ({ date }) => {
     const month = mmtDate.month() + 1;
     const day = mmtDate.date() + 1;
     const mmtDateStr = `${year}-${month > 9 ? month : '0' + month}-${day > 9 ? day : '0' + day}`;
+    // console.log('month', month);
+    // console.log('day', day);
     // console.log('mmtDateStr', mmtDateStr);
+    // console.log('date', date);
 
     return mmtDateStr === date;
   });

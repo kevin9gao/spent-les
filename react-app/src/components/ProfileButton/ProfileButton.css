@@ -48,3 +48,10 @@
   border: none;
   color: white;
 }
+
+#preview-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+}

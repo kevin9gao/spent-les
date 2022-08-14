@@ -13,7 +13,7 @@ function AboutModal() {
         id='about-button'
       >About</button>
       {showModal && (
-        <Modal className='modals' onClose={() => setShowModal(false)}>
+        <Modal className='about modals' onClose={() => setShowModal(false)}>
           <AboutPage />
         </Modal>
       )}

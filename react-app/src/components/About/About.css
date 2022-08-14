@@ -31,7 +31,7 @@
 
 #modal-content {
   width: 20vw;
-  height: 50vh;
+  height: fit-content;
   z-index: 20;
 }
 #modal {

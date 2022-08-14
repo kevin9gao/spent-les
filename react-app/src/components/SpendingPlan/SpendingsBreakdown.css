@@ -1,0 +1,27 @@
+.breakdowns-container {
+  width: 85vw;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.breakdown-info {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.breakdown-overview {
+  width: 90%;
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1em 0;
+  padding: 1em 0;
+}

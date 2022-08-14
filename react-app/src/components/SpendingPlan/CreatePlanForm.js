@@ -53,7 +53,7 @@ const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
       // console.log('newPlan', newPlan);
       await dispatch(getSinglePlan(user.id, newPlan.year, newPlan.month));
       setShowModal(false);
-      history.push(`/users/${user.id}/calendar/${newPlan.year}-${newPlan.month}`);
+      history.push(`/users/${user.id}/plans/calendar/${newPlan.year}-${newPlan.month}`);
     } else setHideErrors(false);
   }
 
@@ -104,7 +104,7 @@ const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
             checked={priv}
             onChange={e => setPriv(!priv)}
           />
-          <button>Submit</button>
+          <button className="submit">Submit</button>
         </form>
       </div>
     </div>
