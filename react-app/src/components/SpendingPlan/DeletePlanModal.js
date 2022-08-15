@@ -19,7 +19,7 @@ const DeletePlanModal = ({ plan }) => {
   const handleDeletePlan = async e => {
     e.preventDefault();
     const planDeleted = await dispatch(deletePlan(plan.id));
-    console.log('planDeleted', planDeleted);
+    // console.log('planDeleted', planDeleted);
     if (planDeleted) {
       setShowModal(false);
       // const newDate = planDeleted.month === 1 ?

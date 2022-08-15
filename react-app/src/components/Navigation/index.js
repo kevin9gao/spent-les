@@ -8,7 +8,7 @@ import './Navigation.css';
 const Navigation = () => {
   const user = useSelector(state => state.session.user);
   const [selectedTab, setSelectedTab] = useState('home');
-  console.log('selectedTab', selectedTab);
+  // console.log('selectedTab', selectedTab);
 
   return (
     <>

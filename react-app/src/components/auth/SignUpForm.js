@@ -25,7 +25,7 @@ const SignUpForm = () => {
     }
     fetchData();
   }, []);
-  console.log('users', users)
+  // console.log('users', users)
 
   useEffect(() => {
     const errors = [];

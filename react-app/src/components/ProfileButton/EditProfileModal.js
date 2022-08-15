@@ -3,7 +3,7 @@ import { Modal } from '../../context/Modal';
 import EditProfileForm from "./EditProfileForm";
 
 const EditProfileModal = ({ user, showModal, setShowModal }) => {
-  console.log('EditProfileModal showModal', showModal);
+  // console.log('EditProfileModal showModal', showModal);
 
   return (
     <>

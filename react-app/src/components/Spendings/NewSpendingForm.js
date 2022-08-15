@@ -48,11 +48,11 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
       date
     }
 
-    console.log('NewSpendingForm payload', payload);
+    // console.log('NewSpendingForm payload', payload);
 
     if (!validationErrors.length) {
       const newSpending = await dispatch(createSpending(payload));
-      console.log('newSpending', newSpending)
+      // console.log('newSpending', newSpending)
       setHideNewSpendingForm(true);
       setNameInput('');
       setNotesInput('');

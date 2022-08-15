@@ -201,8 +201,8 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
         label: plan.plan_name
       };
     });
-    console.log('options', options);
-    console.log('currPlan', currPlan);
+    // console.log('options', options);
+    // console.log('currPlan', currPlan);
 
     if (!options?.length) {
       return (
