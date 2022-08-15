@@ -98,12 +98,14 @@ const CreatePlanForm = ({ month, year, MONTHS, setShowModal }) => {
             onChange={e => setNotes(e.target.value)}
             placeholder='Any additional remarks about this month?'
           />
-          <label>Private:</label>
-          <input
-            type="checkbox"
-            checked={priv}
-            onChange={e => setPriv(!priv)}
-          />
+          <div className="private-checkbox">
+            <label>Private:</label>
+            <input
+              type="checkbox"
+              checked={priv}
+              onChange={e => setPriv(!priv)}
+            />
+          </div>
           <button className="submit">Submit</button>
         </form>
       </div>

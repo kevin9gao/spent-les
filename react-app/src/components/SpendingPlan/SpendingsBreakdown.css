@@ -26,15 +26,36 @@
   padding: 1em;
 }
 
-.no-month-selected h2 {
+.no-month-selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#have-plans {
   transition: all 1s ease;
   font-size: 40px;
   font-weight: 300;
 }
 
-.no-month-selected h2:hover {
+#have-plans:hover {
   filter: drop-shadow(0 0 5px rgb(60, 70, 75));
-  font-size: 45px;
+  font-size: 42px;
+  font-weight: 300;
+  cursor: default;
+}
+
+#has-no-plans {
+  transition: all 1s ease;
+  font-size: 30px;
+  font-weight: 300;
+  width: 50%;
+  margin: 0 auto;
+}
+
+#has-no-plans:hover {
+  filter: drop-shadow(0 0 5px rgb(60, 70, 75));
+  font-size: 31px;
   font-weight: 300;
   cursor: default;
 }

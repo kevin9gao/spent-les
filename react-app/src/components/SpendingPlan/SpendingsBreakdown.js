@@ -91,12 +91,12 @@ const SpendingsBreakdown = ({ isWidget = false, widgetMonth }) => {
   // console.log('daysInMonth', daysInMonth);
   if (!isThisMonth) {
     totalMonthlyIncome = monthlyIncome + Number(selectedPlan?.additional_income);
-    console.log('selectedPlan', selectedPlan);
-    console.log('monthlyIncome', monthlyIncome);
-    console.log('totalMonthlyIncome', totalMonthlyIncome);
-    console.log('moneySpent', moneySpent);
+    // console.log('selectedPlan', selectedPlan);
+    // console.log('monthlyIncome', monthlyIncome);
+    // console.log('totalMonthlyIncome', totalMonthlyIncome);
+    // console.log('moneySpent', moneySpent);
     cashFlow = totalMonthlyIncome - moneySpent;
-    console.log('cashFlow', cashFlow);
+    // console.log('cashFlow', cashFlow);
   } else {
     const currDate = today.date();
     const portionOfMonth = currDate / daysInMonth;
@@ -150,6 +150,13 @@ const SpendingsBreakdown = ({ isWidget = false, widgetMonth }) => {
     );
   }
 
+  let noMonthSelected;
+  if (options?.length) {
+    noMonthSelected = <h2 id="have-plans">Please select a month.</h2>
+  } else {
+    noMonthSelected = <h2 id="has-no-plans">You have no spending plans. Create a spending plan by clicking the "Calendar" tab, then clicking "Create A New Plan".</h2>
+  }
+
   if (!monthSelected) {
     return (
       <div className="breakdowns-container">
@@ -167,7 +174,7 @@ const SpendingsBreakdown = ({ isWidget = false, widgetMonth }) => {
           </div>
         </div>
         <div className="breakdown-info no-month-selected">
-          <h2>Please select a month.</h2>
+          {noMonthSelected}
         </div>
       </div>
     );
