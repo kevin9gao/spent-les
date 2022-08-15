@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import moment from 'moment';
+import './Users.css';
 
 function User() {
   const [user, setUser] = useState({});
@@ -27,20 +28,24 @@ function User() {
   }
 
   return (
-    <ul>
-      <li>
-        <strong>User Id</strong> {userId}
-      </li>
-      <li>
-        <strong>Username</strong> {user.username}
-      </li>
-      <li>
-        <strong>Email</strong> {user.email}
-      </li>
-      <NavLink to={`/users/${userId}/calendar/${dateStr}`}>
-        {`${user.username}'s Spending Plans`}
-      </NavLink>
-    </ul>
+    <div className='users-container users-page'>
+      <div className='user-card'>
+        <div className='user-card-row'>
+          <strong>Username</strong> {user.username}
+        </div>
+        <div className='user-card-row'>
+          <strong>Email</strong> {user.email}
+        </div>
+        <div className='user-card-row'>
+          <strong>Annual Income</strong> {user.annual_income === 'None' ? 'Private' : user.annual_income}
+        </div>
+        <div className='user-link-row'>
+          <NavLink to={`/users/${userId}/calendar/${dateStr}`}>
+            {`${user.username}'s Spending Plans`}
+          </NavLink>
+        </div>
+      </div>
+    </div>
   );
 }
 export default User;

@@ -59,7 +59,7 @@ let newState;
 const spendingsReducer = (state = {}, action) => {
   switch (action.type) {
     case LOAD:
-      newState = { ...state };
+      newState = {};
 
       const spendings = action.list['spendings'];
       spendings.forEach(spending => {
