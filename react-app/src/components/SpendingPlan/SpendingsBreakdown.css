@@ -15,7 +15,7 @@
 }
 
 .breakdown-overview {
-  width: 90%;
+  width: 100%;
 }
 
 .breakdown-row {
@@ -23,7 +23,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 1em 0;
-  padding: 1em 0;
+  padding: 1em;
 }
 
 .no-month-selected h2 {
@@ -37,4 +37,38 @@
   font-size: 45px;
   font-weight: 300;
   cursor: default;
+}
+
+.breakdown-overview > :nth-child(odd) {
+  background-color: rgb(224, 212, 100);
+}
+
+.breakdown-overview > :nth-child(even) {
+  background-color: rgb(181, 167, 185);
+}
+
+.breakdown-overview > div {
+  border-radius: 20px;
+}
+
+#breakdown-overview-header {
+  background-color: transparent;
+}
+
+.breakdowns-container.widget {
+  width: 30vw;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.widget .breakdown-row {
+  margin: .5em 0;
+  padding: .5em;
+}
+
+.widget .breakdown-info {
+  height: fit-content;
 }

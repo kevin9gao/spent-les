@@ -1,11 +1,18 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { NavLink, Redirect } from "react-router-dom";
 import Logo from '../../images/logo.jpg';
 import AboutModal from "../About/AboutModal";
 import DemoUserButton from '../auth/DemoUserButton';
 import './SplashPage.css';
 
 const SplashPage = () => {
+  const user = useSelector(state => state.session.user);
+
+  if (user) {
+    return <Redirect to='/home' />
+  }
+
   return (
     <div className="splash-page">
       <div className="header">

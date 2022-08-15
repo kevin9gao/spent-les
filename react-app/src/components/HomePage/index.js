@@ -1,9 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserPlans } from "../../store/plans";
+import SpendingsBreakdown from "../SpendingPlan/SpendingsBreakdown";
 import './HomePage.css';
 
 const HomePage = ({ WEEKDAYS, MONTHS }) => {
+  const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
+  const plansObj = useSelector(state => state.plans['user-plans']);
+  const plans = plansObj ? Object.values(plansObj) : null;
+
+  useEffect(() => {
+    dispatch(getUserPlans(user.id));
+  }, []);
 
   const date = new Date();
   const weekday = WEEKDAYS[date.getDay()]
@@ -29,10 +38,19 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
       greeting = 'Good Evening';
   }
 
+  let overviews = plans?.map(plan => {
+    const widgetMonth = `${plan.year}-${plan.month < 10 ? `0${plan.month}` : plan.month}`;
+    return (
+      <div className="widget-wrapper">
+        <SpendingsBreakdown isWidget={true} widgetMonth={widgetMonth} />
+      </div>
+    );
+  })
+
   if (!user) return null;
 
   return (
-    <div className="home-main-container">
+    <div className={`home-main-container ${plans?.length > 4 ? '' : 'no-plans'}`}>
       <div className="home-header">
         <div id="home-header-title">Home</div>
         <div id="home-header-date">
@@ -43,7 +61,7 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
         </div>
       </div>
       <div className="home-overview">
-        <h3>Plan Overviews</h3>
+        {overviews}
       </div>
     </div>
   );
