@@ -44,7 +44,7 @@ const EditProfileForm = ({ user, setShowModal }) => {
       profile_pic_url: profilePicUrl
     };
 
-    console.log('EditProfileForm payload', payload);
+    // console.log('EditProfileForm payload', payload);
 
     if (validationErrors.length === 0) {
       await dispatch(updateUser(payload, user.id));

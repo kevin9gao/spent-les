@@ -26,8 +26,8 @@ const add = spending => ({
 export const getSpendings = planId => async dispatch => {
   const res = await fetch(`/api/spendings/plan/${planId}`);
 
-  console.log('getSpendings planId', planId);
-  console.log('getSpendings res', res);
+  // console.log('getSpendings planId', planId);
+  // console.log('getSpendings res', res);
 
   if (res.ok) {
     const list = await res.json();
@@ -37,7 +37,7 @@ export const getSpendings = planId => async dispatch => {
 }
 
 export const createSpending = payload => async dispatch => {
-  console.log('createSpending thunk');
+  // console.log('createSpending thunk');
 
   const res = await fetch('/api/spendings/', {
     method: 'POST',
@@ -45,7 +45,7 @@ export const createSpending = payload => async dispatch => {
     body: JSON.stringify(payload)
   });
 
-  console.log('createSpending res', res);
+  // console.log('createSpending res', res);
 
   if (res.ok) {
     const spending = await res.json();

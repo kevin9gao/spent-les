@@ -12,7 +12,7 @@ const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
   const [avatarUrl, setAvatarUrl] = useState(user.profile_pic_url);
   const { userId, breakdownOrCalendar, date } = useParams();
   // console.log('userId, breakdownOrCalendar, date', userId, breakdownOrCalendar, date);
-  console.log('avatarUrl', avatarUrl);
+  // console.log('avatarUrl', avatarUrl);
 
   useEffect(() => {
     if (!userId) {

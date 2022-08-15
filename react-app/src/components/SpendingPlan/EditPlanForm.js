@@ -46,7 +46,7 @@ const EditPlanForm = ({ plan, setShowModal }) => {
       additional_income_notes: addIncNotes,
       notes
     }
-    console.log('EditPlanForm payload', payload);
+    // console.log('EditPlanForm payload', payload);
 
     if (validationErrors.length === 0) {
       const editedPlan = await dispatch(editPlan(user.id, plan.year, plan.month, payload));;

@@ -13,7 +13,7 @@ const TipSection = ({ plan, tipChanged, setTipChanged }) => {
   if (tips) {
     tipsArr = Object.values(tips);
   }
-  console.log('tipsArr', tipsArr)
+  // console.log('tipsArr', tipsArr)
 
   useEffect(() => {
     dispatch(loadTips(plan?.id));
