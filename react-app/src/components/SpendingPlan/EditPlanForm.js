@@ -25,6 +25,8 @@ const EditPlanForm = ({ plan, setShowModal }) => {
     if (additionalIncome.length) {
       if (!Number(additionalIncome)) {
         errors.push('Additional income provided must be a number.');
+      } else if (Number(additionalIncome) > 99999999.99) {
+        errors.push('Support for hundred millionaires coming soon.');
       }
     }
 

@@ -1,13 +1,21 @@
 .tip-section-container {
   padding: 1em;
   min-width: 60%;
+  max-width: 95%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-wrap: break-word;
 }
 
 #tip-section {
   min-width: 60%;
+  max-width: 95%;
+  overflow-wrap: break-word;
+}
+
+.tip-body {
+  overflow-wrap: break-word;
 }
 
 .tips {
@@ -16,6 +24,7 @@
   border-radius: 20px;
   padding: 1em;
   min-width: 60%;
+  overflow-wrap: break-word;
 }
 
 .tip-edit-delete {

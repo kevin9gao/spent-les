@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { NavLink, Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
@@ -7,7 +7,8 @@ import Check from '../../images/spent-les-check.png';
 import './Auth.css';
 
 const SignUpForm = () => {
-  const [errors, setErrors] = useState([]);
+  const [validationErrors, setValidationErrors] = useState([]);
+  const [hideErrors, setHideErrors] = useState(true);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,13 +16,56 @@ const SignUpForm = () => {
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('/api/users/');
+      const responseData = await response.json();
+      setUsers(responseData.users);
+    }
+    fetchData();
+  }, []);
+  console.log('users', users)
+
+  useEffect(() => {
+    const errors = [];
+
+    if (!username.length) {
+      errors.push('Please provide a username.');
+    } else if (username.length > 40) {
+      errors.push('Username cannot be longer than 40 characters.');
+    } else if (users.map(user => user.username).includes(username)) {
+      errors.push('Username is taken.');
+    }
+
+    if (!email.length) {
+      errors.push('Please provide a email.');
+    } else if (email.length > 255) {
+      errors.push('Email cannot be longer than 255 characters.');
+    } else if (users.map(user => user.email).includes(email)) {
+      errors.push('Email is taken.');
+    } else if (!email.includes('@')) {
+      errors.push('Please provide a valid email.');
+    }
+
+    if (!password.length) {
+      errors.push('Please provide a password.');
+    } else if (repeatPassword !== password) {
+      errors.push('Confirm password must be the same as password.');
+    }
+
+
+
+    setValidationErrors(errors);
+  }, [username, email, password, repeatPassword]);
+
   const onSignUp = async (e) => {
     e.preventDefault();
-    if (password === repeatPassword) {
+
+    if (!validationErrors.length) {
       const data = await dispatch(signUp(username, email, password));
-      if (data) {
-        setErrors(data)
-      }
+    } else {
+      setHideErrors(false);
     }
   };
 
@@ -64,8 +108,8 @@ const SignUpForm = () => {
           <div id='left-form-wrapper'>
             <h4>Sign Up</h4>
             <form onSubmit={onSignUp} id='sign-up-form'>
-              <div>
-                {errors.map((error, ind) => (
+              <div hidden={hideErrors}>
+                {validationErrors.map((error, ind) => (
                   <div key={ind}>{error}</div>
                 ))}
               </div>
@@ -103,7 +147,6 @@ const SignUpForm = () => {
                   onChange={updateRepeatPassword}
                   value={repeatPassword}
                   placeholder='confirm password'
-                  required={true}
                 ></input>
               </div>
               <button type='submit'>Sign Up</button>
