@@ -8,6 +8,7 @@ import './Tips.css';
 
 const TipSection = ({ plan, tipChanged, setTipChanged }) => {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);
   const tips = useSelector(state => state.tips);
   let tipsArr;
   if (tips) {
@@ -39,10 +40,12 @@ const TipSection = ({ plan, tipChanged, setTipChanged }) => {
             <div className="tip-body">
               {tip.tip_body}
             </div>
-            <div className="tip-edit-delete">
-              <EditTipModal tip={tip} setTipChanged={setTipChanged} />
-              <DeleteTipModal tip={tip} />
-            </div>
+            {user.id === tip.user_id && (
+              <div className="tip-edit-delete">
+                <EditTipModal tip={tip} setTipChanged={setTipChanged} />
+                <DeleteTipModal tip={tip} />
+              </div>
+            )}
           </div>
         ))}
       </div>

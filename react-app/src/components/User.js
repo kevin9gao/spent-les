@@ -2,14 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import moment from 'moment';
 import './Users.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAnotherUsersPlans } from '../store/plans';
 
 function User() {
+  const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const { userId }  = useParams();
 
-  const currDate = moment();
-  const currMonth = currDate.month() + 1;
-  const currYear = currDate.year();
+  const plansObj = useSelector(state => state.plans['other-users-plans']);
+  const plans = plansObj ? Object.values(plansObj) : null;
+
+  const options = plans?.map(plan => {
+    return `${plan.year}-${plan.month < 10 ? `0${plan.month}` : plan.month}`
+  });
+  console.log('options', options)
+
+  const currDate = options ? moment(options[0]) : null;
+  const currMonth = currDate?.month() + 1;
+  const currYear = currDate?.year();
   const dateStr = `${currYear}-${currMonth < 10 ? '0' + currMonth : currMonth}`;
 
   useEffect(() => {
@@ -21,6 +32,8 @@ function User() {
       const user = await response.json();
       setUser(user);
     })();
+
+    dispatch(getAnotherUsersPlans(userId));
   }, [userId]);
 
   if (!user) {
