@@ -56,8 +56,8 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
 
   useEffect(() => {
     dispatch(getSinglePlan(isOwner ?
-                            user.id :
-                            userId, selectedYearStr, selectedMonthStr));
+      user.id :
+      userId, selectedYearStr, selectedMonthStr));
     dispatch(getSpendings(currPlan?.id));
   }, [month])
 
@@ -186,9 +186,8 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       (async () => {
         const response = await fetch(`/api/users/${userId}`);
         const paramsUser = await response.json();
-        setOtherUser(paramsUser);
+        if (paramsUser) setOtherUser(paramsUser);
       })();
-
       dispatch(getAnotherUsersPlans(userId));
     }
   }, [userId]);
@@ -203,6 +202,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       };
     });
     console.log('options', options);
+    console.log('currPlan', currPlan);
 
     if (!options?.length) {
       return (

@@ -1,129 +1,139 @@
-# Flask React Project
+# Spent-Lès
 
-This is the starter for the Flask React project.
+Spent-Lès is a full-stack web application that allows users to keep track of
+their monthly spendings and manage their finances through viewing their total
+monthly spendings and cash flow over each month. Styling of Spent-Lès is based off
+of [Asana](https://app.asana.com/).
 
-## Getting started
-1. Clone this repository (only this branch)
+_For a link to the live site, click here: [Spent-Lès](https://spent-les.herokuapp.com/)._
 
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
+_For a link to the wiki, click here: [Wiki](https://github.com/kevin9gao/spent-les/wiki)._
 
-2. Install dependencies
+![Splash Page](./images/spent-les%20splash%20page.png)
 
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
-
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
-
-5. Get into your pipenv, migrate your database, seed your database, and run your flask app
-
-   ```bash
-   pipenv shell
-   ```
-
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
-
-***
+## Technologies Used
+* **Languages:** Javascript, Python, HTML/CSS
+* **Backend:** Flask
+* **Frontend:** React, Redux
+* **Database:** PostgreSQL
+* **Hosting:** Heroku
 
 
-*IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on alpine-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
+## Features and Implementation
 
-### Dev Containers (OPTIONAL for M1 Users)
-The following instructions detail an *optional* development setup for M1 Mac users having issues with the `psycopg` package.
+### Backend
 
-1. Make sure you have the [Microsoft Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed. 
-2. Make sure you have [Docker](https://www.docker.com/products/docker-desktop/) installed on your computer. 
-3. Clone the repository (only this branch)
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
-4. Open the repo in VS Code. 
-5. Click "Open in Container" when VS Code prompts to open container in the bottom right hand corner. 
-6. **Be Patient!** The initial install will take a LONG time, it's building a container that has postgres preconfigured and even installing all your project dependencies. (For both flask and react!)
+_Python/Flask Based Router_
 
-   **Note:** This will take much less time on future starts because everything will be cached.
+Spent-Lès' backend is Python/Flask based, using Flask based route handlers to handle all backend requests. Flask is a Python framework used to handle CRUD routes, database modeling, and backend validations.
 
-7. Once everything is up, be sure to make a `.env` file based on `.env.example` in both the root directory and the *react-app* directory before running your app. You do not need a `DATABASE_URL` in the `.env` file if you are using this Docker setup for development - the URL is already set in the image (see `.devcontainer/Dockerfile` for the URL).
+_Flask-SQLAlchemy Based Database and Models_
 
-8. Get into your pipenv, migrate your database, seed your database, and run your flask app
+Spent-Lès' database is handled by Flask-SQLAlchemy. Flask-SQLAlchemy is used to generate the models and associations, and to create new entries in the database.
 
-   ```bash
-   pipenv shell
-   ```
 
-   ```bash
-   flask db upgrade
-   ```
+### Frontend
 
-   ```bash
-   flask seed all
-   ```
+_React-Redux Based Frontend_
 
-   ```bash
-   flask run
-   ```
+Spent-Lès is a React based app, utilizing React components, React context, and Redux to handle application state.
 
-9. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
 
-<br>
+### Authentication
 
-## Deploy to Heroku
-This repo comes configured with Github Actions. When you push to your main branch, Github will automatically pull your code, package and push it to Heroku, and then release the new image and run db migrations. 
+_Flask-Based Authentication_
 
-1. Write your Dockerfile. In order for the Github action to work effectively, it must have a configured Dockerfile. Follow the comments found in this [Dockerfile](./Dockerfile) to write your own!
+Spent-Lès uses Flask session to store and restore user login state, using Flask-Login in the backend to validate and restore logins, and Redux in the frontend to restore login state in the Redux store.
 
-2. Create a new project on Heroku.
+_Features Available Without Logging In_
 
-3. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres".
+A user that is not logged in is actually redirected upon trying to access any of the
+site's assets. Login is required through the use of backend login authentication with Flask and frontend login authentication through React-Redux.
 
-4. Configure production environment variables. In your Heroku app settings -> config variables you should have two environment variables set:
+_Features Available to Logged In Users_
 
-   |    Key          |    Value    |
-   | -------------   | ----------- |
-   | `DATABASE_URL`  | Autogenerated when adding postgres to Heroku app |
-   | `SECRET_KEY`    | Random string full of entropy |
+A logged in user is able to create, edit, and delete their own monthly spending plans, browse other users and their spending plans, and leave, edit, and delete tips (aka reviews) on other users' plans.
 
-5. Generate a Heroku OAuth token for your Github Action. To do so, log in to Heroku via your command line with `heroku login`. Once you are logged in, run `heroku authorizations:create`. Copy the GUID value for the Token key.
+### **Spending Plans**
 
-6. In your Github Actions Secrets you should have two environment variables set. You can set these variables via your Github repository settings -> secrets -> actions. Click "New respository secret" to create
-each of the following variables:
+A logged in user may create their own monthly spending plans. If the user has not created any spending plans, text will appear that instructs the user how to do so. The user may click the "Create a new plan" button, which causes a modal form to appear.
 
-   |    Key            |    Value    |
-   | -------------     | ----------- |
-   | `HEROKU_API_KEY`  | Heroku Oauth Token (from step 6)|
-   | `HEROKU_APP_NAME` | Heroku app name    |
+![Create Spending Plan Button](./images/spent-les%20create%20plan%20button.png)
 
-7. Push to your `main` branch! This will trigger the Github Action to build your Docker image and deploy your application to the Heroku container registry. Please note that the Github Action will automatically upgrade your production database with `flask db upgrade`. However, it will *not* automatically seed your database. You must manually seed your production database if/when you so choose (see step 8).
+The user may fill in all required fields on this form with the correct data types to create a new spending plan.
 
-8. *Attention!* Please run this command *only if you wish to seed your production database*: `heroku run -a HEROKU_APP_NAME flask seed all`
+![Create Plan Form](./images/spent-les%20create%20plan%20form.png)
 
-## Helpful commands
-|    Command            |    Purpose    |
-| -------------         | ------------- |
-| `pipenv shell`        | Open your terminal in the virtual environment and be able to run flask commands without a prefix |
-| `pipenv run`          | Run a command from the context of the virtual environment without actually entering into it. You can use this as a prefix for flask commands  |
-| `flask db upgrade`    | Check in with the database and run any needed migrations  |
-| `flask db downgrade`  | Check in with the database and revert any needed migrations  |
-| `flask seed all`      | Just a helpful syntax to run queries against the db to seed data. See the **app/seeds** folder for reference and more details |
-| `heroku login -i`      | Authenticate your heroku-cli using the command line. Drop the -i to authenticate via the browser |
-| `heroku authorizations:create` | Once authenticated, use this to generate an Oauth token |
-| `heroku run -a <app name>` | Run a command from within the deployed container on Heroku |
+The user may click on a calendar date, and a sidebar will appear with a button that can be clicked on to log a new spending.
+
+![New Spending Form](./images/spent-les%20new%20spending%20form.png)
+
+The user may fill out the form with valid data and click "Submit", upon which the new spending will appear in the sidebar, and the calendar grid for that date will be populated with a $ for spendings in the one digit range, $$ for spendings in the 2 digit spending range, and $$$ for spendings in the 3 digit range or higher.
+
+![Spendings Sidebar](./images/spent-les%20spending%20sidebar%20and%20icons.png)
+
+If the user so wishes, they can click the month selector in the top right to go to a different month and log spendings from another month.
+
+![Month Selector](./images/spent-les%20month%20selector.png)
+
+With logged spendings in a month, Spent-Lès will calculate the total amount of money that the user has spent in that month, and can calculate the user's total cash flow based on total spendings, the user's input annual income (input via the profile button in the top right > Edit Profile), and any additional income earned that month (input via either the create plan form or the edit plan form).
+
+![Spending Breakdowns Past Month](./images/spent-les%20breakdowns%20previous%20month.png)
+
+When viewing the spending plan for the current month, cash flow will be calculated based on the total income prorated to the current date, in order to better visualize net cash flow for that month.
+
+![Spending Breakdowns Current Month](./images/spent-les%20breakdowns%20current%20month.png)
+
+
+### **Home Page**
+
+The user's home page can be accessed upon login or clicking of the "Home" tab in the navigation bar, and displays a list of the user's spending plans, displayed as widgets. Interactivity with widgets coming in the future.
+
+![Home Page](./images/spent-les%20home%20page.png)
+
+
+### **Tips**
+
+A logged in user may find and view other users' spending plans through the "Users" tab in the navigation bar. Upon click, a list of users of Spent-Lès will appear, each one being clickable and will redirect to that user's profile page.
+
+![Users List](./images/spent-les%20users%20page.png)
+
+![User Profile Page](./images/spent-les%20user%20profile.png)
+
+On another user's spending calendar, the user may leave a tip, or review, of that user's spendings for that month. The user may also edit and delete their review.
+
+![Tip Section](./images/spent-les%20tip%20section.png)
+
+
+## How to Start the Development Environment
+1. Clone this repository:
+
+    ```git clone https://github.com/kevin9gao/spent-les.git```
+2. Install dependencies:
+
+    ```pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt```
+3. Create a **.env** file based on the example with the proper settings for your development environment
+4. Setup your PostgresSQL user,password, and database and make sure it matches with your **.env** file
+5. Enter your environment, migrate your database, seed your database, and run your flask app
+    * ```pipenv shell```
+    * ```flask db upgrade```
+    * ```flask seed all```
+    * ```flask run```
+6. cd into your react-app directory and install dependencies and run the app
+    * ```npm install```
+    * ```npm start```
+7. Open your browser and go to the localhost address you are running the app in
+
+
+## Future Features To Implement
+
+* Friends List
+* DMs
+* Linking to bank account to automate logging spendings
+
+
+## Technical Feature Implementation
+
+Populating the calendar correctly with the days that each month should begin on, in addition to the dates that should lead in from the previous month and the dates leading into the next month proved relatively difficult. This issue was circumvented using the _momentjs_ framework, a JavaScript date framework that has more options than the default JavaScript Date object.
+
+The implementation of the Home Page, with a list of spending breakdowns from multiple months, also proved quite difficult. This was ultimately done by populating the state with all the user's plans and spendings, then filtering through those spendings to obtain the correct numbers for each calculation.
