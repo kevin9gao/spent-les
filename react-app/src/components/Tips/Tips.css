@@ -39,10 +39,12 @@
 
 #new-tip-form {
   width: 90%;
+  display: flex;
+  justify-content: center;
 }
 
 #new-tip-form input {
-  width: 60%;
+  width: 80%;
   border-radius: 10px;
   height: 4vh;
   border: none;

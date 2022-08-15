@@ -156,7 +156,7 @@
 }
 
 .not-owner-main-container {
-  height: 100vh;
+  height: 100%;
   width: 85vw;
   display: flex;
   flex-direction: column;
