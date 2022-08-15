@@ -24,6 +24,23 @@ def seed_spendings():
     for spending in kevin_august:
         db.session.add(spending)
 
+    kevin_june = []
+    for i in range(1, 31):
+        kevin_june.append(Spending(plan_id=2,
+                                   transaction_name='daily spendings',
+                                   transaction_notes='seeders',
+                                   amount=190.46,
+                                   date=date(2022, 6, i)))
+    for i in range(2, 31, 9):
+        kevin_june.append(Spending(plan_id=2,
+                                   transaction_name='splurges',
+                                   transaction_notes='seeders',
+                                   amount=456.32,
+                                   date=date(2022, 6, i)))
+
+    for spending in kevin_june:
+        db.session.add(spending)
+
     marnie_july = []
     for i in range(1, 32):
         marnie_july.append(Spending(plan_id=6,
@@ -34,6 +51,45 @@ def seed_spendings():
 
     for spending in marnie_july:
         db.session.add(spending)
+
+    demo_july = []
+    for i in range(1, 32):
+        demo_july.append(Spending(plan_id=7,
+                                   transaction_name='demolitionist supplies',
+                                   transaction_notes='seeders',
+                                   amount=146.94,
+                                   date=date(2022, 7, i)))
+
+    for spending in demo_july:
+        db.session.add(spending)
+
+    kevin_may = []
+    for i in range(1, 32):
+        kevin_may.append(Spending(plan_id=8,
+                                   transaction_name='daily spendings',
+                                   transaction_notes='seeders',
+                                   amount=150,
+                                   date=date(2022, 5, i)))
+    kevin_may.append(Spending(plan_id=8,
+                                   transaction_name='birthday dinner!!!!',
+                                   transaction_notes='seeders',
+                                   amount=526.49,
+                                   date=date(2022, 5, 29)))
+
+    for spending in kevin_may:
+        db.session.add(spending)
+
+    kevin_april = []
+    for i in range(1, 31):
+        kevin_april.append(Spending(plan_id=8,
+                                   transaction_name='daily spendings',
+                                   transaction_notes='seeders',
+                                   amount=150,
+                                   date=date(2022, 4, i)))
+
+    for spending in kevin_april:
+        db.session.add(spending)
+
 
     db.session.commit()
 
