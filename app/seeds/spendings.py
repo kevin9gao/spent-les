@@ -24,6 +24,17 @@ def seed_spendings():
     for spending in kevin_august:
         db.session.add(spending)
 
+    marnie_july = []
+    for i in range(1, 32):
+        marnie_july.append(Spending(plan_id=6,
+                                   transaction_name='daily spendings - too much',
+                                   transaction_notes='seeders',
+                                   amount=180.64,
+                                   date=date(2022, 7, i)))
+
+    for spending in marnie_july:
+        db.session.add(spending)
+
     db.session.commit()
 
 def undo_spendings():

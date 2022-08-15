@@ -39,7 +39,7 @@ const SpendingIcons = ({ date, calendarDay }) => {
 
   return (
     <div className="icons-container">
-      <div className="days">
+      <div className="days" key='calendar-day'>
         {calendarDay}
       </div>
       {spendings?.filter(spending => spending.date === `${year}-${month}-${day}`).slice(0,8).map((spending, idx) => (

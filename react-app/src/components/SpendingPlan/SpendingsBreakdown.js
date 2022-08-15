@@ -5,7 +5,7 @@ import { getSinglePlan, getUserPlans } from "../../store/plans";
 import { getSpendings } from "../../store/spendings";
 import './SpendingsBreakdown.css';
 
-const SpendingsBreakdown = () => {
+const SpendingsBreakdown = ({ isWidget = false, widgetMonth }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
 
@@ -17,7 +17,7 @@ const SpendingsBreakdown = () => {
   const todayString = `${today.year()}-${today.month() + 1 < 10 ?
     `0${today.month() + 1}` :
     today.month() + 1}`;
-  const [month, setMonth] = useState(todayString);
+  const [month, setMonth] = useState(isWidget ? widgetMonth : todayString);
   const currYear = month.slice(0, 4);
   const currMonth = month.slice(5, 7);
   // console.log('month', month)
@@ -26,11 +26,20 @@ const SpendingsBreakdown = () => {
   const plans = plansObj ? Object.values(plansObj) : null;
   // console.log('plans',plans)
 
-  const selectedPlan = useSelector(state => state.plans['current']);
+  const selectedPlan = plans?.filter(plan => {
+    return (plan.month === Number(currMonth)) && (plan.year === Number(currYear));
+  })[0];
   // console.log('selectedPlan', selectedPlan);
 
+
   const spendingsObj = useSelector(state => state.spendings);
-  const spendings = spendingsObj ? Object.values(spendingsObj) : null;
+  const allSpendings = spendingsObj ? Object.values(spendingsObj) : null;
+  const spendings = allSpendings?.filter(spending => {
+    const spendingDate = moment(spending.date);
+    return month === `${spendingDate.year()}-${spendingDate.month() + 1 < 10 ?
+                      `0${spendingDate.month() + 1}` :
+                      spendingDate.month() + 1}`;
+  })
   // console.log('spendings', spendings);
 
   useEffect(() => {
@@ -64,7 +73,7 @@ const SpendingsBreakdown = () => {
 
   const moneySpent = spendings ? spendings.reduce((accum, current) => {
     return accum + Number(current.amount);
-  }, 0).toFixed(2) : null;
+  }, 0).toFixed(2) : 0;
   // console.log('moneySpent', moneySpent);
 
   // console.log('month', month);
@@ -82,12 +91,63 @@ const SpendingsBreakdown = () => {
   // console.log('daysInMonth', daysInMonth);
   if (!isThisMonth) {
     totalMonthlyIncome = monthlyIncome + Number(selectedPlan?.additional_income);
+    console.log('selectedPlan', selectedPlan);
+    console.log('monthlyIncome', monthlyIncome);
+    console.log('totalMonthlyIncome', totalMonthlyIncome);
+    console.log('moneySpent', moneySpent);
     cashFlow = totalMonthlyIncome - moneySpent;
+    console.log('cashFlow', cashFlow);
   } else {
     const currDate = today.date();
     const portionOfMonth = currDate / daysInMonth;
     totalMonthlyIncome = monthlyIncome * portionOfMonth + Number(selectedPlan?.additional_income);
     cashFlow = totalMonthlyIncome - moneySpent;
+  }
+
+  let breakdownOverview = (
+    <div className="breakdown-overview">
+      <div className="breakdown-row">
+        <span className="breakdown-name">Additional Income</span>
+        <span className="breakdown-value">{`$${selectedPlan?.additional_income}`}</span>
+      </div>
+      <div className="breakdown-row">
+        <span className="breakdown-name">Money Spent</span>
+        <span className="breakdown-value">{`$${moneySpent && moneySpent}`}</span>
+      </div>
+      <div className="breakdown-row">
+        <span className="breakdown-name">Monthly Income</span>
+        <span className="breakdown-value">{`$${monthlyIncome.toFixed(2)}`}</span>
+      </div>
+      {isThisMonth && (
+        <div className="breakdown-row">
+          <span className="breakdown-name">{'Monthly Income (up to today)'}</span>
+          <span className="breakdown-value">{`$${totalMonthlyIncome.toFixed(2)}`}</span>
+        </div>
+      )}
+      {isThisMonth && (
+        <div className="breakdown-row">
+          <span className="breakdown-name">{'Cash Flow (up to today)'}</span>
+          <span className="breakdown-value">{`$${cashFlow.toFixed(2)}`}</span>
+        </div>
+      )}
+      {!isThisMonth && (
+        <div className="breakdown-row">
+          <span className="breakdown-name">Cash Flow</span>
+          <span className="breakdown-value">{`$${cashFlow.toFixed(2)}`}</span>
+        </div>
+      )}
+    </div>
+  );
+
+  if (isWidget) {
+    return (
+      <div className="breakdowns-container widget">
+        <div className="breakdown-info">
+          <h3 id="breakdown-overview-header">{selectedPlan?.plan_name}</h3>
+          {breakdownOverview}
+        </div>
+      </div>
+    );
   }
 
   if (!monthSelected) {
@@ -129,39 +189,8 @@ const SpendingsBreakdown = () => {
         </div>
       </div>
       <div className="breakdown-info">
-        <div className="breakdown-overview">
-          <h3>Overview</h3>
-          <div className="breakdown-row">
-            <span className="breakdown-name">Additional Income</span>
-            <span className="breakdown-value">{`$${selectedPlan?.additional_income}`}</span>
-          </div>
-          <div className="breakdown-row">
-            <span className="breakdown-name">Money Spent</span>
-            <span className="breakdown-value">{`$${moneySpent && moneySpent}`}</span>
-          </div>
-          <div className="breakdown-row">
-            <span className="breakdown-name">Monthly Income</span>
-            <span className="breakdown-value">{`$${monthlyIncome.toFixed(2)}`}</span>
-          </div>
-          {isThisMonth && (
-            <div className="breakdown-row">
-              <span className="breakdown-name">{'Monthly Income (up to today)'}</span>
-              <span className="breakdown-value">{`$${totalMonthlyIncome.toFixed(2)}`}</span>
-            </div>
-          )}
-          {isThisMonth && (
-            <div className="breakdown-row">
-              <span className="breakdown-name">{'Cash Flow (up to today)'}</span>
-              <span className="breakdown-value">{`$${cashFlow.toFixed(2)}`}</span>
-            </div>
-          )}
-          {!isThisMonth && (
-            <div className="breakdown-row">
-              <span className="breakdown-name">Cash Flow</span>
-              <span className="breakdown-value">{`$${cashFlow.toFixed(2)}`}</span>
-            </div>
-          )}
-        </div>
+        <h3 id="breakdown-overview-header">Overview</h3>
+        {breakdownOverview}
       </div>
     </div>
   );
