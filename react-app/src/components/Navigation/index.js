@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ProfileButton from "../ProfileButton";
@@ -7,6 +7,8 @@ import './Navigation.css';
 
 const Navigation = () => {
   const user = useSelector(state => state.session.user);
+  const [selectedTab, setSelectedTab] = useState('home');
+  console.log('selectedTab', selectedTab);
 
   return (
     <>
@@ -22,25 +24,26 @@ const Navigation = () => {
           </div>
           <div
             className="navbar-links">
-            <NavLink to='/home' exact>
+            <NavLink
+              to='/home'
+              exact>
               Home
             </NavLink>
           </div>
           <div
             className="navbar-links">
-            <NavLink to={`/users/${user.id}/plans/breakdown`} exact>
+            <NavLink
+              to={`/users/${user.id}/plans/breakdown`}
+              exact>
               My Spending Plans
             </NavLink>
           </div>
-          {/* <div
-            className="navbar-links">
-            <NavLink to={`/users/${user.id}/DMs`} exact>
-              Messages
-            </NavLink>
-          </div> */}
           <div
             className="navbar-links">
-            <NavLink to='/users' exact={true} activeClassName='active'>
+            <NavLink
+              to='/users'
+              exact={true}
+              activeClassName='active'>
               Users
             </NavLink>
           </div>

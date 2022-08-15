@@ -85,7 +85,7 @@ const SpendingsBreakdown = ({ isWidget = false, widgetMonth }) => {
   const isThisMonth = month === todayString;
   let cashFlow;
   let totalMonthlyIncome;
-  const monthlyIncome = Number(user.annual_income) / 12;
+  const monthlyIncome = user.annual_income !== 'None' ? Number(user.annual_income) / 12 : 0;
   const daysInMonth = moment([currYear, 0, 31]).month(Number(currMonth) - 1).date();
   // console.log('Number(currMonth) - 1', Number(currMonth) - 1);
   // console.log('daysInMonth', daysInMonth);
@@ -93,6 +93,7 @@ const SpendingsBreakdown = ({ isWidget = false, widgetMonth }) => {
     totalMonthlyIncome = monthlyIncome + Number(selectedPlan?.additional_income);
     // console.log('selectedPlan', selectedPlan);
     // console.log('monthlyIncome', monthlyIncome);
+    // console.log('user.annual_income', user.annual_income);
     // console.log('totalMonthlyIncome', totalMonthlyIncome);
     // console.log('moneySpent', moneySpent);
     cashFlow = totalMonthlyIncome - moneySpent;
@@ -116,7 +117,7 @@ const SpendingsBreakdown = ({ isWidget = false, widgetMonth }) => {
       </div>
       <div className="breakdown-row">
         <span className="breakdown-name">Monthly Income</span>
-        <span className="breakdown-value">{`$${monthlyIncome.toFixed(2)}`}</span>
+        <span className="breakdown-value">{`$${ monthlyIncome.toFixed(2)}`}</span>
       </div>
       {isThisMonth && (
         <div className="breakdown-row">
