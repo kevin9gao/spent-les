@@ -156,7 +156,12 @@
 }
 
 .not-owner-main-container {
-  margin-top: 3em;
+  height: 100%;
+  width: 85vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 3vh;
 }
 
 .tips-container {
