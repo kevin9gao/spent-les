@@ -332,6 +332,14 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           </div>
         </div>
       </div>
+      <div className="tips-container">
+        <div id="calendar-tips-section">
+          <TipSection plan={currPlan} tipChanged={tipChanged} setTipChanged={setTipChanged} />
+        </div>
+        <div id="calendar-new-tip-container">
+          <NewTipForm plan={currPlan} setTipChanged={setTipChanged} />
+        </div>
+      </div>
       <div
         id="sidebar"
         hidden={hidden}
