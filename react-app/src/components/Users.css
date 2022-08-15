@@ -88,3 +88,15 @@
 .user-card > div {
   margin: 1em;
 }
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.user-username {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}

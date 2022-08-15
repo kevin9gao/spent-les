@@ -21,7 +21,15 @@ function UsersList() {
       <li key={user.id}>
         <NavLink to={`/users/${user.id}`}>
           <div className='user-buttons'>
-            {user.username}
+            <div className='user-pic'>
+              <img className='avatar'
+                src={user.profile_pic_url}
+                alt='avatar'
+                />
+            </div>
+            <div className='user-username'>
+              {user.username}
+            </div>
           </div>
         </NavLink>
       </li>

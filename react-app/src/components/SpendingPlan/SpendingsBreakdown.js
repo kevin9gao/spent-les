@@ -26,8 +26,11 @@ const SpendingsBreakdown = () => {
   const plans = plansObj ? Object.values(plansObj) : null;
   // console.log('plans',plans)
 
-  const selectedPlan = useSelector(state => state.plans['current']);
-  // console.log('selectedPlan', selectedPlan);
+  const selectedPlan = plans?.filter(plan => {
+    return (plan.month === Number(currMonth)) && (plan.year === Number(currYear));
+  })[0];
+  console.log('selectedPlan', selectedPlan);
+
 
   const spendingsObj = useSelector(state => state.spendings);
   const spendings = spendingsObj ? Object.values(spendingsObj) : null;
