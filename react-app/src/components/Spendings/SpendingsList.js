@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import EditSpendingModal from "./EditSpendingModal";
 
 const SpendingsList = ({ date }) => {
   const spendings = Object.values(useSelector(state => state.spendings));
@@ -23,21 +24,26 @@ const SpendingsList = ({ date }) => {
 
   return (
     <div className="spendings-list-container">
-      <ul className="spendings-list">
+      <div className="spendings-list">
         {dailySpendings && dailySpendings.map(spending => (
-          <li className="spendings" key={spending.id}>
-            <h4 className="spending-names">
-              {spending.transaction_name}
-            </h4>
-            <p className="spending-notes">
-              {spending.transaction_notes}
-            </p>
-            <p className="spending-amounts">
-              {`Amount: $${spending.amount}`}
-            </p>
-          </li>
+          <div className="spendings" key={spending.id}>
+            <div className="spendings info">
+              <h4 className="spending-names">
+                {spending.transaction_name}
+              </h4>
+              <p className="spending-notes">
+                {spending.transaction_notes}
+              </p>
+              <p className="spending-amounts">
+                {`Amount: $${spending.amount}`}
+              </p>
+            </div>
+            <div className="spending-edit-delete">
+              <EditSpendingModal spending={spending} />
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

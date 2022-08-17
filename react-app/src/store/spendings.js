@@ -1,7 +1,7 @@
 const LOAD = 'spendings/LOAD';
 const ADD = 'spendings/ADD';
-// const UPDATE = 'spendings/UPDATE';
-// const REMOVE = 'spendings/REMOVE';
+const UPDATE = 'spendings/UPDATE';
+const REMOVE = 'spendings/REMOVE';
 
 const load = list => ({
   type: LOAD,
@@ -13,15 +13,15 @@ const add = spending => ({
   spending
 })
 
-// const update = spending => ({
-//   type: UPDATE,
-//   spending
-// })
+const update = spending => ({
+  type: UPDATE,
+  spending
+})
 
-// const remove = spendingId => ({
-//   type: REMOVE,
-//   spendingId
-// })
+const remove = spendingId => ({
+  type: REMOVE,
+  spendingId
+})
 
 export const getSpendings = planId => async dispatch => {
   const res = await fetch(`/api/spendings/plan/${planId}`);
@@ -54,6 +54,30 @@ export const createSpending = payload => async dispatch => {
   }
 }
 
+export const editSpending = (spendingId, payload) => async dispatch => {
+  const res = await fetch(`/api/spendings/${spendingId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (res.ok) {
+    const spending = await res.json();
+    await dispatch(update(spending));
+    return spending;
+  }
+}
+
+export const deleteSpending = spendingId => async dispatch => {
+  const res = await fetch(`/api/spendings/${spendingId}`, {
+    method: 'DELETE'
+  });
+
+  if (res.ok) {
+    await dispatch(remove(spendingId));
+  }
+}
+
 let newState;
 
 const spendingsReducer = (state = {}, action) => {
@@ -71,6 +95,14 @@ const spendingsReducer = (state = {}, action) => {
     case ADD:
       newState = { ...state };
       newState[action.spending.id] = action.spending;
+      return newState;
+    case UPDATE:
+      newState = { ...state };
+      newState[action.spending.id] = action.spending;
+      return newState;
+    case REMOVE:
+      newState = { ...state };
+      delete newState[action.spendingId];
       return newState;
     default:
       return state;
