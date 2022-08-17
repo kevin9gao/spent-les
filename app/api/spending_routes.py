@@ -32,3 +32,23 @@ def create_spending():
         db.session.add(spending)
         db.session.commit()
         return spending.to_dict()
+
+@spending_routes.route('/<int:id>', methods=['PUT'])
+def edit_spending(id):
+    spending = Spending.query.get(id)
+    form = SpendingForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        data = form.data
+        spending.transaction_name = data['transaction_name']
+        spending.transaction_notes = data['transaction_notes']
+        spending.amount = data['amount']
+        db.session.commit()
+        return spending.to_dict()
+
+@spending_routes.route('/<int:id>', methods=['DELETE'])
+def delete_spending(id):
+    spending = Spending.query.get(id)
+    db.session.delete(spending)
+    db.session.commit()
+    return spending.to_dict()
