@@ -6,18 +6,18 @@ const EditSpendingModal = ({ spending }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <>
+    <div id="edit-spending-modal">
       <button
         className="edit-spending-btn"
         onClick={() => setShowModal(true)}>Edit
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <EditSpendingForm spending={spending} />
+          <EditSpendingForm spending={spending} setShowModal={setShowModal} />
           <button onClick={() => setShowModal(false)}>Cancel</button>
         </Modal>
       )}
-    </>
+    </div>
   );
 }
 

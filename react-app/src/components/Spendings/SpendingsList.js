@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import EditSpendingModal from "./EditSpendingModal";
+import DeleteSpendingModal from "./DeleteSpendingModal";
 
 const SpendingsList = ({ date }) => {
   const spendings = Object.values(useSelector(state => state.spendings));
@@ -40,6 +41,7 @@ const SpendingsList = ({ date }) => {
             </div>
             <div className="spending-edit-delete">
               <EditSpendingModal spending={spending} />
+              <DeleteSpendingModal spending={spending} />
             </div>
           </div>
         ))}

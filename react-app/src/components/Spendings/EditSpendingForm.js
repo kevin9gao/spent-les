@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { editSpending } from "../../store/spendings";
 import moment from 'moment';
 
-const EditSpendingForm = ({ spending }) => {
+const EditSpendingForm = ({ spending, setShowModal }) => {
   const dispatch = useDispatch();
   const [nameInput, setNameInput] = useState(spending.transaction_name);
   const [notesInput, setNotesInput] = useState(spending.transaction_notes);
@@ -66,6 +66,7 @@ const EditSpendingForm = ({ spending }) => {
       setNameInput('');
       setNotesInput('');
       setAmountInput('');
+      setShowModal(false);
     } else setHideErrors(false);
   }
 
