@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import { loadTips } from "../../store/tips";
 import DeleteTipModal from "./DeleteTipModal";
 import EditTipModal from "./EditTipModal";
+// import moment from 'moment';
+import moment from 'moment-timezone';
 import './Tips.css';
 
 const TipSection = ({ plan, tipChanged, setTipChanged }) => {
@@ -21,6 +23,10 @@ const TipSection = ({ plan, tipChanged, setTipChanged }) => {
     setTipChanged(false);
   }, [plan, tipChanged])
 
+  const createDateString = time => {
+    const timestamp = moment.tz(time, 'America/Los Angeles');
+    return timestamp.format("dddd, MMMM Do YYYY, h:mm:ss a");
+  }
 
   return (
     <div className="tip-section-container">
@@ -36,6 +42,9 @@ const TipSection = ({ plan, tipChanged, setTipChanged }) => {
                 {tip.user.username}
               </NavLink>
               )}
+              <span className="timestamps">
+                {createDateString(tip.created_at)}
+              </span>
             </div>
             <div className="tip-body">
               {tip.tip_body}
