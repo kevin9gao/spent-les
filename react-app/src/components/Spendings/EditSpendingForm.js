@@ -21,8 +21,10 @@ const EditSpendingForm = ({ spending, setShowModal }) => {
       errors.push('Spending name cannot be longer than 50 characters.');
     }
 
-    if (notesInput.length > 500) {
-      errors.push('Spending notes can only be a maximum of 500 characters.');
+    if (notesInput) {
+      if (notesInput.length > 500) {
+        errors.push('Spending notes can only be a maximum of 500 characters.');
+      }
     }
 
     if (amountInput.length === 0) {
