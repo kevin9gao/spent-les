@@ -52,14 +52,15 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
 
   useEffect(() => {
     dispatch(getUserPlans(user.id));
-  }, [])
+  }, []);
 
   useEffect(() => {
-    dispatch(getSinglePlan(isOwner ?
-      user.id :
-      userId, selectedYearStr, selectedMonthStr));
-    dispatch(getSpendings(currPlan?.id));
-  }, [month])
+    dispatch(getSinglePlan(userId, selectedYear, selectedMonth));
+  }, [month]);
+
+  useEffect(() => {
+    dispatch(getSpendings(currPlan.id));
+  }, [currPlan]);
 
   const firstOfSelectedMonth = moment(`${selectedYear}-${selectedMonth}-01`).day();
   // console.log('firstOfSelectedMonth', firstOfSelectedMonth);
@@ -160,6 +161,19 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     setHidden(!hidden);
   }
 
+  useEffect(() => {
+    if (hidden) return;
+
+    const closeSidebar = () => {
+      setHidden(true);
+    };
+
+    const main = document.getElementsByClassName('calendar-main-container')[0];
+    main.addEventListener('click', closeSidebar);
+
+    return () => main.removeEventListener("click", closeSidebar);
+  }, [hidden]);
+
   const changeMonth = e => {
     e.preventDefault();
 
@@ -242,7 +256,11 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
                     onClick={e => toggleSidebar(e, dayIdx, weekIdx, dayStr)}
                     key={dayIdx}
                   >
-                    <SpendingIcons date={`${dayStr.slice(0, 4)}-${dayStr.slice(5, 7)}-${dayStr.slice(8, 10)}`} calendarDay={dayStr.slice(8, 10)} />
+                    <SpendingIcons
+                      date={`${dayStr.slice(0, 4)}-${dayStr.slice(5, 7)}-${dayStr.slice(8, 10)}`}
+                      calendarDay={dayStr.slice(8, 10)}
+                      plan={currPlan}
+                      />
                   </div>
                 ))}
               </div>
@@ -288,56 +306,62 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   }
 
   return (
-    <div
-      className="calendar-main-container"
-    // onClick={closeSidebar}
-    >
-      <h2>{currPlan?.plan_name}</h2>
-      <div id="month-selector-container">
-        <div id="month-selector">
-          <input
-            type="month"
-            value={month}
-            onChange={changeMonth}
-          />
+    <>
+      <div
+        className="calendar-main-container"
+      // onClick={closeSidebar}
+      >
+        <h2>{currPlan?.plan_name}</h2>
+        <div id="month-selector-container">
+          <div id="month-selector">
+            <input
+              type="month"
+              value={month}
+              onChange={changeMonth}
+            />
+          </div>
         </div>
-      </div>
-      <div id='calendar-container'>
-        <div id="weekdays-row">
-          {weekdaysRow}
-        </div>
-        <div id="calendar-body">
-          {calendar && (calendar.map((week, weekIdx) => (
-            <div
-              className="calendar-weeks"
-              key={weekIdx}>
-              {week.map((dayStr, dayIdx) => (
-                <div
-                  className="calendar-days"
-                  onClick={e => toggleSidebar(e, dayIdx, weekIdx, dayStr)}
-                  key={dayIdx}
-                >
-                  <SpendingIcons date={`${dayStr.slice(0, 4)}-${dayStr.slice(5, 7)}-${dayStr.slice(8, 10)}`} calendarDay={dayStr.slice(8, 10)} />
-                </div>
-              ))}
-            </div>
-          )))}
-          <div id="calendar-edit-delete">
-            <div id="edit-plan-modal">
-              <EditPlanModal plan={currPlan} />
-            </div>
-            <div id="delete-plan-modal">
-              <DeletePlanModal plan={currPlan} />
+        <div id='calendar-container'>
+          <div id="weekdays-row">
+            {weekdaysRow}
+          </div>
+          <div id="calendar-body">
+            {calendar && (calendar.map((week, weekIdx) => (
+              <div
+                className="calendar-weeks"
+                key={weekIdx}>
+                {week.map((dayStr, dayIdx) => (
+                  <div
+                    className="calendar-days"
+                    onClick={e => toggleSidebar(e, dayIdx, weekIdx, dayStr)}
+                    key={dayIdx}
+                  >
+                    <SpendingIcons
+                      date={`${dayStr.slice(0, 4)}-${dayStr.slice(5, 7)}-${dayStr.slice(8, 10)}`}
+                      calendarDay={dayStr.slice(8, 10)}
+                      plan={currPlan}
+                      />
+                  </div>
+                ))}
+              </div>
+            )))}
+            <div id="calendar-edit-delete">
+              <div id="edit-plan-modal">
+                <EditPlanModal plan={currPlan} />
+              </div>
+              <div id="delete-plan-modal">
+                <DeletePlanModal plan={currPlan} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="tips-container">
-        <div id="calendar-tips-section">
-          <TipSection plan={currPlan} tipChanged={tipChanged} setTipChanged={setTipChanged} />
-        </div>
-        <div id="calendar-new-tip-container">
-          <NewTipForm plan={currPlan} setTipChanged={setTipChanged} />
+        <div className="tips-container">
+          <div id="calendar-tips-section">
+            <TipSection plan={currPlan} tipChanged={tipChanged} setTipChanged={setTipChanged} />
+          </div>
+          <div id="calendar-new-tip-container">
+            <NewTipForm plan={currPlan} setTipChanged={setTipChanged} />
+          </div>
         </div>
       </div>
       <div
@@ -346,7 +370,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       >
         <SpendingsSidebar date={calendarDate} />
       </div>
-    </div>
+    </>
   );
 }
 
