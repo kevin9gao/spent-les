@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-const SpendingIcons = ({ date, calendarDay }) => {
+const SpendingIcons = ({ date, calendarDay, plan }) => {
   // console.log('SpendingIcons Date', date);
 
   const year = date.slice(0, 4);
@@ -15,7 +15,7 @@ const SpendingIcons = ({ date, calendarDay }) => {
   // console.log('spendingsSelectorCopy', spendingsSelectorCopy);
   const spendingsArray = Object.values(spendingsSelectorCopy);
   // console.log('spendingsArray', spendingsArray);
-  const spendings = spendingsArray.map(spending => {
+  const spendings = spendingsArray?.map(spending => {
     // console.log('spending SpendingIcons', spending);
     const mmtDate = moment(spending.date);
     // console.log('mmtDate', mmtDate);
@@ -28,6 +28,8 @@ const SpendingIcons = ({ date, calendarDay }) => {
     return spending;
   })
   // console.log('spendings', spendings);
+
+  useEffect(() => {}, [plan]);
 
   const icon = spending => {
     const amount = Number(spending.amount);

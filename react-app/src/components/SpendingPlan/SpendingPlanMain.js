@@ -55,6 +55,10 @@ const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
               src={avatarUrl}
               id='spending-plan-main-avatar'
               alt='avatar'
+              onError={({ target }) => {
+                target.onError = null;
+                target.src = 'https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/256x256/link_broken.png';
+              }}
             />
           </div>
           <div id="spending-plan-main-header-text">
