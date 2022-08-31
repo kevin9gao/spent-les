@@ -15,14 +15,20 @@ const SpendingIcons = ({ date, calendarDay, plan }) => {
   // console.log('spendingsSelectorCopy', spendingsSelectorCopy);
   const spendingsArray = Object.values(spendingsSelectorCopy);
   // console.log('spendingsArray', spendingsArray);
+
   const spendings = spendingsArray?.map(spending => {
     // console.log('spending SpendingIcons', spending);
     const mmtDate = moment(spending.date);
     // console.log('mmtDate', mmtDate);
     const year = mmtDate.year();
-    const month = mmtDate.month() + 1;
-    const mmtDay = mmtDate.date() + 1;
+    let month = mmtDate.month() + 1;
+    let mmtDay = mmtDate.date() + 1;
     // console.log('year month mmtDay', year, month, mmtDay)
+    const lastOfSelectedMonth = moment([year, 0, 31]).month(month).date();
+    if (mmtDay > lastOfSelectedMonth) {
+      month++;
+      mmtDay = 1;
+    };
     const mmtDateStr = `${year}-${month > 9 ? month : '0' + month}-${mmtDay > 9 ? mmtDay : '0' + mmtDay}`;
     spending.date = mmtDateStr;
     return spending;
