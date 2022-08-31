@@ -7,13 +7,20 @@ import DeleteSpendingModal from "./DeleteSpendingModal";
 const SpendingsList = ({ date }) => {
   const spendings = Object.values(useSelector(state => state.spendings));
   // console.log('spendings', spendings);
+  console.log('SpendingsList date', date);
 
   const dailySpendings = spendings.filter(spending => {
     const mmtDate = moment(spending.date);
     const year = mmtDate.year();
-    const month = mmtDate.month() + 1;
-    const day = mmtDate.date() + 1;
+    let month = mmtDate.month() + 1;
+    let day = mmtDate.date() + 1;
+    const lastOfSelectedMonth = moment([year, 0, 31]).month(month).date();
+    if (day > lastOfSelectedMonth) {
+      month++;
+      day = 1;
+    };
     const mmtDateStr = `${year}-${month > 9 ? month : '0' + month}-${day > 9 ? day : '0' + day}`;
+    // console.log('mmtDate', mmtDate);
     // console.log('month', month);
     // console.log('day', day);
     // console.log('mmtDateStr', mmtDateStr);

@@ -59,7 +59,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
   }, [month]);
 
   useEffect(() => {
-    dispatch(getSpendings(currPlan.id));
+    dispatch(getSpendings(currPlan?.id));
   }, [currPlan]);
 
   const firstOfSelectedMonth = moment(`${selectedYear}-${selectedMonth}-01`).day();
@@ -149,14 +149,11 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       targetYear++;
     }
 
-    if (hidden === true) {
-      // console.log('e', e);
-      // console.log('day', day);
-      setCalendarDate(`${targetYear}-${Number(targetMonth) > 9 ?
-        targetMonth :
-        '0' + targetMonth
-        }-${day}`);
-    }
+    setCalendarDate(`${targetYear}-${Number(targetMonth) > 9 ?
+      targetMonth :
+      '0' + targetMonth
+      }-${day}`);
+
     // console.log('calendarDate', calendarDate)
     setHidden(!hidden);
   }

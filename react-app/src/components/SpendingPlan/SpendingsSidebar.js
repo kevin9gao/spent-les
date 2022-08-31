@@ -20,6 +20,8 @@ const SpendingsSidebar = ({ date, isOwner = true }) => {
     setHideNewSpendingForm(true);
   }, [date]);
 
+  // console.log('SpendingsSidebar date', date);
+
   return (
     <div className="sidebar-container">
       <div className="existing-spendings">
