@@ -165,8 +165,16 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
       setHidden(true);
     };
 
+    const escapeClose = e => {
+      console.log('in escapeClose');
+      if (e.key === 'Escape') {
+        closeSidebar();
+      }
+    }
+
     const main = document.getElementsByClassName('calendar-main-container')[0];
     main.addEventListener('click', closeSidebar);
+    document.onkeydown = e => escapeClose(e);
 
     return () => main.removeEventListener("click", closeSidebar);
   }, [hidden]);
