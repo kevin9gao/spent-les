@@ -7,7 +7,7 @@ import DeleteSpendingModal from "./DeleteSpendingModal";
 const SpendingsList = ({ date }) => {
   const spendings = Object.values(useSelector(state => state.spendings));
   // console.log('spendings', spendings);
-  console.log('SpendingsList date', date);
+  // console.log('SpendingsList date', date);
 
   const dailySpendings = spendings.filter(spending => {
     const mmtDate = moment(spending.date);
