@@ -166,7 +166,6 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
     };
 
     const escapeClose = e => {
-      console.log('in escapeClose');
       if (e.key === 'Escape') {
         closeSidebar();
       }

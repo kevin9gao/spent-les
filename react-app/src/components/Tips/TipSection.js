@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import { loadTips } from "../../store/tips";
 import DeleteTipModal from "./DeleteTipModal";
 import EditTipModal from "./EditTipModal";
-// import moment from 'moment';
 import moment from 'moment-timezone';
 import './Tips.css';
 
@@ -23,8 +22,11 @@ const TipSection = ({ plan, tipChanged, setTipChanged }) => {
     setTipChanged(false);
   }, [plan, tipChanged])
 
+  // moment.tz.guess();
+
   const createDateString = time => {
-    const timestamp = moment.tz(time, 'America/Los Angeles');
+    const timestamp = moment(time);
+
     return timestamp.format("dddd, MMMM Do YYYY, h:mm:ss a");
   }
 

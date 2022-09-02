@@ -9,7 +9,7 @@ class Tip(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     plan_id = db.Column(db.Integer, db.ForeignKey('spending_plans.id'), nullable=False)
     tip_body = db.Column(db.String(1000), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
 
     def to_dict(self):
         return {
