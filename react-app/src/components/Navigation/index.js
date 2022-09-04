@@ -47,6 +47,15 @@ const Navigation = () => {
               Users
             </NavLink>
           </div>
+          <div
+            className="navbar-links">
+            <NavLink
+              to='/inbox'
+              exact={true}
+              activeClassName='active'>
+              Inbox
+            </NavLink>
+          </div>
         </div>
       </div>
       <div
