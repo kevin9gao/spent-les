@@ -54,7 +54,7 @@
   font-weight: 500;
 }
 
-.active {
+.navbar-links .active {
   background-color: gray;
   height: 5vh;
   width: 100%;
