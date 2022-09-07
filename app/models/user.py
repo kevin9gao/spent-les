@@ -1,6 +1,7 @@
 from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from .followers import followers
 
 
 class User(db.Model, UserMixin):
@@ -37,3 +38,22 @@ class User(db.Model, UserMixin):
     spending_plans = db.relationship('SpendingPlan', back_populates='user', cascade='all, delete')
     tips = db.relationship('Tip', back_populates='user', cascade='all, delete')
     messages_sent = db.relationship("DirectMessage", back_populates="sender")
+    followed = db.relationship('User',
+                               secondary=followers,
+                               primaryjoin=(followers.c.follower_id == id),
+                               secondaryjoin=(followers.c.followed_id == id),
+                               backref=db.backref('followers', lazy='dynamic'),
+                               lazy='dynamic')
+
+    def follow(self, user):
+        if not self.is_following(user):
+            self.followed.append(user)
+            return self
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.followed.remove(user)
+            return self
+
+    def is_following(self, user):
+        return self.followed.filter(followers.c.followed_id == user.id).count() > 0

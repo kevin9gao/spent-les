@@ -35,6 +35,10 @@
   font-size: 17px;
   filter: drop-shadow(0 0 5px rgb(60, 70, 75));
 }
+#spending-plan-main-header-categories .active {
+  font-size: 17px;
+  filter: drop-shadow(0 0 5px rgb(60, 70, 75));
+}
 
 #spending-plan-main-header-title {
   font-size: 20px;
