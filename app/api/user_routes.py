@@ -43,7 +43,7 @@ def follow_user(follower_id, followed_id):
         db.session.commit()
         return followed.to_dict()
 
-@user_routes.route('/<int:follower_id>/follow/<int:followed_id>', methods=['POST'])
+@user_routes.route('/<int:follower_id>/unfollow/<int:followed_id>', methods=['POST'])
 def unfollow_user(follower_id, followed_id):
     follower = User.query.get(follower_id)
     followed = User.query.get(followed_id)

@@ -14,7 +14,7 @@ function User() {
   const sessionUser = useSelector(state => state.session.user);
 
   const followedUsers = useSelector(state => state.followers['followed']);
-  const [followed, setFollowed] = useState(userId in followedUsers);
+  const [followed, setFollowed] = useState(followedUsers ? userId in followedUsers : false);
   // console.log('followed', followed);
   // console.log('followedUsers', followedUsers);
   // console.log('userId in followedUsers', userId in followedUsers);
