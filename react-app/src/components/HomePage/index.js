@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getFollowed, getFollowers } from "../../store/followers";
 import { getUserPlans } from "../../store/plans";
 import SpendingsBreakdown from "../SpendingPlan/SpendingsBreakdown";
 import './HomePage.css';
@@ -12,6 +13,11 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
 
   useEffect(() => {
     dispatch(getUserPlans(user.id));
+  }, []);
+
+  useEffect(() => {
+    dispatch(getFollowers(user?.id));
+    dispatch(getFollowed(user?.id));
   }, []);
 
   const date = new Date();

@@ -67,6 +67,12 @@
   border-radius: 20px;
 }
 
+#follow-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .user-link-row {
   height: 22%;
   width: 100%;
