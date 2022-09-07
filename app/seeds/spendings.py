@@ -81,13 +81,24 @@ def seed_spendings():
 
     kevin_april = []
     for i in range(1, 31):
-        kevin_april.append(Spending(plan_id=8,
+        kevin_april.append(Spending(plan_id=9,
                                    transaction_name='daily spendings',
                                    transaction_notes='seeders',
                                    amount=150,
                                    date=date(2022, 4, i)))
 
     for spending in kevin_april:
+        db.session.add(spending)
+
+    kevin_september = []
+    for i in range(1, 7):
+        kevin_september.append(Spending(plan_id=10,
+                                   transaction_name='daily spendings hah',
+                                   transaction_notes='seeders',
+                                   amount=100,
+                                   date=date(2022, 9, i)))
+
+    for spending in kevin_september:
         db.session.add(spending)
 
 
