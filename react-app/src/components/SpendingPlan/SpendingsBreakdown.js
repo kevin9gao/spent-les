@@ -33,13 +33,7 @@ const SpendingsBreakdown = ({ isWidget = false, widgetMonth }) => {
 
 
   const spendingsObj = useSelector(state => state.spendings);
-  const allSpendings = spendingsObj ? Object.values(spendingsObj) : null;
-  const spendings = allSpendings?.filter(spending => {
-    const spendingDate = moment(spending.date);
-    return month === `${spendingDate.year()}-${spendingDate.month() + 1 < 10 ?
-                      `0${spendingDate.month() + 1}` :
-                      spendingDate.month() + 1}`;
-  })
+  const spendings = spendingsObj ? Object.values(spendingsObj) : null;
   // console.log('spendings', spendings);
 
   useEffect(() => {

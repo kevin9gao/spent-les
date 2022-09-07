@@ -106,3 +106,24 @@
   display: flex;
   justify-content: center;
 }
+
+#users-page-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.users-page.main-container {
+  display: flex;
+  flex-direction: column;
+  width: 85vw;
+}
+
+.users-page.main-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1em;
+  border-bottom: 3px solid gray;
+  height: 15vh;
+}

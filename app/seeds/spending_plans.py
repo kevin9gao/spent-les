@@ -82,6 +82,15 @@ def seed_spending_plans():
      additional_income_notes='Not sure where extra money came from',
      notes='My birthday is next month'
      )
+    kevin_september = SpendingPlan(plan_name="kevin - September 2022",
+     user_id=4,
+     month=9,
+     year=2022,
+     private=False,
+     additional_income=50,
+     additional_income_notes='Not sure where extra money came from',
+     notes='My birthday is next month'
+     )
 
     spending_plans = [kevin_july,
                       kevin_june,
@@ -91,7 +100,8 @@ def seed_spending_plans():
                       marnie_july,
                       demo_july,
                       kevin_may,
-                      kevin_april]
+                      kevin_april,
+                      kevin_september]
 
     for spending_plan in spending_plans:
         db.session.add(spending_plan)
