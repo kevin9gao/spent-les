@@ -14,7 +14,7 @@ const DemoUserButton = () => {
     const demoPW = 'password';
 
     await dispatch(login(demoEmail, demoPW));
-    history.push('/home');
+    history.push('/home/overview');
   };
 
   return (
