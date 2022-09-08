@@ -1,0 +1,42 @@
+.anchor-images {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-wrapper {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer {
+  width: 10vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .logo {
+  border: 1px solid gray;
+  width: 40px;
+  height: 40px;
+}
+
+.footer p,
+.footer span {
+  margin: 1em;
+}
+
+.footer a {
+  margin: .2em;
+}
+
+#logo-wrapper.footer span {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+#footer-year {
+  font-size: 18px;
+}

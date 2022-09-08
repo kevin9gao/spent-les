@@ -66,7 +66,7 @@ let newState;
 const followersReducer = (state = {}, action) => {
   switch (action.type) {
     case LOAD:
-      newState = {};
+      newState = { ...state };
       if (action.list['followers']) {
         const followers = action.list['followers'];
 
@@ -86,7 +86,7 @@ const followersReducer = (state = {}, action) => {
 
         if (followed) {
           followed.forEach(followed => {
-            newState[followed.id] = followed;
+            newState['followed'][followed.id] = followed;
           })
         }
 

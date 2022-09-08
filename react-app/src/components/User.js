@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 import './Users.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ function User() {
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const { userId }  = useParams();
+  const history = useHistory();
 
   const sessionUser = useSelector(state => state.session.user);
 
@@ -57,14 +58,26 @@ function User() {
     }
   }
 
+  const handleBack = e => {
+    e.preventDefault();
+
+    history.goBack();
+  }
+
   if (!user) {
     return null;
   }
 
   return (
     <div className='users-container users-page'>
+      <div className='back-wrapper'>
+        <button
+          className='back-btn'
+          onClick={handleBack}
+          >Back</button>
+      </div>
       <div className='user-card'>
-        <div className='user-card-row' id='follow-row'>
+        <div className={`user-card-row ${followed ? 'followed' : 'not-followed'}`} id='follow-row'>
           <button onClick={handleFollow}>{followed ? 'Unfollow' : 'Follow'}</button>
         </div>
         <div className='user-card-row'>

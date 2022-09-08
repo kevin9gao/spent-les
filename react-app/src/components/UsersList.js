@@ -29,7 +29,7 @@ function UsersList() {
                   target.onError = null;
                   target.src = 'https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/256x256/link_broken.png';
                 }}
-                />
+              />
             </div>
             <div className='user-username'>
               {user.username}
@@ -42,7 +42,7 @@ function UsersList() {
 
   return (
     <div className='users-container'>
-      <h1>User List: </h1>
+      <h1>Users</h1>
       <ul className='users-list'>{userComponents}</ul>
     </div>
   );
