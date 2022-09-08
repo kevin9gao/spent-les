@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const LOAD = 'spendings/LOAD';
 const ADD = 'spendings/ADD';
 const UPDATE = 'spendings/UPDATE';
@@ -33,6 +35,33 @@ export const getSpendings = planId => async dispatch => {
     const list = await res.json();
     await dispatch(load(list));
     return list;
+  }
+}
+
+export const getOtherUsersSpendings = userId => async dispatch => {
+  const planRes = await fetch(`/api/plans/users/${userId}`);
+
+  let plans;
+  let spendings = {};
+  spendings[userId] = [];
+  // console.log('spendings', spendings);
+
+  if (planRes.ok) {
+    plans = await planRes.json();
+    plans = plans['user_plans'];
+    plans.sort((a,b) => a.month - b.month);
+    console.log('plans getOtherUserSpendings thunk', plans);
+
+    plans.forEach(async plan => {
+      console.log('plan in forEach', plan);
+      const spendingsRes = await fetch(`/api/spendings/plan/${plan.id}`);
+      const singlePlanSpendings = await spendingsRes.json();
+      // console.log('singlePlanSpendings', singlePlanSpendings);
+      spendings[userId].push(...singlePlanSpendings.spendings);
+      console.log('spendings after push in forEach', spendings);
+    })
+    console.log('spendings after push', spendings);
+
   }
 }
 

@@ -8,7 +8,10 @@ def seed_spendings():
                                    transaction_name='daily spendings',
                                    transaction_notes='seeders',
                                    amount=67.56,
-                                   date=date(2022, 7, i)))
+                                   date=date(2022, 7, i),
+                                   month=7,
+                                   year=2022,
+                                   day=i))
 
     for spending in kevin_july:
         db.session.add(spending)
@@ -19,7 +22,10 @@ def seed_spendings():
                                    transaction_name='daily spendings',
                                    transaction_notes='seeders',
                                    amount=59.46,
-                                   date=date(2022, 8, i)))
+                                   date=date(2022, 8, i),
+                                   month=8,
+                                   year=2022,
+                                   day=i))
 
     for spending in kevin_august:
         db.session.add(spending)
@@ -30,13 +36,19 @@ def seed_spendings():
                                    transaction_name='daily spendings',
                                    transaction_notes='seeders',
                                    amount=190.46,
-                                   date=date(2022, 6, i)))
+                                   date=date(2022, 6, i),
+                                   month=6,
+                                   year=2022,
+                                   day=i))
     for i in range(2, 31, 9):
         kevin_june.append(Spending(plan_id=2,
                                    transaction_name='splurges',
                                    transaction_notes='seeders',
                                    amount=456.32,
-                                   date=date(2022, 6, i)))
+                                   date=date(2022, 6, i),
+                                   month=6,
+                                   year=2022,
+                                   day=i))
 
     for spending in kevin_june:
         db.session.add(spending)
@@ -47,7 +59,10 @@ def seed_spendings():
                                    transaction_name='daily spendings - too much',
                                    transaction_notes='seeders',
                                    amount=180.64,
-                                   date=date(2022, 7, i)))
+                                   date=date(2022, 7, i),
+                                   month=7,
+                                   year=2022,
+                                   day=i))
 
     for spending in marnie_july:
         db.session.add(spending)
@@ -58,7 +73,10 @@ def seed_spendings():
                                    transaction_name='demolitionist supplies',
                                    transaction_notes='seeders',
                                    amount=146.94,
-                                   date=date(2022, 7, i)))
+                                   date=date(2022, 7, i),
+                                   month=7,
+                                   year=2022,
+                                   day=i))
 
     for spending in demo_july:
         db.session.add(spending)
@@ -69,12 +87,18 @@ def seed_spendings():
                                    transaction_name='daily spendings',
                                    transaction_notes='seeders',
                                    amount=150,
-                                   date=date(2022, 5, i)))
+                                   date=date(2022, 5, i),
+                                   month=5,
+                                   year=2022,
+                                   day=i))
     kevin_may.append(Spending(plan_id=8,
                                    transaction_name='birthday dinner!!!!',
                                    transaction_notes='seeders',
                                    amount=526.49,
-                                   date=date(2022, 5, 29)))
+                                   date=date(2022, 5, 29),
+                                   month=5,
+                                   year=2022,
+                                   day=i))
 
     for spending in kevin_may:
         db.session.add(spending)
@@ -85,7 +109,10 @@ def seed_spendings():
                                    transaction_name='daily spendings',
                                    transaction_notes='seeders',
                                    amount=150,
-                                   date=date(2022, 4, i)))
+                                   date=date(2022, 4, i),
+                                   month=4,
+                                   year=2022,
+                                   day=i))
 
     for spending in kevin_april:
         db.session.add(spending)
@@ -96,7 +123,10 @@ def seed_spendings():
                                    transaction_name='daily spendings hah',
                                    transaction_notes='seeders',
                                    amount=100,
-                                   date=date(2022, 9, i)))
+                                   date=date(2022, 9, i),
+                                   month=9,
+                                   year=2022,
+                                   day=i))
 
     for spending in kevin_september:
         db.session.add(spending)

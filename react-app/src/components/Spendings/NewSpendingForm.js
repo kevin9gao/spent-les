@@ -11,7 +11,10 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
   const [validationErrors, setValidationErrors] = useState([]);
   const [hideErrors, setHideErrors] = useState(true);
 
-  // console.log('NewSpendingForm date', date);
+  console.log('NewSpendingForm date', date);
+  const year = Number(date.slice(0, 4));
+  const month = Number(date.slice(5, 7));
+  const day = Number(date.slice(8, 10));
 
   useEffect(() => {
     const errors = [];
@@ -45,7 +48,10 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
       transaction_name: nameInput,
       transaction_notes: notesInput.length ? notesInput : null,
       amount: amountInput,
-      date
+      date,
+      month,
+      year,
+      day
     }
 
     // console.log('NewSpendingForm payload', payload);
