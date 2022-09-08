@@ -43,24 +43,28 @@ const EditSpendingForm = ({ spending, setShowModal }) => {
 
     const date = moment(spending.date);
     const year = date.year();
-    const month = date.month();
-    const day = date.date();
-    const dateStr = `${year}-${month + 1 < 10 ?
-                              `0${month + 1}` :
-                              month + 1}-${day + 1 < 10 ?
-                                          `0${day + 1}` :
-                                          day + 1}`;
+    const month = date.month() + 1;
+    const day = date.date() + 1;
+    const dateStr = `${year}-${month < 10 ?
+                              `0${month}` :
+                              month}-${day < 10 ?
+                                          `0${day}` :
+                                          day}`;
+    // console.log('year', year, 'month', month, 'day', day);
 
 
     const payload = {
       plan_id: spending.plan_id,
       transaction_name: nameInput,
-      transaction_notes: notesInput.length ? notesInput : null,
+      transaction_notes: notesInput ? notesInput : null,
       amount: Number(amountInput),
-      date: dateStr
+      date: dateStr,
+      month,
+      year,
+      day
     }
 
-    console.log('EditSpendingForm payload', payload);
+    // console.log('EditSpendingForm payload', payload);
 
     if (!validationErrors.length) {
       const updatedSpending = await dispatch(editSpending(spending.id, payload));

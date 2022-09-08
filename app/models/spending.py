@@ -10,6 +10,9 @@ class Spending(db.Model):
     transaction_notes = db.Column(db.String(500), nullable=True)
     amount = db.Column(db.Numeric(10,2), nullable=False)
     date = db.Column(db.Date, nullable=False)
+    month = db.Column(db.Integer, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    day = db.Column(db.Integer, nullable=False)
 
     def to_dict(self):
         return {
@@ -18,7 +21,10 @@ class Spending(db.Model):
             'transaction_name': self.transaction_name,
             'transaction_notes': self.transaction_notes,
             'amount': str(self.amount),
-            'date': self.date
+            'date': self.date,
+            'month': self.month,
+            'year': self.year,
+            'day': self.day,
         }
 
     plan = db.relationship('SpendingPlan', back_populates='spendings')

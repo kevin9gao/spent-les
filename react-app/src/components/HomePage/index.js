@@ -4,6 +4,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { getFollowed, getFollowers } from "../../store/followers";
 import { getUserPlans } from "../../store/plans";
 import SpendingsBreakdown from "../SpendingPlan/SpendingsBreakdown";
+import Feed from "./Feed";
 import './HomePage.css';
 import Overviews from "./Overviews";
 
@@ -62,7 +63,7 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
   if (page === 'overview') {
     bodySection = <Overviews />
   } else if (page === 'feed') {
-
+    bodySection = <Feed />
   }
 
   if (!user) return null;
