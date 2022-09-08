@@ -103,9 +103,11 @@ function App() {
             </Route>
           </Switch>
         </div>
-        <footer>
-          <Footer />
-        </footer>
+        {user && (
+          <footer>
+            <Footer />
+          </footer>
+        )}
       </div>
     </BrowserRouter>
   );

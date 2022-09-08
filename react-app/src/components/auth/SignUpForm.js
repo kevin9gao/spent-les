@@ -5,6 +5,7 @@ import { signUp } from '../../store/session';
 import Logo from '../../images/logo.jpg';
 import Check from '../../images/spent-les-check.png';
 import './Auth.css';
+import Footer from '../Footer';
 
 const SignUpForm = () => {
   const [validationErrors, setValidationErrors] = useState([]);
@@ -200,37 +201,8 @@ const SignUpForm = () => {
           </div>
         </div>
       </div>
-      <footer className='footer'>
-        <div className='footer-wrapper'>
-          <div id='app-name'>
-            Spent-Lès
-          </div>
-          <div id='dev-name'>
-            Kevin Gao
-          </div>
-          <div id='footer-links'>
-            <a
-              href="https://www.linkedin.com/in/kevin-gao-81a7b8241/"
-              target='_blank'
-              rel="noreferrer"
-            >
-              <img
-                src="https://sharethis.imgix.net/2017/05/LinkedIn.png?fm=webp&auto=compress&q=1"
-                className="anchor-images"
-              />
-            </a>
-            <a
-              href="https://github.com/kevin9gao"
-              target='_blank'
-              rel="noreferrer"
-            >
-              <img
-                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                className="anchor-images"
-              />
-            </a>
-          </div>
-        </div>
+      <footer>
+        <Footer />
       </footer>
     </div>
   );

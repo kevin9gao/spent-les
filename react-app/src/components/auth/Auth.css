@@ -231,3 +231,13 @@ footer {
   font-family: "gordita", "Helvetica Neue", "Helvetica", sans-serif;
   margin: 0;
 }
+
+.login-wrapper footer {
+  display: block;
+  position: absolute;
+  bottom: 0;
+}
+
+.login-wrapper .footer-wrapper {
+  width: 100%;
+}
