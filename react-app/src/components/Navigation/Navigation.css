@@ -1,6 +1,14 @@
 .navbar-container {
   display: block;
   width: 15vw;
+  height: 100vh;
+}
+
+.navbar-block-wrapper {
+  display: block;
+  position: sticky;
+  left: 0;
+  height: 100%;
 }
 
 .navbar {
@@ -38,16 +46,17 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  margin: 0 0 0 5px;
+  margin: 0;
   padding: 5px;
 }
 .logo-wrapper {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 100%;
   margin-top: 12px;
   margin-bottom: 12px;
+  margin-right: 1.3em;
 }
 .logo-wrapper span {
   font-size: 20px;

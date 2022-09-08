@@ -1,12 +1,37 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useParams } from "react-router-dom";
+import { getFollowed, getFollowers } from "../../store/followers";
+import UsersList from "../UsersList";
+import Following from "./Following";
+import Followers from "./Followers";
 
 const UsersPage = () => {
+  const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const { userId, page } = useParams();
+  // console.log('userId', userId);
+  // console.log('page', page);
+  const [isExtended, setIsExtended] = useState(false);
+
+  useEffect(() => {
+    dispatch(getFollowers(sessionUser.id));
+    dispatch(getFollowed(sessionUser.id));
+  }, []);
+
+  let bodySection;
+
+  if (page === undefined) {
+    bodySection = <UsersList />
+  } else if (page === 'followers') {
+    bodySection = <Followers setIsExtended={setIsExtended} />
+  } else if (page === 'following') {
+    bodySection = <Following setIsExtended={setIsExtended} />
+  }
 
   return (
-    <div className="users-page main-container">
+    <div
+      className={`users-page main-container ${isExtended ? 'extended' : ''}`}>
       <div className="users-page main-header">
         <div className="users-page-main-avatar">
           <NavLink to={`/users/${sessionUser.id}`}>
@@ -30,7 +55,7 @@ const UsersPage = () => {
               to='/users/list'
               activeClassName="active"
               >
-                Users List
+                Users
             </NavLink>
             <NavLink
               to={`/users/${sessionUser.id}/following`}
@@ -46,6 +71,9 @@ const UsersPage = () => {
             </NavLink>
           </div>
         </div>
+      </div>
+      <div id="users-page-body">
+        {bodySection}
       </div>
     </div>
   );

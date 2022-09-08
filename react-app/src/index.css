@@ -13,8 +13,23 @@ body {
 }
 
 .app-wrapper {
-  display: flex;
   background-color: gainsboro;
+  height: 100vh;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  height: 10vh;
+  width: 100%;
+  background-color: black;
+  z-index: 10;
+}
+
+.app-formatting-wrapper {
+  display: flex;
+  height: 90vh;
 }
 
 a, button {
