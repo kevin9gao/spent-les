@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useParams } from "react-router-dom";
 import { getFollowed, getFollowers } from "../../store/followers";
 import { getUserPlans } from "../../store/plans";
 import SpendingsBreakdown from "../SpendingPlan/SpendingsBreakdown";
 import './HomePage.css';
+import Overviews from "./Overviews";
 
 const HomePage = ({ WEEKDAYS, MONTHS }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
   const plansObj = useSelector(state => state.plans['user-plans']);
   const plans = plansObj ? Object.values(plansObj) : null;
+  const { page } = useParams();
+  console.log('page', page);
 
   useEffect(() => {
     dispatch(getUserPlans(user.id));
@@ -53,21 +57,49 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
     );
   })
 
+  let bodySection;
+
+  if (page === 'overview') {
+    bodySection = <Overviews />
+  } else if (page === 'feed') {
+
+  }
+
   if (!user) return null;
 
   return (
-    <div className={`home-main-container ${plans?.length > 4 ? '' : 'no-plans'}`}>
+    <div className={`home-main-container`}>
+      <div id="home-header-title">Home</div>
       <div className="home-header">
-        <div id="home-header-title">Home</div>
-        <div id="home-header-date">
-          {dateStr}
-        </div>
-        <div id="home-header-greeting">
-          {`${greeting}, ${user.username}`}
+        <div id="home-header-wrapper">
+          <div id="home-header-static">
+            <div id="home-header-date">
+              {dateStr}
+            </div>
+            <div id="home-header-greeting">
+              {`${greeting}, ${user.username}`}
+            </div>
+          </div>
+          <div id="home-header-dynamic">
+            <div id="home-header-categories">
+              <NavLink
+                to='/home/overview'
+                activeClassName="active"
+                >
+                  Overview
+              </NavLink>
+              <NavLink
+                to='/home/feed'
+                activeClassName="active"
+                >
+                  Feed
+              </NavLink>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="home-overview">
-        {overviews}
+      <div className="home-body">
+        {bodySection}
       </div>
     </div>
   );

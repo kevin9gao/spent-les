@@ -24,7 +24,7 @@ const Navigation = () => {
             <div
               className="navbar-links">
               <NavLink
-                to='/home'
+                to='/home/overview'
                 exact>
                 Home
               </NavLink>

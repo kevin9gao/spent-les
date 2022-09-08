@@ -95,7 +95,7 @@ function App() {
             <ProtectedRoute path='/users/:userId/DMs' exact={true}>
               Inbox
             </ProtectedRoute>
-            <ProtectedRoute path='/home' exact={true} >
+            <ProtectedRoute path='/home/:page' exact={true} >
               <HomePage WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
             </ProtectedRoute>
             <Route path='/' exact={true} >
