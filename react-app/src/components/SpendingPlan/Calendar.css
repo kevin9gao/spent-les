@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  overflow-y: auto;
 }
 
 #month-selector-container {
@@ -156,11 +157,16 @@
 }
 
 .not-owner-main-container {
-  height: 100%;
+  height: 90vh;
   width: 85vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 30vh;
+}
+
+.not-owner-main-container h2 {
+  margin: 0;
 }
 
 .tips-container {
