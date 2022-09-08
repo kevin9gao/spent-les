@@ -1,12 +1,18 @@
 import moment from "moment";
 
 const LOAD = 'spendings/LOAD';
+const LOAD_FEED = 'spendings/LOAD_FEED';
 const ADD = 'spendings/ADD';
 const UPDATE = 'spendings/UPDATE';
 const REMOVE = 'spendings/REMOVE';
 
 const load = list => ({
   type: LOAD,
+  list
+})
+
+const loadFeed = list => ({
+  type: LOAD_FEED,
   list
 })
 
@@ -49,19 +55,19 @@ export const getOtherUsersSpendings = userId => async dispatch => {
   if (planRes.ok) {
     plans = await planRes.json();
     plans = plans['user_plans'];
-    plans.sort((a,b) => a.month - b.month);
-    console.log('plans getOtherUserSpendings thunk', plans);
+    // console.log('plans getOtherUserSpendings thunk', plans);
 
     plans.forEach(async plan => {
-      console.log('plan in forEach', plan);
+      // console.log('plan in forEach', plan);
       const spendingsRes = await fetch(`/api/spendings/plan/${plan.id}`);
       const singlePlanSpendings = await spendingsRes.json();
       // console.log('singlePlanSpendings', singlePlanSpendings);
       spendings[userId].push(...singlePlanSpendings.spendings);
-      console.log('spendings after push in forEach', spendings);
+      spendings[userId].sort((a, b) => a.month - b.month);
     })
     console.log('spendings after push', spendings);
-
+    const list = spendings;
+    await dispatch(loadFeed(list));
   }
 }
 
@@ -119,6 +125,25 @@ const spendingsReducer = (state = {}, action) => {
       spendings.forEach(spending => {
         newState[spending.id] = spending;
       });
+
+      return newState;
+    case LOAD_FEED:
+      newState = { ...state };
+
+      console.log('reducer action.list', action.list);
+
+      const otherUserId = Object.keys(action.list)[0];
+      console.log('reducer otherUserId', otherUserId);
+
+      const otherUserSpendings = action.list[otherUserId];
+      console.log('reducer otherUserSpendings', otherUserSpendings);
+
+      otherUserSpendings.forEach(spending => {
+        newState[spending.id] = spending;
+      });
+      console.log('reducer newState', newState);
+
+      // newState['following-spendings'].sort((a, b) => a.month - b.month);
 
       return newState;
     case ADD:
