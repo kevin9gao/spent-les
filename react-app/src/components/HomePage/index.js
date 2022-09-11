@@ -83,18 +83,19 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
           </div>
           <div id="home-header-dynamic">
             <div id="home-header-categories">
-              <NavLink
+              <h2>Overview</h2>
+              {/* <NavLink
                 to='/home/overview'
                 activeClassName="active"
                 >
                   Overview
-              </NavLink>
-              <NavLink
+              </NavLink> */}
+              {/* <NavLink
                 to='/home/feed'
                 activeClassName="active"
                 >
                   Feed
-              </NavLink>
+              </NavLink> */}
             </div>
           </div>
         </div>
