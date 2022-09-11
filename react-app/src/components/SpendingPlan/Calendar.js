@@ -283,7 +283,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
           id="sidebar"
           hidden={hidden}
         >
-          <SpendingsSidebar date={calendarDate} isOwner={false} />
+          <SpendingsSidebar date={calendarDate} isOwner={false} userId={userId} />
         </div>
       </div>
     );
@@ -372,7 +372,7 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
         id="sidebar"
         hidden={hidden}
       >
-        <SpendingsSidebar date={calendarDate} />
+        <SpendingsSidebar date={calendarDate} userId={userId} />
       </div>
     </>
   );

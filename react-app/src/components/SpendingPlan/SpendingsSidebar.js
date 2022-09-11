@@ -7,10 +7,21 @@ import NewSpendingForm from "../Spendings/NewSpendingForm";
 import SpendingsList from "../Spendings/SpendingsList";
 import './SpendingsSidebar.css';
 
-const SpendingsSidebar = ({ date, isOwner = true }) => {
+const SpendingsSidebar = ({ date, isOwner = true, userId }) => {
   const dispatch = useDispatch();
   const [hideNewSpendingForm, setHideNewSpendingForm] = useState(true);
   const plan = useSelector(state => state.plans.current);
+  // console.log('userId sidebar', userId)
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`/api/users/${userId}`);
+      const sidebarUser = await res.json();
+      setUser(sidebarUser);
+    })();
+  }, [userId]);
+  // console.log('user state var', user);
 
   useEffect(() => {
     dispatch(getSpendings(plan?.id));
@@ -25,7 +36,7 @@ const SpendingsSidebar = ({ date, isOwner = true }) => {
   return (
     <div className="sidebar-container">
       <div className="existing-spendings">
-        <h2>{`User Spendings - ${date}`}</h2>
+        <h2>{`${user?.username}'s Spendings - ${date}`}</h2>
         <div id="sidebar-spendings-container">
           <SpendingsList date={date} />
         </div>
