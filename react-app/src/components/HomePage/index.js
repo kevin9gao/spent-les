@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, Redirect, useParams } from "react-router-dom";
 import { getFollowed, getFollowers } from "../../store/followers";
 import { getUserPlans } from "../../store/plans";
 import SpendingsBreakdown from "../SpendingPlan/SpendingsBreakdown";
@@ -65,6 +65,8 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
   } else if (page === 'feed') {
     bodySection = <Feed />
   }
+
+  if (page === undefined) return <Redirect to='/home/overview' />;
 
   if (!user) return null;
 
