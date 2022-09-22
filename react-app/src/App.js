@@ -98,6 +98,9 @@ function App() {
             <ProtectedRoute path='/home/:page' exact={true} >
               <HomePage WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
             </ProtectedRoute>
+            <ProtectedRoute path='/home' exact={true} >
+              <HomePage WEEKDAYS={WEEKDAYS} MONTHS={MONTHS} />
+            </ProtectedRoute>
             <Route path='/' exact={true} >
               <SplashPage />
             </Route>

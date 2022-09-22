@@ -11,7 +11,9 @@ const AboutPage = () => {
       </div>
       <div id="name-container">
         <p id="name">Kevin Gao</p>
-        <p id="position">Developer</p>
+        <p id="position">I am a full stack web developer with an education background
+                        at App Academy.</p>
+        <p id="technologies">Technologies Used:</p>
       </div>
       <div id="about-links">
         <a
