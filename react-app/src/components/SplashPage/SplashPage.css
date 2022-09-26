@@ -114,19 +114,16 @@
   left: 45%;
   top: 20vh;
 }
-#wallet-img {
-  transform: all 5s ease;
+.right-col img {
+  transition: all 1s ease;
 }
 #wallet-img:hover {
-  width: 26vw;
-  height: 34vh;
-}
-#graphs-img {
-  transform: all 5s ease;
+  width: 24.2vw;
+  height: 33vh;
 }
 #graphs-img:hover {
-  width: 26vw;
-  height: 34vh;
+  width: 27.5vw;
+  height: 33vh;
 }
 #img-1:hover {
   z-index: 2;
