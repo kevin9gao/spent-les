@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editSpending } from "../../store/spendings";
 import moment from 'moment';
 
 const EditSpendingForm = ({ spending, setShowModal }) => {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);
   const [nameInput, setNameInput] = useState(spending.transaction_name);
   const [notesInput, setNotesInput] = useState(spending.transaction_notes);
   const [amountInput, setAmountInput] = useState(spending.amount);
@@ -61,7 +62,8 @@ const EditSpendingForm = ({ spending, setShowModal }) => {
       date: dateStr,
       month,
       year,
-      day
+      day,
+      user_id: user.id,
     }
 
     // console.log('EditSpendingForm payload', payload);

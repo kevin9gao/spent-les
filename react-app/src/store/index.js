@@ -5,6 +5,7 @@ import plans from './plans';
 import spendings from './spendings';
 import tips from './tips';
 import followers from './followers';
+import feed from './feed';
 
 const rootReducer = combineReducers({
   session,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   spendings,
   tips,
   followers,
+  feed,
 });
 
 

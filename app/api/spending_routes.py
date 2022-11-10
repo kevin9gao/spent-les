@@ -7,6 +7,11 @@ from app.models.user import User
 spending_routes = Blueprint('spendings', __name__)
 
 
+@spending_routes.route('/')
+def get_all_spendings():
+    spendings = Spending.query.all()
+    return {'spendings': [spending.to_dict() for spending in spendings]}
+
 @spending_routes.route('/plan/<int:plan_id>')
 def get_user_spendings(plan_id):
     plan = SpendingPlan.query.get(plan_id)
@@ -26,7 +31,8 @@ def create_spending():
                             date=data['date'],
                             month=data['month'],
                             year=data['year'],
-                            day=data['day'])
+                            day=data['day'],
+                            user_id=data['user_id'])
         db.session.add(spending)
         db.session.commit()
         return spending.to_dict()

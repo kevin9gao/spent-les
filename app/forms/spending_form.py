@@ -13,3 +13,4 @@ class SpendingForm(FlaskForm):
     month = IntegerField('month', validators=[DataRequired()])
     year = IntegerField('year', validators=[DataRequired()])
     day = IntegerField('day', validators=[DataRequired()])
+    user_id = IntegerField('user_id', validators=[DataRequired()])
