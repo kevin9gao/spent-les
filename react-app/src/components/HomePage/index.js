@@ -14,7 +14,7 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
   const plansObj = useSelector(state => state.plans['user-plans']);
   const plans = plansObj ? Object.values(plansObj) : null;
   const { page } = useParams();
-  console.log('page', page);
+  // console.log('page', page);
 
   useEffect(() => {
     dispatch(getUserPlans(user.id));

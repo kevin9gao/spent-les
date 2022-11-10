@@ -34,8 +34,8 @@ const remove = spendingId => ({
 export const getSpendings = planId => async dispatch => {
   const res = await fetch(`/api/spendings/plan/${planId}`);
 
-  console.log('getSpendings planId', planId);
-  console.log('getSpendings res', res);
+  // console.log('getSpendings planId', planId);
+  // console.log('getSpendings res', res);
 
   if (res.ok) {
     const list = await res.json();

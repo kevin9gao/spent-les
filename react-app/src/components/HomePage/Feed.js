@@ -9,7 +9,7 @@ const Feed = () => {
   const sessionUser = useSelector(state => state.session.user);
   const followingObj = useSelector(state => state.followers['followed']);
   const following = followingObj ? Object.values(followingObj).map(user => user.id) : null;
-  // console.log('feed following', following);
+  console.log('feed following', following);
   const [users, setUsers] = useState([]);
   console.log('users', users);
 
@@ -27,7 +27,7 @@ const Feed = () => {
   }, []);
 
   const feedObj = useSelector(state => state.feed);
-  // console.log('feedObj', feedObj)
+  console.log('feedObj', feedObj)
 
   const followingFeed = feedObj ? Object.values(feedObj).filter(spending => {
     return following.includes(spending.user_id);
