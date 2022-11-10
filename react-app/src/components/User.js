@@ -26,7 +26,7 @@ function User() {
   const options = plans?.map(plan => {
     return `${plan.year}-${plan.month < 10 ? `0${plan.month}` : plan.month}`
   });
-  console.log('options', options)
+  // console.log('options', options)
 
   const currDate = options ? moment(options[0]) : null;
   const currMonth = currDate?.month() + 1;
