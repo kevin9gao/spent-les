@@ -118,3 +118,61 @@
   border: 3px solid gray;
   border-radius: 20px;
 }
+
+.home-body {
+  width: 100%;
+}
+
+#feed-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1em 2em 0 2em;
+}
+
+.feed-spendings-wrapper {
+  padding: 1em;
+  margin: 1em;
+  border: 1px solid gray;
+  border-radius: 20px;
+  width: 80%;
+}
+
+.feed-spendings {
+  display: flex;
+  flex-direction: column;
+}
+
+.spending-dates {
+  font-size: 12px;
+  margin-bottom: 1em;
+}
+
+#feed-spendings-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#feed-wrapper h2 {
+  width: 80%;
+}
+
+.feed-headers {
+  display: flex;
+  align-items: center;
+}
+
+.feed-avatars {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 1em;
+}
+
+.feed-headers div {
+  display: flex;
+  flex-direction: column;
+}

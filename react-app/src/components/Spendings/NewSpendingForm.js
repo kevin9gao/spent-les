@@ -8,10 +8,11 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
   const [notesInput, setNotesInput] = useState('');
   const [amountInput, setAmountInput] = useState('');
   const plan = useSelector(state => state.plans.current);
+  const user = useSelector(state => state.session.user);
   const [validationErrors, setValidationErrors] = useState([]);
   const [hideErrors, setHideErrors] = useState(true);
 
-  console.log('NewSpendingForm date', date);
+  // console.log('NewSpendingForm date', date);
   const year = Number(date.slice(0, 4));
   const month = Number(date.slice(5, 7));
   const day = Number(date.slice(8, 10));
@@ -51,7 +52,8 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
       date,
       month,
       year,
-      day
+      day,
+      user_id: user.id,
     }
 
     // console.log('NewSpendingForm payload', payload);

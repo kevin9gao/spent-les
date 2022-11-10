@@ -13,6 +13,7 @@ class Spending(db.Model):
     month = db.Column(db.Integer, nullable=False)
     year = db.Column(db.Integer, nullable=False)
     day = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def to_dict(self):
         return {
@@ -25,6 +26,7 @@ class Spending(db.Model):
             'month': self.month,
             'year': self.year,
             'day': self.day,
+            'user_id': self.user_id
         }
 
     plan = db.relationship('SpendingPlan', back_populates='spendings')

@@ -1,7 +1,7 @@
-import moment from "moment";
+// import moment from "moment";
 
 const LOAD = 'spendings/LOAD';
-const LOAD_FEED = 'spendings/LOAD_FEED';
+// const LOAD_FEED = 'spendings/LOAD_FEED';
 const ADD = 'spendings/ADD';
 const UPDATE = 'spendings/UPDATE';
 const REMOVE = 'spendings/REMOVE';
@@ -11,10 +11,10 @@ const load = list => ({
   list
 })
 
-const loadFeed = list => ({
-  type: LOAD_FEED,
-  list
-})
+// const loadFeed = list => ({
+//   type: LOAD_FEED,
+//   list
+// })
 
 const add = spending => ({
   type: ADD,
@@ -44,35 +44,38 @@ export const getSpendings = planId => async dispatch => {
   }
 }
 
-export const getOtherUsersSpendings = userId => async dispatch => {
-  const planRes = await fetch(`/api/plans/users/${userId}`);
+// export const getOtherUsersSpendings = userId => async dispatch => {
+//   const planRes = await fetch(`/api/plans/users/${userId}`);
 
-  let plans;
-  let spendings = {};
-  spendings[userId] = [];
-  // console.log('spendings', spendings);
+//   let plans;
+//   let spendings = {};
+//   spendings[userId] = [];
+//   // console.log('spendings', spendings);
 
-  if (planRes.ok) {
-    plans = await planRes.json();
-    plans = plans['user_plans'];
-    // console.log('plans getOtherUserSpendings thunk', plans);
+//   if (planRes.ok) {
+//     plans = await planRes.json();
+//     plans = plans['user_plans'];
+//     // console.log('plans getOtherUserSpendings thunk', plans);
 
-    plans.forEach(async plan => {
-      // console.log('plan in forEach', plan);
-      const spendingsRes = await fetch(`/api/spendings/plan/${plan.id}`);
-      const singlePlanSpendings = await spendingsRes.json();
-      // console.log('singlePlanSpendings', singlePlanSpendings);
-      spendings[userId].push(...singlePlanSpendings.spendings);
-      spendings[userId].sort((a, b) => a.month - b.month);
-    })
-    console.log('spendings after push', spendings);
-    const list = spendings;
-    await dispatch(loadFeed(list));
-  }
-}
+//     plans.forEach(async plan => {
+//       // console.log('plan in forEach', plan);
+//       const spendingsRes = await fetch(`/api/spendings/plan/${plan.id}`);
+//       const singlePlanSpendings = await spendingsRes.json();
+//       // console.log('singlePlanSpendings', singlePlanSpendings);
+//       spendings[userId].push(singlePlanSpendings.spendings);
+//       spendings[userId].sort((a, b) => a.month - b.month);
+//     })
+//     console.log('spendings after push', spendings);
+//     const list = spendings;
+//     console.log('thunk list', list);
+//     await dispatch(loadFeed(list));
+//     return list;
+//   }
+// }
 
 export const createSpending = payload => async dispatch => {
-  // console.log('createSpending thunk');
+  // console.log('createSpending payload', payload);
+
 
   const res = await fetch('/api/spendings/', {
     method: 'POST',
@@ -127,25 +130,30 @@ const spendingsReducer = (state = {}, action) => {
       });
 
       return newState;
-    case LOAD_FEED:
-      newState = { ...state };
+    // case LOAD_FEED:
+    //   newState = { ...state };
 
-      console.log('reducer action.list', action.list);
+    //   console.log('reducer action.list', action.list);
 
-      const otherUserId = Object.keys(action.list)[0];
-      console.log('reducer otherUserId', otherUserId);
+    //   const otherUserId = Object.keys(action.list)[0];
+    //   console.log('reducer otherUserId', otherUserId);
 
-      const otherUserSpendings = action.list[otherUserId];
-      console.log('reducer otherUserSpendings', otherUserSpendings);
+    //   const otherUserSpendings = action.list[otherUserId];
+    //   console.log('reducer otherUserSpendings', otherUserSpendings);
 
-      otherUserSpendings.forEach(spending => {
-        newState[spending.id] = spending;
-      });
-      console.log('reducer newState', newState);
+    //   // if (!newState['feed']) newState['feed'] = {};
 
-      // newState['following-spendings'].sort((a, b) => a.month - b.month);
+    //   otherUserSpendings.forEach(month => {
+    //     console.log('reducer month', month)
+    //     month.forEach(spending => {
+    //       newState[spending.id] = spending;
+    //     })
+    //   });
+    //   console.log('reducer newState', newState);
 
-      return newState;
+    //   // newState['following-spendings'].sort((a, b) => a.month - b.month);
+
+    //   return newState;
     case ADD:
       newState = { ...state };
       newState[action.spending.id] = action.spending;
