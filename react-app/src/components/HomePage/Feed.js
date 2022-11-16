@@ -13,6 +13,9 @@ const Feed = () => {
   const [users, setUsers] = useState([]);
   console.log('users', users);
 
+  const state = useSelector(state => state);
+  console.log('state', state);
+
   useEffect(() => {
     dispatch(getFollowed(sessionUser.id));
 
