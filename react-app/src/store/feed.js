@@ -8,6 +8,8 @@ const load = list => ({
 export const loadFeed = () => async dispatch => {
   const res = await fetch('/api/spendings');
 
+  console.log('loadFeed thunk res', res);
+
   if (res.ok) {
     const list = await res.json();
     dispatch(load(list));
@@ -21,6 +23,8 @@ const feedReducer = (state = {}, action) => {
     case LOAD:
       newState = { ...state };
       const spendings = action.list.spendings;
+
+      console.log('feedReducer spendings', spendings);
 
       spendings.forEach(spending => {
         newState[spending.id] = spending;
