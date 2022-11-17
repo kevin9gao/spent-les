@@ -6,11 +6,11 @@ const load = list => ({
 })
 
 export const loadFeed = () => async dispatch => {
-  console.log('got to loadFeed thunk');
+  // console.log('got to loadFeed thunk');
 
   const res = await fetch('/api/spendings/');
 
-  console.log('loadFeed thunk res', res);
+  // console.log('loadFeed thunk res', res);
 
   if (res.ok) {
     const list = await res.json();
@@ -26,7 +26,7 @@ const feedReducer = (state = {}, action) => {
       newState = { ...state };
       const spendings = action.list.spendings;
 
-      console.log('feedReducer spendings', spendings);
+      // console.log('feedReducer spendings', spendings);
 
       spendings.forEach(spending => {
         newState[spending.id] = spending;

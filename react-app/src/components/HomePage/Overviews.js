@@ -6,7 +6,7 @@ const Overviews = () => {
   const dispatch = useDispatch();
   const plansObj = useSelector(state => state.plans['user-plans']);
   const plans = plansObj ? Object.values(plansObj) : null;
-  console.log('plans', plans);
+  // console.log('plans', plans);
 
   let overviews = plans?.map(plan => {
     const widgetMonth = `${plan.year}-${plan.month < 10 ? `0${plan.month}` : plan.month}`;
