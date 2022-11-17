@@ -33,7 +33,7 @@ const Feed = () => {
   console.log('feedObj', feedObj)
 
   const followingFeed = feedObj ? Object.values(feedObj).filter(spending => {
-    return following.includes(spending.user_id);
+    return following?.includes(spending.user_id);
   }) : null;
   if (followingFeed) followingFeed.sort((a, b) => new Date(b.date) - new Date(a.date));
   console.log('followingFeed', followingFeed);
