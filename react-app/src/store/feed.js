@@ -6,6 +6,8 @@ const load = list => ({
 })
 
 export const loadFeed = () => async dispatch => {
+  console.log('got to loadFeed thunk');
+
   const res = await fetch('/api/spendings');
 
   console.log('loadFeed thunk res', res);
