@@ -49,15 +49,6 @@ const HomePage = ({ WEEKDAYS, MONTHS }) => {
       greeting = 'Good Evening';
   }
 
-  let overviews = plans?.map(plan => {
-    const widgetMonth = `${plan.year}-${plan.month < 10 ? `0${plan.month}` : plan.month}`;
-    return (
-      <div className="widget-wrapper">
-        <SpendingsBreakdown isWidget={true} widgetMonth={widgetMonth} />
-      </div>
-    );
-  })
-
   let bodySection;
 
   if (page === 'overview') {
