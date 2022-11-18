@@ -224,14 +224,14 @@ const Calendar = ({ WEEKDAYS, MONTHS }) => {
 
     if (!options?.length) {
       return (
-        <div className="not-owner calendar-main-container not-owner-main-container">
+        <div className="not-owner calendar-main-container not-owner-main-container no-plan">
           <h2>{otherUser && `${otherUser.username} does not have any spending plans.`}</h2>
         </div>
       );
     }
 
     return (
-      <div className="not-owner calendar-main-container not-owner-main-container">
+      <div className="not-owner calendar-main-container not-owner-main-container has-plan">
         <h2>{currPlan?.plan_name}</h2>
         <div id="month-selector-container" className="not-owner">
           <div id="month-selector" className="not-owner">

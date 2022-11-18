@@ -156,7 +156,7 @@
   width: 80%;
 }
 
-.not-owner-main-container {
+.not-owner-main-container.has-plan {
   height: 90vh;
   width: 85vw;
   display: flex;
