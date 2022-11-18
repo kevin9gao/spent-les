@@ -36,6 +36,8 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
       errors.push('Spending amount must be a number.');
     } else if (Number(amountInput) > 99999999.99) {
       errors.push('Support for billionaires incoming...');
+    } else if (Number(amountInput) < 0) {
+      errors.push('Spending amount must be greater than $0.');
     }
 
     setValidationErrors(errors);
@@ -66,6 +68,17 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
       setNotesInput('');
       setAmountInput('');
     } else setHideErrors(false);
+  }
+
+  const cancelSpending = e => {
+    e.preventDefault();
+
+    setHideNewSpendingForm(true);
+    setNameInput('');
+    setNotesInput('');
+    setAmountInput('');
+    setValidationErrors([]);
+    setHideErrors(true);
   }
 
   return (
@@ -103,8 +116,13 @@ const NewSpendingForm = ({ date, setHideNewSpendingForm }) => {
             value={amountInput}
             onChange={e => setAmountInput(e.target.value)}
           />
-          <div className="submit">
-            <button>Submit</button>
+          <div className="cancel-submit-wrapper">
+            <div className="cancel">
+              <button onClick={cancelSpending}>Cancel</button>
+            </div>
+            <div className="submit">
+              <button>Submit</button>
+            </div>
           </div>
         </form>
       </div>
