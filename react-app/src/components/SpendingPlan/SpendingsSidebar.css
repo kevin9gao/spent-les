@@ -18,6 +18,10 @@
   align-items: flex-start;
 }
 
+.spending-form input {
+  width: 100%;
+}
+
 #sidebar-new-spending-container button {
   margin: 1em;
 }
@@ -94,4 +98,9 @@
 
 #sidebar-x {
   width: 20px;
+}
+
+.cancel-submit-wrapper {
+  display: flex;
+  align-items: center;
 }
