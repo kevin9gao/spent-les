@@ -67,14 +67,14 @@ const SpendingPlanMain = ({ WEEKDAYS, MONTHS }) => {
             </div>
             <div id="spending-plan-main-header-categories">
               <NavLink
-                to={`/users/${user.id}/plans/breakdown`}
-                activeClassName='active' >
-                Spendings Breakdown
-              </NavLink>
-              <NavLink
                 to={`/users/${user.id}/plans/calendar/${year}-${month}`}
                 activeClassName='active' >
                 Calendar
+              </NavLink>
+              <NavLink
+                to={`/users/${user.id}/plans/breakdown`}
+                activeClassName='active' >
+                Spendings Breakdown
               </NavLink>
             </div>
           </div>
