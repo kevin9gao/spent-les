@@ -3,10 +3,15 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ProfileButton from "../ProfileButton";
 import Logo from '../../images/logo.jpg';
+import moment from "moment";
 import './Navigation.css';
 
 const Navigation = () => {
   const user = useSelector(state => state.session.user);
+
+  const currDate = moment();
+  const month = currDate.month() + 1;
+  const year = currDate.year();
 
   return (
     <>
@@ -32,7 +37,7 @@ const Navigation = () => {
             <div
               className="navbar-links">
               <NavLink
-                to={`/users/${user.id}/plans/breakdown`}
+                to={`/users/${user.id}/plans/calendar/${year}-${month}`}
                 exact>
                 My Spending Plans
               </NavLink>
