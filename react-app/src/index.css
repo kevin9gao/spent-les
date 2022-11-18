@@ -14,8 +14,8 @@ body {
 
 .app-wrapper {
   background-color: gainsboro;
-  height: 100vh;
-  overflow-y: hidden;
+  min-height: 100vh;
+  /* overflow-y: hidden; */
   display: flex;
   flex-direction: column;
 }
@@ -29,7 +29,7 @@ footer {
 
 .app-formatting-wrapper {
   display: flex;
-  height: 90vh;
+  min-height: 90vh;
 }
 
 a, button {

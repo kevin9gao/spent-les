@@ -1,14 +1,19 @@
 .navbar-container {
   display: block;
   width: 15vw;
-  height: 100vh;
+  background-color: black;
+  /* height: 100vh; */
 }
 
 .navbar-block-wrapper {
   display: block;
   position: sticky;
+  align-self: flex-start;
+  top: 0;
+  overflow-y: auto;
   left: 0;
   height: 100%;
+  height: auto;
 }
 
 .navbar {
@@ -16,7 +21,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: black;
   color: white;
   height: 100%;
   min-width: 15vw;

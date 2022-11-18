@@ -40,9 +40,13 @@ const TipSection = ({ plan, tipChanged, setTipChanged }) => {
             key={tip.id}
           >
             <div className="tip-username">
-              {tip.user && (<NavLink to={`/users/${tip.user.id}`}>
-                {tip.user.username}
-              </NavLink>
+              {tip.user && (
+                <NavLink to={`/users/${tip.user.id}`}>
+                  <div className="tip-profile">
+                    <img src={tip.user.profile_pic_url} />
+                    {tip.user.username}
+                  </div>
+                </NavLink>
               )}
               <span className="timestamps">
                 {createDateString(tip.created_at)}

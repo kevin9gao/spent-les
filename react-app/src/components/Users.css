@@ -2,7 +2,7 @@
 .followers-container,
 .following-container {
   width: 85vw;
-  height: 70vh;
+  /* height: 70vh; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -34,8 +34,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  padding-bottom: 5em;
-  margin-bottom: 10vh;
+  margin-bottom: 2em;
 }
 
 .users-list li {
@@ -173,7 +172,7 @@
   display: flex;
   flex-direction: column;
   width: 85vw;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .extended {
@@ -195,7 +194,7 @@
 }
 
 #users-page-body {
-  height: 75vh;
+  height: auto;
 }
 
 .users-page.main-header {
