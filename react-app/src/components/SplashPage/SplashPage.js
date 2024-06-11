@@ -4,6 +4,8 @@ import { NavLink, Redirect } from "react-router-dom";
 import Logo from '../../images/logo.jpg';
 import AboutModal from "../About/AboutModal";
 import DemoUserButton from '../auth/DemoUserButton';
+import Wallet from "../../images/money_flying.jpg";
+import Models from "../../images/money_models.jpg";
 import './SplashPage.css';
 
 const SplashPage = () => {
@@ -63,14 +65,14 @@ const SplashPage = () => {
             <div id="right-images">
               <div id="img-1">
                 <img
-                  src="../../../../images/money_flying.jpg"
+                  src={ Wallet }
                   alt="wallet"
                   id="wallet-img"
                   />
               </div>
               <div id="img-2">
                 <img
-                  src="https://cdn.elearningindustry.com/wp-content/uploads/2018/06/free-ebook-investing-wisely-maximize-your-sales-training-budget-with-the-arise-model-1024x574.jpg"
+                  src={ Models }
                   alt="graphs"
                   id="graphs-img"
                   />
