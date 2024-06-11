@@ -63,7 +63,7 @@ const SplashPage = () => {
             <div id="right-images">
               <div id="img-1">
                 <img
-                  src="https://www.centsaccountability.co.za/wp-content/uploads/2018/07/Fotolia_180992247_Subscription_Monthly_M-e1530553560430.jpg"
+                  src="../../../../images/money_flying.jpg"
                   alt="wallet"
                   id="wallet-img"
                   />
