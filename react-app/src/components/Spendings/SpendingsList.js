@@ -8,6 +8,7 @@ const SpendingsList = ({ date }) => {
   const spendings = Object.values(useSelector(state => state.spendings));
   // console.log('spendings', spendings);
   // console.log('SpendingsList date', date);
+  const user = useSelector(state => state.session.user);
 
   const dailySpendings = spendings.filter(spending => {
     const mmtDate = moment(spending.date);
@@ -46,10 +47,12 @@ const SpendingsList = ({ date }) => {
                 {`Amount: $${spending.amount}`}
               </p>
             </div>
-            <div className="spending-edit-delete">
-              <EditSpendingModal spending={spending} />
-              <DeleteSpendingModal spending={spending} />
-            </div>
+            {user.id === spending.userid && (
+              <div className="spending-edit-delete">
+                <EditSpendingModal spending={spending} />
+                <DeleteSpendingModal spending={spending} />
+              </div>
+            )}
           </div>
         ))}
       </div>
